@@ -75,7 +75,13 @@ public class MainActivity extends AppCompatActivity {
         });
 
         Button mapBtn = (Button)findViewById(R.id.mainMapButton);
-
+        mapBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, ShoppingCartActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     private void logoutUser() {
