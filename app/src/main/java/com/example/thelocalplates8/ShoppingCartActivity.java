@@ -2,19 +2,22 @@ package com.example.thelocalplates8;
 
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Pair;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.view.View;
 
 import com.example.thelocalplates8.R;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.text.DecimalFormat;
+import java.util.HashMap;
+import java.util.Map;
 
 public class ShoppingCartActivity extends AppCompatActivity {
 
     private LinearLayout cartItemsLayout;
     private TextView totalPriceTextView;
+    private Map<String, Integer> cartItems;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,41 +27,105 @@ public class ShoppingCartActivity extends AppCompatActivity {
         cartItemsLayout = findViewById(R.id.cartItemsLayout);
         totalPriceTextView = findViewById(R.id.totalPriceTextView);
 
+        cartItems = new HashMap<>();
+        // Example of adding items to the cart with quantities
+        cartItems.put("Product XYZ", 2); // Product XYZ with quantity 2
+        cartItems.put("Hello", 1); // Hello with quantity 1
+        cartItems.put("Michael", 3); // Michael with quantity 3
+
         updateCartItems();
     }
 
     private void updateCartItems() {
-        // Retrieve the cart items from your data source
-        List<Pair<String, Integer>> cartItems = new ArrayList<>();
-        // Example of adding items to the cart with quantities
-        cartItems.add(new Pair<>("Product XYZ", 2)); // Product XYZ with quantity 2
-        cartItems.add(new Pair<>("Hello", 1)); // Hello with quantity 1
-        cartItems.add(new Pair<>("Michael", 3)); // Michael with quantity 3
+        cartItemsLayout.removeAllViews();
 
         double totalPrice = 0.0;
-        for (Pair<String, Integer> cartItem : cartItems) {
-            String item = cartItem.first;
-            int quantity = cartItem.second;
+        for (Map.Entry<String, Integer> cartItem : cartItems.entrySet()) {
+            String item = cartItem.getKey();
+            int quantity = cartItem.getValue();
 
             // Assuming you have a method to retrieve the price for each item
             double itemPrice = getItemPrice(item);
             double totalPriceForItem = itemPrice * quantity;
             totalPrice += totalPriceForItem;
 
-            TextView textView = new TextView(this);
-            textView.setLayoutParams(new LinearLayout.LayoutParams(
+            LinearLayout itemLayout = new LinearLayout(this);
+            itemLayout.setOrientation(LinearLayout.HORIZONTAL);
+            itemLayout.setLayoutParams(new LinearLayout.LayoutParams(
                     LinearLayout.LayoutParams.MATCH_PARENT,
                     LinearLayout.LayoutParams.WRAP_CONTENT
             ));
-            textView.setText(item + " (Quantity: " + quantity + ") - $" + totalPriceForItem);
-            textView.setTextSize(16);
-            textView.setPadding(16, 8, 16, 8);
 
-            cartItemsLayout.addView(textView);
+            TextView itemNameTextView = new TextView(this);
+            itemNameTextView.setLayoutParams(new LinearLayout.LayoutParams(
+                    0,
+                    LinearLayout.LayoutParams.WRAP_CONTENT,
+                    1
+            ));
+            itemNameTextView.setText(item);
+            itemNameTextView.setTextSize(16);
+            itemNameTextView.setPadding(16, 8, 16, 8);
+            itemLayout.addView(itemNameTextView);
+
+            Button increaseButton = new Button(this);
+            increaseButton.setLayoutParams(new LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.WRAP_CONTENT,
+                    LinearLayout.LayoutParams.WRAP_CONTENT
+            ));
+            increaseButton.setText("+");
+            increaseButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    // Increase the quantity by 1
+                    cartItem.setValue(quantity + 1);
+                    updateCartItems();
+                }
+            });
+            itemLayout.addView(increaseButton);
+
+            TextView quantityTextView = new TextView(this);
+            quantityTextView.setLayoutParams(new LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.WRAP_CONTENT,
+                    LinearLayout.LayoutParams.WRAP_CONTENT
+            ));
+            quantityTextView.setText(String.valueOf(quantity));
+            itemLayout.addView(quantityTextView);
+
+            Button decreaseButton = new Button(this);
+            decreaseButton.setLayoutParams(new LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.WRAP_CONTENT,
+                    LinearLayout.LayoutParams.WRAP_CONTENT
+            ));
+            decreaseButton.setText("-");
+            decreaseButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (quantity > 1) {
+                        // Decrease the quantity by 1
+                        cartItem.setValue(quantity - 1);
+                        updateCartItems();
+                    }
+                }
+            });
+            itemLayout.addView(decreaseButton);
+
+            TextView totalPriceTextView = new TextView(this);
+            totalPriceTextView.setLayoutParams(new LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.WRAP_CONTENT,
+                    LinearLayout.LayoutParams.WRAP_CONTENT
+            ));
+            DecimalFormat decimalFormat = new DecimalFormat("0.00");
+            String formattedTotalPriceForItem = decimalFormat.format(totalPriceForItem);
+            totalPriceTextView.setText("$" + formattedTotalPriceForItem);
+            itemLayout.addView(totalPriceTextView);
+
+            cartItemsLayout.addView(itemLayout);
         }
+        DecimalFormat decimalFormat = new DecimalFormat("0.00");
+        String formattedTotalPrice = decimalFormat.format(totalPrice);
 
         // Display the total price
-        totalPriceTextView.setText("Total Price: $" + totalPrice);
+        totalPriceTextView.setText("Total Price: $" + formattedTotalPrice);
     }
 
     private double getItemPrice(String item) {
@@ -74,4 +141,6 @@ public class ShoppingCartActivity extends AppCompatActivity {
             return 0.0;
         }
     }
+
+
 }
