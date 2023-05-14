@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -26,6 +27,7 @@ import com.google.firebase.database.ValueEventListener;
 public class MainActivity extends AppCompatActivity {
 
     TextView tvFirstName, tvLastName, tvEmail;
+    Button businessBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +49,7 @@ public class MainActivity extends AppCompatActivity {
         tvFirstName = findViewById(R.id.tvFirstName);
         tvLastName = findViewById(R.id.tvLastName);
         tvEmail = findViewById(R.id.tvEmail);
+        businessBtn = (Button)findViewById(R.id.businessMainBtn);
 
         Button btnLogout = findViewById(R.id.btnLogout);
         btnLogout.setOnClickListener(new View.OnClickListener() {
@@ -63,6 +66,7 @@ public class MainActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 User user = snapshot.getValue(User.class);
                 if (user != null) {
+                    Log.d("Check1", "HELLOO" + user.firstName);
                     tvFirstName.setText("First Name: " + user.firstName);
                     tvLastName.setText("Last Name: " + user.lastName);
                     tvEmail.setText("Email: " + user.email);
@@ -74,14 +78,14 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        Button mapBtn = (Button)findViewById(R.id.mainMapButton);
-        mapBtn.setOnClickListener(new View.OnClickListener() {
+        businessBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, ShoppingCartActivity.class);
+                Intent intent = new Intent(MainActivity.this, BusinessActivity.class);
                 startActivity(intent);
             }
         });
+
     }
 
     private void logoutUser() {

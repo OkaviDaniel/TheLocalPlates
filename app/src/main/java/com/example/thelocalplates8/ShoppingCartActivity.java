@@ -14,7 +14,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class ShoppingCartActivity extends AppCompatActivity {
-
     private LinearLayout cartItemsLayout;
     private TextView totalPriceTextView;
     private Map<String, Integer> cartItems;
@@ -118,6 +117,24 @@ public class ShoppingCartActivity extends AppCompatActivity {
             String formattedTotalPriceForItem = decimalFormat.format(totalPriceForItem);
             totalPriceTextView.setText("$" + formattedTotalPriceForItem);
             itemLayout.addView(totalPriceTextView);
+
+            // Add a remove button
+            Button removeButton = new Button(this);
+            removeButton.setLayoutParams(new LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.WRAP_CONTENT,
+                    LinearLayout.LayoutParams.WRAP_CONTENT
+            ));
+            removeButton.setText("Remove");
+            removeButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    // Remove the item from the cart
+                    cartItems.remove(item);
+                    updateCartItems();
+                }
+            });
+            itemLayout.addView(removeButton);
+
 
             cartItemsLayout.addView(itemLayout);
         }

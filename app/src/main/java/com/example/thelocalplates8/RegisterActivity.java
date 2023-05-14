@@ -16,6 +16,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 public class RegisterActivity extends AppCompatActivity {
 
@@ -77,6 +78,11 @@ public class RegisterActivity extends AppCompatActivity {
                                     .setValue(user).addOnCompleteListener(new OnCompleteListener<Void>() {
                                 @Override
                                 public void onComplete(@NonNull Task<Void> task) {
+                                    FirebaseCommunicator firebaseCommunicator = new FirebaseCommunicator(firstName, lastName,email);
+                                    FirebaseFirestore db = FirebaseFirestore.getInstance();
+                                    String userId = mAuth.getCurrentUser().getUid();
+
+                                    firebaseCommunicator.initializeNewUser(db, userId);
                                     showMainActivity();
                                 }
                             });
