@@ -6,6 +6,7 @@ import androidx.annotation.NonNull;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -74,20 +75,20 @@ public class FirebaseCommunicator {
                     }
                 });
     }
-
+/*
     private void initializeBusinessDocument(FirebaseFirestore db, String userId) {
         Map<String, Object> business = new HashMap<>();
-        business.put("DeliveryCost", 0);
-        business.put("Rating",0);
-        business.put("city","");
-        business.put("DestinationLimit","");
-        business.put("lastName",lastName);
-        business.put("firstName",name);
-        business.put("ordersTime","");
-        business.put("phone","");
-        business.put("Products",new ArrayList<String>());
-        business.put("street","");
-        business.put("userId",userId);
+        business.put("DeliveryCost", 0); // done
+        business.put("Rating",0); // done
+        business.put("city",""); // done
+        business.put("DestinationLimit",""); // done
+        business.put("lastName",lastName); // done
+        business.put("firstName",name); // done
+        business.put("ordersTime",""); // done
+        business.put("phone",""); // done
+        business.put("Products",new ArrayList<String>()); // done
+        business.put("street",""); // done
+        business.put("userId",userId); // done
         business.put("email",email);
 
         db.collection("business").add(business).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
@@ -105,7 +106,7 @@ public class FirebaseCommunicator {
             }
         });
     }
-
+*/
     public static void checkBusinessExist(FirebaseFirestore db, String userId, OnBusinessCheckCompleteListener listener){
 
         DocumentReference userRef = db.collection("customers").document(userId);
@@ -127,4 +128,38 @@ public class FirebaseCommunicator {
     public interface OnBusinessCheckCompleteListener {
         void onBusinessCheckComplete(boolean isBusinessCreated);
     }
+
+
+    public  void createBusiness(FirebaseFirestore db, String userId, String phone, String city, String destinationLimit, String deliveryCost,
+                                      String openTime, String closedTime){
+        Map<String, Object> business = new HashMap<>();
+        business.put("phone", phone);
+        business.put("DeliveryCost", Integer.parseInt(deliveryCost));
+        business.put("Rating",0);
+        business.put("city",city);
+        business.put("DestinationLimit",destinationLimit);
+        business.put("lastName",lastName);
+        business.put("firstName",name);
+        business.put("ordersTime",""); // maybe to change this!
+        business.put("Products",new ArrayList<String>());
+        business.put("street","");
+        business.put("userId",userId);
+        business.put("email",email);
+
+        db.collection("business").add(business).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+            @Override
+            public void onSuccess(DocumentReference documentReference) {
+                Log.d("New user business", "DocumentSnapshot successfully written!");
+                HashMap<String, Object> business = new HashMap<>();
+                business.put("businessId", documentReference.getId());
+                db.collection("customers").document(userId).update(business);
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Log.w("New user business", "Error writing document", e);
+            }
+        });
+    }
+
 }

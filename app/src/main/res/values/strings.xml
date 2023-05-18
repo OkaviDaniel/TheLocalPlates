@@ -7,4 +7,14 @@
     <string name="open_map">Open map</string>
     <string name="checkout">Checkout</string>
     <string name="welcome_to_business_screen">Welcome to business screen</string>
+    <string name="welcome_to_business_creation_screen">Welcome to business creation screen</string>
+    <string name="please_fill_the_entire_boxes">Please fill the entire boxes</string>
+    <string name="destination_limit">Destination Limit</string>
+    <string name="phone_number">Phone number</string>
+    <string name="create_a_new_business">Create a new business</string>
+    <string name="city">City</string>
+    <string name="create_business">Create business</string>
+    <string name="delivery_cost">Delivery cost (New Israeli Shekels)</string>
+    <string name="open_time">Open Time</string>
+    <string name="closed_time">Closed time</string>
 </resources>
