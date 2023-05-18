@@ -15,9 +15,20 @@ public class BusinessModel {
     private ArrayList<String> products;
     private String street;
     private String userId;
+    private String email;
+
+
 
     public BusinessModel(){
 
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public int getDeliveryCost() {

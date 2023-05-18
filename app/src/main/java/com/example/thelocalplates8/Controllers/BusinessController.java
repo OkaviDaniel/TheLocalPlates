@@ -6,10 +6,15 @@ import androidx.annotation.NonNull;
 
 import com.example.thelocalplates8.Models.BusinessModel;
 import com.example.thelocalplates8.Models.CustomerModel;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -22,10 +27,54 @@ public class BusinessController {
         db = FirebaseFirestore.getInstance();
     }
 
-    public void getBusinessData(String userId, final BusinessModelCallback callback){
 
+
+    public void getBusinessData(String userId, final BusinessModelCallback callback){
+//        DocumentReference docRef = db.collection("business").document(userId);
+
+        Query usersBusiness = db.collection("business").whereEqualTo("userId", userId);
+        usersBusiness.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if(task.isSuccessful()){
+                    for (DocumentSnapshot document : task.getResult()){
+
+                        BusinessModel businessModel = new BusinessModel();
+                        businessModel.setFirstName(document.getString("firstName"));
+                        businessModel.setLastName(document.getString("lastName"));
+                        businessModel.setEmail(document.getString("email"));
+                        businessModel.setCity(document.getString("city"));
+                        businessModel.setDeliveryCost(document.getLong("DeliveryCost").intValue());
+                        businessModel.setRating(document.getDouble("Rating"));
+                        businessModel.setPhone(document.getString("phone"));
+                        businessModel.setOpenTime(document.getString("openTime"));
+                        businessModel.setClosedTime(document.getString("closedTime"));
+                        businessModel.setDestinationLimit(document.getString("DestinationLimit"));
+                        // Add later an iterator over the array of products and add them to array list
+                        // and of course add the array list to the business model
+                        callback.onBusinessModelCallback(businessModel);
+                    }
+                }
+            }
+        });
     }
 
+
+
+
+    /**
+     * Creating a new business for the first time
+     * @param firstName first name of the user
+     * @param lastName last name of the user
+     * @param email email of the user
+     * @param userId the user ID
+     * @param phone the phone number of the user
+     * @param city city that the user lives in
+     * @param destinationLimit the farthest city the user can deliver to
+     * @param deliveryCost how much money the delivery cost
+     * @param openTime open time
+     * @param closedTime closed time
+     */
     public void createBusiness(String firstName, String lastName, String email, String userId, String phone,
                                String city, String destinationLimit, int deliveryCost, String openTime, String closedTime){
         Map<String, Object> business = new HashMap<>();
@@ -41,6 +90,8 @@ public class BusinessController {
         business.put("street","");
         business.put("userId",userId);
         business.put("email",email);
+        business.put("openTime", openTime);
+        business.put("closedTime",closedTime);
 
         db.collection("business").add(business).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
             @Override
@@ -57,6 +108,9 @@ public class BusinessController {
             }
         });
     }
+
+
+
 
     public interface BusinessModelCallback{
         void onBusinessModelCallback(BusinessModel business);

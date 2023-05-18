@@ -7,6 +7,16 @@ public class CustomerModel {
     private String email;
     private String phone;
 
+    public String getBusinessId() {
+        return businessId;
+    }
+
+    public void setBusinessId(String businessId) {
+        this.businessId = businessId;
+    }
+
+    private String businessId;
+
     public CustomerModel(){
 
     }

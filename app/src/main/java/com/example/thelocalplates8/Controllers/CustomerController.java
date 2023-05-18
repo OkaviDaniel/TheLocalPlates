@@ -31,6 +31,9 @@ public class CustomerController {
                         customer.setEmail(document.getString("email"));
                         customer.setCity(document.getString("city"));
                         customer.setPhone(document.getString("phone"));
+                        if(document.contains("businessId")){
+                            customer.setBusinessId(document.getString("businessId"));
+                        }
                         callback.onCustomerModelCallback(customer);
                     }
                 }
