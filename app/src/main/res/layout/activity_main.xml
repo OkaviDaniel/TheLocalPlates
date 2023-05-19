@@ -6,11 +6,12 @@
         android:orientation="horizontal"
         android:layout_height="wrap_content"
         android:layout_width="match_parent">
-    <Button
-        android:id="@+id/businessMainBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Business" />
+
+        <Button
+            android:id="@+id/businessMainBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Business" />
     <Space
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"

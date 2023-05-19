@@ -17,4 +17,7 @@
     <string name="delivery_cost">Delivery cost (New Israeli Shekels)</string>
     <string name="open_time">Open Time</string>
     <string name="closed_time">Closed time</string>
+    <string name="name">Name</string>
+    <string name="phone">Phone</string>
+    <string name="email">email</string>
 </resources>

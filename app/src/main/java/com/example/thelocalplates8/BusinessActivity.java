@@ -14,6 +14,8 @@ import com.example.thelocalplates8.Models.BusinessModel;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import org.w3c.dom.Text;
+
 public class BusinessActivity extends AppCompatActivity {
 
     @Override
@@ -25,6 +27,14 @@ public class BusinessActivity extends AppCompatActivity {
         welcomeText.setVisibility(View.GONE);
         Button createBusiness = (Button)findViewById(R.id.createBusinessButton);
         createBusiness.setVisibility(View.GONE);
+        TextView nameTextView = (TextView)findViewById(R.id.BusinessOwnerName);
+        nameTextView.setVisibility(View.GONE);
+        TextView cityTextView = (TextView)findViewById(R.id.BusinessCityTextView);
+        cityTextView.setVisibility(View.GONE);
+        TextView phoneTextView = (TextView) findViewById(R.id.BusinessPhoneTextView);
+        phoneTextView.setVisibility(View.GONE);
+        TextView emailTextView = (TextView) findViewById(R.id.BusinessEmailTextView);
+        emailTextView.setVisibility(View.GONE);
 
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
         String userID = mAuth.getCurrentUser().getUid();
@@ -44,6 +54,15 @@ public class BusinessActivity extends AppCompatActivity {
                         public void onBusinessModelCallback(BusinessModel business) {
                             welcomeText.setText("Welcome back " + business.getFirstName() + " to your business!");
                             welcomeText.setVisibility(View.VISIBLE);
+                            nameTextView.setText(business.getFirstName() + "\n" + business.getLastName());
+                            cityTextView.setText(business.getCity());
+                            phoneTextView.setText(business.getPhone());
+                            emailTextView.setText(business.getEmail());
+
+                            nameTextView.setVisibility(View.VISIBLE);
+                            cityTextView.setVisibility(View.VISIBLE);
+                            phoneTextView.setVisibility(View.VISIBLE);
+                            emailTextView.setVisibility(View.VISIBLE);
                         }
                     });
 
