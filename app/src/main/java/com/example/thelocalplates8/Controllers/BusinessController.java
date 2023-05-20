@@ -1,5 +1,6 @@
 package com.example.thelocalplates8.Controllers;
 
+import android.content.SharedPreferences;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -52,6 +53,9 @@ public class BusinessController {
                         businessModel.setDestinationLimit(document.getString("DestinationLimit"));
                         // Add later an iterator over the array of products and add them to array list
                         // and of course add the array list to the business model
+                        ArrayList<String> products = (ArrayList<String>) document.get("products");
+                        businessModel.setProducts(products);
+
                         callback.onBusinessModelCallback(businessModel);
                     }
                 }
@@ -93,6 +97,8 @@ public class BusinessController {
         business.put("openTime", openTime);
         business.put("closedTime",closedTime);
 
+
+
         db.collection("business").add(business).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
             @Override
             public void onSuccess(DocumentReference documentReference) {
@@ -100,6 +106,7 @@ public class BusinessController {
                 HashMap<String, Object> business = new HashMap<>();
                 business.put("businessId", documentReference.getId());
                 db.collection("customers").document(userId).update(business);
+
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override

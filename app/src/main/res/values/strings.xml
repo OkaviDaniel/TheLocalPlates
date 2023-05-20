@@ -20,4 +20,20 @@
     <string name="name">Name</string>
     <string name="phone">Phone</string>
     <string name="email">email</string>
+    <string name="add_product">Add product</string>
+    <string name="welcome_to_add_product_screen">Welcome to add product screen</string>
+    <string name="mekoshkeshet">Mekoshkeshet</string>
+    <string name="kosher">Kosher</string>
+    <string name="preperation_time">Preperation time</string>
+    <string name="button">Button</string>
+    <string name="deleteproduct">DeleteProduct</string>
+    <string name="_80">80$</string>
+    <string name="product_name">Product name</string>
+    <string name="product_price">Product price</string>
+    <string name="product_culture">Product culture</string>
+    <string name="kosher_describe_the_kashrot">Kosher (Describe the kashrot)</string>
+    <string name="preparation_time">Preparation Time</string>
+    <string name="upload_image">Upload Image</string>
+    <string name="select_image">Select Image</string>
+    <string name="add_product_btn">Add product</string>
 </resources>
