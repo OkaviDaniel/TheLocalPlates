@@ -36,4 +36,5 @@
     <string name="upload_image">Upload Image</string>
     <string name="select_image">Select Image</string>
     <string name="add_product_btn">Add product</string>
+    <string name="select_image_create_business">Select image</string>
 </resources>

@@ -1,8 +1,16 @@
 package com.example.thelocalplates8;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -25,6 +33,8 @@ public class BusinessCreationActivity extends AppCompatActivity implements Custo
     private String lastName;
     private String email;
 
+    private Uri imageUri;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,7 +48,9 @@ public class BusinessCreationActivity extends AppCompatActivity implements Custo
         EditText openTimeText = (EditText) findViewById(R.id.editTextOpenTime);
         EditText closedTimeText = (EditText) findViewById(R.id.editTextClosedTime);
 
+        Button selectImageButton = (Button)findViewById(R.id.chooseImageButtonBusiness);
         Button createBusiness = (Button) findViewById(R.id.createBsButton);
+
 
         Intent intent = getIntent();
         String userId = intent.getStringExtra("userId");
@@ -48,7 +60,12 @@ public class BusinessCreationActivity extends AppCompatActivity implements Custo
         Log.d("BusinessCreationActivity", "UserId = " + userId);
         customerController.getCustomerData(userId, this);
 
-
+        selectImageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                selectImage();
+            }
+        });
         createBusiness.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -63,7 +80,18 @@ public class BusinessCreationActivity extends AppCompatActivity implements Custo
                 BusinessController businessController = new BusinessController();
                 businessController.createBusiness(Firstname, lastName, email, userId, phone, city, dstLimit, dvct, openTime,closedTime, BusinessCreationActivity.this);
 
-                goToMainScreen();
+                SharedPreferences sp = getSharedPreferences("MyUserPrefs", Context.MODE_PRIVATE);
+                String businessId = sp.getString("businessId", "");
+
+                businessController.uploadImage(businessId ,imageUri,BusinessCreationActivity.this , new BusinessController.BusinessUploadImage() {
+                    @Override
+                    public void onBusinessUploadImage(Boolean uploaded) {
+                        if(uploaded){
+                            goToMainScreen();
+                        }
+                    }
+                });
+
             }
         });
     }
@@ -82,4 +110,24 @@ public class BusinessCreationActivity extends AppCompatActivity implements Custo
         this.email =  customer.getEmail();
 
     }
+
+    private void selectImage() {
+        Intent intent = new Intent();
+        intent.setType("image/");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        onActivityResultLauncher.launch(intent);
+    }
+
+    ActivityResultLauncher<Intent> onActivityResultLauncher = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            new ActivityResultCallback<ActivityResult>() {
+                @Override
+                public void onActivityResult(ActivityResult result) {
+                    if (result.getResultCode() == Activity.RESULT_OK) {
+                        // There are no request codes
+                        Intent data = result.getData();
+                        imageUri = data.getData();
+                    }
+                }
+            });
 }

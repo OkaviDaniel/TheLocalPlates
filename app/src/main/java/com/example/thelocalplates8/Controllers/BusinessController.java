@@ -1,8 +1,11 @@
 package com.example.thelocalplates8.Controllers;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.util.Log;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
@@ -17,6 +20,9 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -66,7 +72,36 @@ public class BusinessController {
         });
     }
 
+    public void uploadImage(String businessId, Uri imageUri, Context context, final BusinessUploadImage callback){
+        ProgressDialog progressDialog = new ProgressDialog(context);
+        progressDialog.setTitle("Uploading file..");
+        progressDialog.show();
 
+        SharedPreferences sp = context.getSharedPreferences("MyUserPrefs", Context.MODE_PRIVATE);
+        String userId = sp.getString("userId", "");
+        Log.d("Add product screen", "UserId is: " + userId);
+
+        StorageReference storageReference = FirebaseStorage.getInstance().getReference("images/"+userId+"/"+businessId);
+        storageReference.putFile(imageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                Toast.makeText(context, "Successfully uploaded!", Toast.LENGTH_SHORT).show();
+                callback.onBusinessUploadImage(true);
+                if(progressDialog.isShowing()){
+                    progressDialog.dismiss();
+                }
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(context, "Failed to upload!", Toast.LENGTH_SHORT).show();
+                callback.onBusinessUploadImage(false);
+                if(progressDialog.isShowing()){
+                    progressDialog.dismiss();
+                }
+            }
+        });
+    }
 
 
     /**
@@ -109,6 +144,8 @@ public class BusinessController {
                 Log.d("New user business", "DocumentSnapshot successfully written!");
                 HashMap<String, Object> business = new HashMap<>();
                 business.put("businessId", documentReference.getId());
+                business.put("city", city);
+                business.put("phone", phone);
                 db.collection("customers").document(userId).update(business);
 
 
@@ -130,5 +167,9 @@ public class BusinessController {
 
     public interface BusinessModelCallback{
         void onBusinessModelCallback(BusinessModel business);
+    }
+
+    public interface BusinessUploadImage{
+        void onBusinessUploadImage(Boolean uploaded);
     }
 }

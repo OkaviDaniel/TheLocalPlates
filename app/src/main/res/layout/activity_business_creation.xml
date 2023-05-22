@@ -9,7 +9,7 @@
     <TextView
         android:textStyle="bold|italic"
         android:textColor="#E80505"
-        android:textSize="20dp"
+        android:textSize="20sp"
         android:id="@+id/BusinessCreationScreenTxt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -24,7 +24,7 @@
     <TextView
         android:textStyle="bold|italic"
         android:textColor="#E80505"
-        android:textSize="15dp"
+        android:textSize="15sp"
         android:id="@+id/BusinessCreationGuideTxt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -154,4 +154,16 @@
         app:layout_constraintTop_toBottomOf="@+id/editTextOpenTime"
         app:layout_constraintVertical_bias="0.123"
         android:autofillHints="" />
+
+    <Button
+        android:id="@+id/chooseImageButtonBusiness"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="@string/select_image_create_business"
+        app:layout_constraintBottom_toTopOf="@+id/createBsButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextClosedTime"
+        app:layout_constraintVertical_bias="0.157" />
 </androidx.constraintlayout.widget.ConstraintLayout>

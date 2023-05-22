@@ -16,9 +16,24 @@
             android:layout_height="wrap_content"
             android:text="Business" />
         <Space
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"/>
+        <Button
+            android:id="@+id/cartButton"
+            android:layout_width="wrap_content"
+
+            android:layout_height="wrap_content"
+            android:backgroundTint="#74DF143D"
+            android:text="Cart"
+            android:textStyle="bold|italic" />
+
+
+        <Space
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
             android:layout_weight="1"/>
+
         <Button
             android:textStyle="bold|italic"
 

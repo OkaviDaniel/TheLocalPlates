@@ -4,11 +4,8 @@ import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.Activity;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -19,24 +16,13 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.TextView;
-import android.widget.Toast;
-
-import com.example.thelocalplates8.Controllers.BusinessController;
 import com.example.thelocalplates8.Controllers.ProductController;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.UploadTask;
 
 
 public class AddProductActivity extends AppCompatActivity {
 
     private ImageView imageView;
     private Uri imageUri;
-    private StorageReference storageReference;
-    private ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,7 +72,14 @@ public class AddProductActivity extends AppCompatActivity {
                             @Override
                             public void onProductIdInterface(String productId) {
                                 Log.d("Add product", "adding product!");
-                                uploadImage(productId);
+                                productController.uploadImage(productId, imageUri, AddProductActivity.this, new ProductController.UploadProductImage() {
+                                    @Override
+                                    public void onUploadProductImage(Boolean uploaded) {
+                                        if(uploaded){
+                                                goToBusinessScreen();
+                                        }
+                                    }
+                                });
                             }
                         });
             }
@@ -120,39 +113,4 @@ public class AddProductActivity extends AppCompatActivity {
                     }
                 }
             });
-
-    private void uploadImage(String proudctId){
-        progressDialog = new ProgressDialog(this);
-        progressDialog.setTitle("Uploading file..");
-        progressDialog.show();
-
-
-        SharedPreferences sp = getSharedPreferences("MyUserPrefs", Context.MODE_PRIVATE);
-        String userId = sp.getString("userId", "");
-        Log.d("Add product screen", "UserId is: " + userId);
-
-        storageReference = FirebaseStorage.getInstance().getReference("images/"+userId+"/Products/"+proudctId);
-        storageReference.putFile(imageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-            @Override
-            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                Toast.makeText(AddProductActivity.this, "Successfully uploaded!", Toast.LENGTH_SHORT).show();
-                if(progressDialog.isShowing()){
-                    progressDialog.dismiss();
-
-                    goToBusinessScreen();
-                }
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Toast.makeText(AddProductActivity.this, "Failed to upload!", Toast.LENGTH_SHORT).show();
-                if(progressDialog.isShowing()){
-                    progressDialog.dismiss();
-
-                    goToBusinessScreen();
-                }
-            }
-        });
-
-    }
 }

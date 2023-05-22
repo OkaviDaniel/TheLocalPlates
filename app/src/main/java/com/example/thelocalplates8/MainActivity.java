@@ -28,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
 
     TextView tvFirstName, tvLastName, tvEmail;
     Button businessBtn;
+    Button cartButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +51,7 @@ public class MainActivity extends AppCompatActivity {
         tvLastName = findViewById(R.id.tvLastName);
         tvEmail = findViewById(R.id.tvEmail);
         businessBtn = (Button)findViewById(R.id.businessMainBtn);
+        cartButton = (Button)findViewById(R.id.cartButton);
 
         Button btnLogout = findViewById(R.id.btnLogout);
         btnLogout.setOnClickListener(new View.OnClickListener() {
@@ -82,6 +84,14 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, BusinessActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        cartButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, ShoppingCartActivity.class);
                 startActivity(intent);
             }
         });
