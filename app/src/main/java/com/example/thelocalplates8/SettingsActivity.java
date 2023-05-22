@@ -1,13 +1,22 @@
 package com.example.thelocalplates8;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 
 import android.content.Intent;
 import android.util.Log;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -20,7 +29,11 @@ import com.google.firebase.database.ValueEventListener;
 
 public class SettingsActivity extends AppCompatActivity {
 
-    TextView tvFirstName, tvLastName, tvEmail;
+    private TextView tvFirstName, tvLastName, tvEmail;
+    private ImageView profileImageView;
+
+    private Uri imageUri;
+    private ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,10 +44,10 @@ public class SettingsActivity extends AppCompatActivity {
         FirebaseAuth auth = FirebaseAuth.getInstance();
         FirebaseUser currentUser = auth.getCurrentUser();
 
-        tvFirstName = findViewById(R.id.firstNameSettings);
-        tvLastName = findViewById(R.id.lastNameSettings);
-        tvEmail = findViewById(R.id.emailSettings);
-
+        tvFirstName = (TextView) findViewById(R.id.firstNameSettings);
+        tvLastName = (TextView)findViewById(R.id.lastNameSettings);
+        tvEmail = (TextView)findViewById(R.id.emailSettings);
+        profileImageView = (ImageView) findViewById(R.id.profileImageViewSettings);
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference reference = database.getReference("users").child(currentUser.getUid());
@@ -49,18 +62,38 @@ public class SettingsActivity extends AppCompatActivity {
                     tvEmail.setText("Email: " + user.email);
                 }
             }
-
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
             }
         });
 
+        profileImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                selectImage();
+            }
+        });
     }
 
-    private void logoutUser() {
-        FirebaseAuth.getInstance().signOut();
-        Intent intent = new Intent(this, LoginActivity.class);
-        startActivity(intent);
-        finish();
+    private void selectImage() {
+        Intent intent = new Intent();
+        intent.setType("image/");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        onActivityResultLauncher.launch(intent);
     }
+
+    ActivityResultLauncher<Intent> onActivityResultLauncher = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            new ActivityResultCallback<ActivityResult>() {
+                @Override
+                public void onActivityResult(ActivityResult result) {
+                    if (result.getResultCode() == Activity.RESULT_OK) {
+                        // There are no request codes
+                        Intent data = result.getData();
+                        imageUri = data.getData();
+                        profileImageView.setImageURI(imageUri);
+                    }
+                }
+            });
+
 }
