@@ -8,24 +8,29 @@
         android:layout_width="match_parent">
 
         <Button
+            android:textStyle="bold|italic"
+            android:backgroundTint="#74DF143D"
+
             android:id="@+id/businessMainBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Business" />
-    <Space
+        <Space
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
             android:layout_weight="1"/>
-    <Button
-        android:layout_height="wrap_content"
-        android:layout_width="wrap_content"
-        android:text="Logout"
-        android:backgroundTint="#74DF143D"
-        android:id="@+id/btnLogout"/>
+        <Button
+            android:textStyle="bold|italic"
+
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:text="Logout"
+            android:backgroundTint="#74DF143D"
+            android:id="@+id/btnLogout"/>
 
 
 
-</LinearLayout>
+    </LinearLayout>
 
     <Space
         android:layout_height="wrap_content"
@@ -38,9 +43,10 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:text="Welcome"
+        android:textStyle="bold|italic"
+
         android:textAppearance="@style/TextAppearance.AppCompat.Display3"
         android:textColor="#B31056"
-        android:textStyle="bold"
         />
 
     <Space
@@ -49,11 +55,12 @@
         android:layout_weight="1"/>
 
     <TextView
+        android:textStyle="bold|italic"
+
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
         android:text="First Name:"
         android:id="@+id/tvFirstName"
-        android:textStyle="bold"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"/>
 
     <TextView
@@ -61,14 +68,14 @@
         android:layout_width="match_parent"
         android:text="Last Name:"
         android:id="@+id/tvLastName"
-        android:textStyle="bold"
+        android:textStyle="bold|italic"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"/>
 
     <TextView android:layout_height="wrap_content"
         android:layout_width="match_parent"
         android:text="Email:"
         android:id="@+id/tvEmail"
-        android:textStyle="bold"
+        android:textStyle="bold|italic"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"/>
 
     <Space

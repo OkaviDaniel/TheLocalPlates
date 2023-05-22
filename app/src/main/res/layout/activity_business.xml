@@ -8,6 +8,8 @@
 
 
     <TextView
+        android:textStyle="bold|italic"
+        android:textColor="#E80505"
         android:id="@+id/BusinessScreenTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -19,6 +21,8 @@
         app:layout_constraintVertical_bias="0.53" />
 
     <Button
+        android:textStyle="bold|italic"
+        android:backgroundTint="#74DF143D"
         android:id="@+id/createBusinessButton"
         style="@style/Widget.MaterialComponents.Button"
         android:layout_width="0dp"
@@ -33,6 +37,8 @@
 
 
     <Button
+        android:backgroundTint="#74DF143D"
+        android:textStyle="bold|italic"
         android:id="@+id/AddProductButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -59,6 +65,7 @@
         app:strokeWidth="5dp" />
 
     <TextView
+        android:textStyle="bold|italic"
         android:id="@+id/BusinessOwnerName"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -91,6 +98,7 @@
         tools:ignore="VisualLintBounds" />
 
     <TextView
+        android:textStyle="bold|italic"
         android:id="@+id/BusinessPhoneTextView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -103,6 +111,7 @@
         app:layout_constraintVertical_bias="0.0" />
 
     <TextView
+        android:textStyle="bold|italic"
         android:id="@+id/BusinessEmailTextView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -127,6 +136,7 @@
         app:layout_constraintVertical_bias="0.0" />
 
     <TextView
+        android:textStyle="bold|italic"
         android:id="@+id/BusinessCityTextView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"

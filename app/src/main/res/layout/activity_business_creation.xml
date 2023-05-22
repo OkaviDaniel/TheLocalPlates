@@ -7,6 +7,9 @@
     tools:context=".BusinessCreationActivity">
 
     <TextView
+        android:textStyle="bold|italic"
+        android:textColor="#E80505"
+        android:textSize="20dp"
         android:id="@+id/BusinessCreationScreenTxt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -19,6 +22,9 @@
         app:layout_constraintVertical_bias="0.022" />
 
     <TextView
+        android:textStyle="bold|italic"
+        android:textColor="#E80505"
+        android:textSize="15dp"
         android:id="@+id/BusinessCreationGuideTxt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -30,6 +36,7 @@
         app:layout_constraintVertical_bias="0.031" />
 
     <EditText
+        android:textStyle="bold|italic"
         android:id="@+id/editTextPhoneBusiness"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -45,6 +52,8 @@
         android:autofillHints="" />
 
     <EditText
+        android:textStyle="bold|italic"
+
         android:id="@+id/editTextTextCityBusiness"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -68,6 +77,8 @@
         android:hint="@string/destination_limit"
         android:inputType="textPostalAddress"
         android:minHeight="48dp"
+        android:textStyle="bold|italic"
+
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/editTextTextCityBusiness"
         app:layout_constraintHorizontal_bias="0.0"
@@ -77,10 +88,13 @@
         android:autofillHints="" />
 
     <Button
+        android:textStyle="bold|italic"
         android:id="@+id/createBsButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/create_business"
+        android:textColorHint="#FFFBF6"
+        android:backgroundTint="#74DF143D"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/editTextTextDestinationLimit"
         app:layout_constraintHorizontal_bias="0.491"
@@ -94,6 +108,8 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="380dp"
         android:ems="10"
+        android:textStyle="bold|italic"
+
         android:hint="@string/delivery_cost"
         android:inputType="number"
         android:minHeight="48dp"
@@ -110,6 +126,8 @@
         android:ems="10"
         android:hint="@string/open_time"
         android:inputType="time"
+        android:textStyle="bold|italic"
+
         android:minHeight="48dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/editTextDeliveryCost"
@@ -127,6 +145,8 @@
         android:hint="@string/closed_time"
         android:inputType="time"
         android:minHeight="48dp"
+        android:textStyle="bold|italic"
+
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/editTextOpenTime"
         app:layout_constraintHorizontal_bias="0.0"

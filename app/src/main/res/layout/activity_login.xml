@@ -33,11 +33,12 @@
         android:layout_weight="1" />
 
     <TextView
+        android:textStyle="bold|italic"
         android:id="@+id/textView5"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Email:"
-            android:textStyle="bold"
+
         android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
     <EditText
@@ -54,7 +55,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="password:"
-        android:textStyle="bold"
+        android:textStyle="bold|italic"
         android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
     <EditText
@@ -71,6 +72,8 @@
         android:layout_weight="1" />
 
     <Button
+        android:textStyle="bold|italic"
+
         android:id="@+id/btnLogin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -86,9 +89,11 @@
         android:gravity="right"
         android:linksClickable="true"
         android:text="@string/register"
+        android:textStyle="bold|italic"
+
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         android:textColor="#911C1C"
-        android:textStyle="bold" />
+        />
 
     <Space
         android:layout_width="match_parent"
