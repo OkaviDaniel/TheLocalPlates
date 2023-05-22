@@ -1,5 +1,6 @@
 package com.example.thelocalplates8.Controllers;
 
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Log;
 
@@ -23,6 +24,8 @@ import java.util.Map;
 
 public class BusinessController {
     private FirebaseFirestore db;
+    private Context context;
+    private SharedPreferences sharedPreferences;
 
     public BusinessController(){
         db = FirebaseFirestore.getInstance();
@@ -80,7 +83,7 @@ public class BusinessController {
      * @param closedTime closed time
      */
     public void createBusiness(String firstName, String lastName, String email, String userId, String phone,
-                               String city, String destinationLimit, int deliveryCost, String openTime, String closedTime){
+                               String city, String destinationLimit, int deliveryCost, String openTime, String closedTime, Context context){
         Map<String, Object> business = new HashMap<>();
         business.put("phone", phone);
         business.put("DeliveryCost", deliveryCost);
@@ -97,7 +100,8 @@ public class BusinessController {
         business.put("openTime", openTime);
         business.put("closedTime",closedTime);
 
-
+        this.context = context;
+        sharedPreferences = context.getSharedPreferences("MyUserPrefs", Context.MODE_PRIVATE);
 
         db.collection("business").add(business).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
             @Override
@@ -107,6 +111,11 @@ public class BusinessController {
                 business.put("businessId", documentReference.getId());
                 db.collection("customers").document(userId).update(business);
 
+
+                // Here we save the businessId in the local storage
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putString("businessId", documentReference.getId());
+                editor.apply();
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override

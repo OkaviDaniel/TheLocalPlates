@@ -59,20 +59,16 @@ public class BusinessCreationActivity extends AppCompatActivity implements Custo
                 int dvct = Integer.parseInt(deliveryCost.getText().toString());
                 String openTime = openTimeText.getText().toString();
                 String closedTime = closedTimeText.getText().toString();
-                // email
-                // firstName
-                // lastName
-                // userId
+
                 BusinessController businessController = new BusinessController();
-                businessController.createBusiness(Firstname, lastName, email, userId, phone, city, dstLimit, dvct, openTime,closedTime);
+                businessController.createBusiness(Firstname, lastName, email, userId, phone, city, dstLimit, dvct, openTime,closedTime, BusinessCreationActivity.this);
 
-                goToBusinessScreen();
-
+                goToMainScreen();
             }
         });
     }
 
-    private void goToBusinessScreen() {
+    private void goToMainScreen() {
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
         finish();
