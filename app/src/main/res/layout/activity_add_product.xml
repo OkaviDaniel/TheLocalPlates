@@ -127,44 +127,28 @@
         tools:ignore="VisualLintTextFieldSize" />
 
     <Button
-        android:textStyle="bold|italic"
-        android:id="@+id/buttonUploadProductImage"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:backgroundTint="#74DF143D"
-
-        android:text="upload image"
-        app:layout_constraintBottom_toBottomOf="@+id/buttonSelectProductImage"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/buttonSelectProductImage"
-        app:layout_constraintVertical_bias="0.0" />
-
-    <Button
         android:id="@+id/buttonSelectProductImage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="72dp"
+        android:layout_marginTop="30dp"
         android:backgroundTint="#74DF143D"
         android:text="select image"
         android:textColorHint="#FFFBF6"
         android:textStyle="bold|italic"
-        app:layout_constraintEnd_toStartOf="@+id/buttonUploadProductImage"
-        app:layout_constraintHorizontal_bias="0.081"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.451"
         app:layout_constraintStart_toStartOf="@+id/editTextPreparationTime"
-        app:layout_constraintTop_toBottomOf="@+id/editTextPreparationTime" />
+        app:layout_constraintTop_toBottomOf="@+id/contains" />
 
     <Button
         android:id="@+id/buttonAddProduct"
         android:layout_width="0dp"
-        android:textStyle="bold|italic"
         android:layout_height="wrap_content"
-        android:text="add product "
         android:backgroundTint="#74DF143D"
+        android:text="add product "
+        android:textStyle="bold|italic"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/buttonUploadProductImage"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/buttonSelectProductImage"
         app:layout_constraintTop_toBottomOf="@+id/buttonSelectProductImage"
         app:layout_constraintVertical_bias="0.442"

@@ -22,6 +22,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.thelocalplates8.Controllers.BusinessController;
 import com.example.thelocalplates8.Controllers.ProductController;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -29,16 +30,12 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Locale;
 
 public class AddProductActivity extends AppCompatActivity {
 
     private ImageView imageView;
     private Uri imageUri;
     private StorageReference storageReference;
-    private String fileName;
     private ProgressDialog progressDialog;
 
     @Override
@@ -54,7 +51,6 @@ public class AddProductActivity extends AppCompatActivity {
         EditText ingredientsEditText = (EditText) findViewById(R.id.contains);
 
         Button selectImageButton = (Button) findViewById(R.id.buttonSelectProductImage);
-        Button uploadImageButton = (Button) findViewById(R.id.buttonUploadProductImage);
         Button addProductButton = (Button) findViewById(R.id.buttonAddProduct);
         imageView = (ImageView) findViewById(R.id.imageViewProduct);
 
@@ -68,13 +64,6 @@ public class AddProductActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 selectImage();
-            }
-        });
-
-        uploadImageButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                uploadImage();
             }
         });
 
@@ -93,8 +82,13 @@ public class AddProductActivity extends AppCompatActivity {
 
                 ProductController productController = new ProductController();
                 productController.addProduct(businessId, productName, productPrice, productCulture,
-                        kosher, preparationTime, ingredients);
-                goToBusinessScreen();
+                        kosher, preparationTime, ingredients, new ProductController.ProductIdInterface() {
+                            @Override
+                            public void onProductIdInterface(String productId) {
+                                Log.d("Add product", "adding product!");
+                                uploadImage(productId);
+                            }
+                        });
             }
         });
 
@@ -127,26 +121,25 @@ public class AddProductActivity extends AppCompatActivity {
                 }
             });
 
-    private void uploadImage(){
+    private void uploadImage(String proudctId){
         progressDialog = new ProgressDialog(this);
         progressDialog.setTitle("Uploading file..");
         progressDialog.show();
 
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy_MM_dd_HH_mm_ss", Locale.ENGLISH);
-        Date now = new Date();
-        fileName = formatter.format(now);
 
         SharedPreferences sp = getSharedPreferences("MyUserPrefs", Context.MODE_PRIVATE);
         String userId = sp.getString("userId", "");
         Log.d("Add product screen", "UserId is: " + userId);
 
-        storageReference = FirebaseStorage.getInstance().getReference("images/"+userId+"/Products/"+fileName);
+        storageReference = FirebaseStorage.getInstance().getReference("images/"+userId+"/Products/"+proudctId);
         storageReference.putFile(imageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                 Toast.makeText(AddProductActivity.this, "Successfully uploaded!", Toast.LENGTH_SHORT).show();
                 if(progressDialog.isShowing()){
                     progressDialog.dismiss();
+
+                    goToBusinessScreen();
                 }
             }
         }).addOnFailureListener(new OnFailureListener() {
@@ -155,11 +148,11 @@ public class AddProductActivity extends AppCompatActivity {
                 Toast.makeText(AddProductActivity.this, "Failed to upload!", Toast.LENGTH_SHORT).show();
                 if(progressDialog.isShowing()){
                     progressDialog.dismiss();
+
+                    goToBusinessScreen();
                 }
             }
         });
 
     }
-
-
 }

@@ -4,6 +4,7 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
+import com.example.thelocalplates8.Models.BusinessModel;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentReference;
@@ -20,7 +21,7 @@ public class ProductController {
     }
 
 
-    public void addProduct(String businessId, String productName, double productPrice, String productCulture, String kosher, String preparationTime, String ingredients) {
+    public void addProduct(String businessId, String productName, double productPrice, String productCulture, String kosher, String preparationTime, String ingredients, final ProductIdInterface callback) {
         Map<String, Object> product = new HashMap<>();
         product.put("businessId", businessId);
         product.put("productName", productName);
@@ -34,7 +35,7 @@ public class ProductController {
             @Override
             public void onSuccess(DocumentReference documentReference) {
                 Log.d("New product", "DocumentSnapshot successfully written!");
-
+                callback.onProductIdInterface(documentReference.getId());
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
@@ -43,5 +44,9 @@ public class ProductController {
             }
         });
 
+    }
+
+    public interface ProductIdInterface{
+        void onProductIdInterface(String productId);
     }
 }
