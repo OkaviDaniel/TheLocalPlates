@@ -10,40 +10,35 @@
         android:id="@+id/AddProductWelcomeTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/welcome_to_add_product_screen"
+        android:text="welcome to add product screen"
+        android:shadowColor="#151414"
+        android:textAppearance="@style/TextAppearance.AppCompat.Display3"
+        android:textSize="20dp"
+        android:textStyle="bold|italic"
+        android:textColor="#E80505"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.022" />
 
-    <ImageView
-        android:id="@+id/imageViewAddProduct"
-        android:layout_width="0dp"
-        android:layout_height="177dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/AddProductWelcomeTextView"
-        app:srcCompat="@drawable/logo" />
-
     <EditText
         android:id="@+id/editTextProductName"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="4dp"
-        android:layout_marginEnd="8dp"
+        android:layout_marginTop="8dp"
         android:autofillHints=""
         android:ems="10"
-        android:hint="@string/product_name"
+        android:hint="name:"
         android:inputType="text"
         android:minHeight="48dp"
         android:textColorHint="#000000"
+        android:textStyle="bold|italic"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageViewAddProduct"
+        app:layout_constraintTop_toBottomOf="@+id/imageView"
         tools:ignore="VisualLintTextFieldSize" />
 
     <EditText
@@ -52,7 +47,8 @@
         android:layout_height="wrap_content"
         android:autofillHints=""
         android:ems="10"
-        android:hint="@string/product_price"
+        android:textStyle="bold|italic"
+        android:hint="price:"
         android:inputType="number"
         android:minHeight="48dp"
         android:textColorHint="#000000"
@@ -68,7 +64,8 @@
         android:layout_height="wrap_content"
         android:autofillHints=""
         android:ems="10"
-        android:hint="@string/product_culture"
+        android:textStyle="bold|italic"
+        android:hint=" culture:"
         android:inputType="text"
         android:minHeight="48dp"
         android:textColorHint="#000000"
@@ -79,12 +76,13 @@
         tools:ignore="VisualLintTextFieldSize" />
 
     <EditText
+        android:textStyle="bold|italic"
         android:id="@+id/editTextKosher"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:autofillHints=""
         android:ems="10"
-        android:hint="@string/kosher_describe_the_kashrot"
+        android:hint="kosher:"
         android:inputType="text"
         android:minHeight="48dp"
         android:textColorHint="#000000"
@@ -94,13 +92,14 @@
         tools:ignore="VisualLintTextFieldSize" />
 
     <EditText
+        android:textStyle="bold|italic"
         android:id="@+id/editTextPreparationTime"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:autofillHints=""
         android:ems="10"
-        android:hint="@string/preparation_time"
-        android:inputType="time"
+        android:hint="preparation time: "
+        android:inputType="text"
         android:minHeight="48dp"
         android:textColorHint="#000000"
         app:layout_constraintEnd_toEndOf="@+id/editTextKosher"
@@ -108,33 +107,61 @@
         app:layout_constraintTop_toBottomOf="@+id/editTextKosher"
         tools:ignore="VisualLintTextFieldSize" />
 
+
+    <EditText
+        android:id="@+id/contains"
+        android:layout_width="392dp"
+        android:layout_height="70dp"
+        android:layout_marginTop="52dp"
+        android:autofillHints=""
+        android:ems="10"
+        android:hint="Ingredients: "
+        android:inputType="text"
+        android:minHeight="48dp"
+        android:textColorHint="#000000"
+        android:textStyle="bold|italic"
+        app:layout_constraintEnd_toEndOf="@+id/editTextKosher"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/editTextKosher"
+        app:layout_constraintTop_toBottomOf="@+id/editTextKosher"
+        tools:ignore="VisualLintTextFieldSize" />
+
     <Button
+        android:textStyle="bold|italic"
         android:id="@+id/buttonUploadProductImage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
-        android:text="@string/upload_image"
+        android:backgroundTint="#74DF143D"
+
+        android:text="upload image"
         app:layout_constraintBottom_toBottomOf="@+id/buttonSelectProductImage"
-        app:layout_constraintEnd_toEndOf="@+id/editTextPreparationTime"
-        app:layout_constraintTop_toTopOf="@+id/buttonSelectProductImage" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/buttonSelectProductImage"
+        app:layout_constraintVertical_bias="0.0" />
 
     <Button
         android:id="@+id/buttonSelectProductImage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="32dp"
-        android:text="@string/select_image"
+        android:layout_marginTop="72dp"
+        android:backgroundTint="#74DF143D"
+        android:text="select image"
+        android:textColorHint="#FFFBF6"
+        android:textStyle="bold|italic"
         app:layout_constraintEnd_toStartOf="@+id/buttonUploadProductImage"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.081"
         app:layout_constraintStart_toStartOf="@+id/editTextPreparationTime"
         app:layout_constraintTop_toBottomOf="@+id/editTextPreparationTime" />
 
     <Button
         android:id="@+id/buttonAddProduct"
         android:layout_width="0dp"
+        android:textStyle="bold|italic"
         android:layout_height="wrap_content"
-        android:text="@string/add_product_btn"
+        android:text="add product "
+        android:backgroundTint="#74DF143D"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/buttonUploadProductImage"
         app:layout_constraintHorizontal_bias="0.0"
@@ -142,5 +169,15 @@
         app:layout_constraintTop_toBottomOf="@+id/buttonSelectProductImage"
         app:layout_constraintVertical_bias="0.442"
         tools:ignore="VisualLintButtonSize" />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="227dp"
+        android:layout_height="161dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/AddProductWelcomeTextView"
+        app:srcCompat="@drawable/a" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

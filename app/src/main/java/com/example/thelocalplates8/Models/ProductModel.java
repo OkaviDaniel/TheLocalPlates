@@ -8,9 +8,11 @@ public class ProductModel {
     private boolean available;
     private int discount;
     private int inventoryAmount;
-    private int preparationTime;
+    private String preparationTime;
     private int price;
     private double rating;
+
+    private String Ingredients;
 
     public ProductModel(){
 
@@ -74,11 +76,11 @@ public class ProductModel {
         this.inventoryAmount = inventoryAmount;
     }
 
-    public int getPreparationTime() {
+    public String getPreparationTime() {
         return preparationTime;
     }
 
-    public void setPreparationTime(int preparationTime) {
+    public void setPreparationTime(String preparationTime) {
         this.preparationTime = preparationTime;
     }
 
@@ -97,4 +99,14 @@ public class ProductModel {
     public void setRating(double rating) {
         this.rating = rating;
     }
+
+
+    public String getIngredients() {
+        return Ingredients;
+    }
+
+    public void setIngredients(String ingredients) {
+        Ingredients = ingredients;
+    }
+
 }

@@ -20,7 +20,7 @@ public class ProductController {
     }
 
 
-    public void addProduct(String businessId, String productName, double productPrice, String productCulture, String kosher, int preparationTime) {
+    public void addProduct(String businessId, String productName, double productPrice, String productCulture, String kosher, String preparationTime, String ingredients) {
         Map<String, Object> product = new HashMap<>();
         product.put("businessId", businessId);
         product.put("productName", productName);
@@ -28,6 +28,7 @@ public class ProductController {
         product.put("productCulture", productCulture);
         product.put("kosher", kosher);
         product.put("preparationTime", preparationTime);
+        product.put("ingredients", ingredients);
 
         db.collection("products").add(product).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
             @Override

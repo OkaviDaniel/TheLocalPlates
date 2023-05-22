@@ -25,6 +25,7 @@ public class AddProductActivity extends AppCompatActivity {
         EditText productCultureEditText = (EditText) findViewById(R.id.editTextProductCulture);
         EditText kosherEditText = (EditText) findViewById(R.id.editTextKosher);
         EditText preparationTimeEditText = (EditText) findViewById(R.id.editTextPreparationTime);
+        EditText ingredientsEditText = (EditText) findViewById(R.id.contains);
 
         Button selectImageButton = (Button) findViewById(R.id.buttonSelectProductImage);
         Button uploadImageButton = (Button) findViewById(R.id.buttonUploadProductImage);
@@ -45,11 +46,12 @@ public class AddProductActivity extends AppCompatActivity {
                 double productPrice = Double.parseDouble(productPriceEditText.getText().toString());
                 String productCulture = productCultureEditText.getText().toString();
                 String kosher = kosherEditText.getText().toString();
-                int preparationTime = Integer.parseInt(preparationTimeEditText.getText().toString());
+                String preparationTime = preparationTimeEditText.getText().toString();
+                String ingredients = ingredientsEditText.getText().toString();
 
                 ProductController productController = new ProductController();
                 productController.addProduct(businessId, productName, productPrice, productCulture,
-                        kosher, preparationTime);
+                        kosher, preparationTime, ingredients);
                 goToBusinessScreen();
             }
         });
