@@ -1,16 +1,24 @@
 package com.example.thelocalplates8.Controllers;
 
+import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.net.Uri;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
 import com.example.thelocalplates8.Models.CustomerModel;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
 public class CustomerController {
     private FirebaseFirestore db;
@@ -45,6 +53,32 @@ public class CustomerController {
     }
 
     public void uploadImage(Uri imageUri, Context context, final UploadProfileImage callback){
+
+        ProgressDialog progressDialog = new ProgressDialog(context);
+        progressDialog.setTitle("Uploading file..");
+        progressDialog.show();
+
+        SharedPreferences sp = context.getSharedPreferences("MyUserPrefs", Context.MODE_PRIVATE);
+        String userId = sp.getString("userId", "");
+        StorageReference storageReference = FirebaseStorage.getInstance().getReference("images/"+userId+"/profile");
+        storageReference.putFile(imageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                callback.onUploadProfileImage(true);
+                if(progressDialog.isShowing()){
+                    progressDialog.dismiss();
+                }
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                callback.onUploadProfileImage(false);
+                if(progressDialog.isShowing()){
+                    progressDialog.dismiss();
+                }
+            }
+        });
+
 
     }
 

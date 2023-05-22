@@ -7,6 +7,8 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -18,7 +20,9 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.thelocalplates8.Controllers.CustomerController;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -33,7 +37,6 @@ public class SettingsActivity extends AppCompatActivity {
     private ImageView profileImageView;
 
     private Uri imageUri;
-    private ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,6 +95,14 @@ public class SettingsActivity extends AppCompatActivity {
                         Intent data = result.getData();
                         imageUri = data.getData();
                         profileImageView.setImageURI(imageUri);
+
+                        CustomerController customerController = new CustomerController();
+                        customerController.uploadImage(imageUri, SettingsActivity.this, new CustomerController.UploadProfileImage() {
+                            @Override
+                            public void onUploadProfileImage(Boolean uploaded) {
+                                Toast.makeText(SettingsActivity.this, "Profile Image uploaded!", Toast.LENGTH_SHORT).show();
+                            }
+                        });
                     }
                 }
             });

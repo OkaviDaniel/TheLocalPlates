@@ -80,10 +80,7 @@ public class BusinessCreationActivity extends AppCompatActivity implements Custo
                 BusinessController businessController = new BusinessController();
                 businessController.createBusiness(Firstname, lastName, email, userId, phone, city, dstLimit, dvct, openTime,closedTime, BusinessCreationActivity.this);
 
-                SharedPreferences sp = getSharedPreferences("MyUserPrefs", Context.MODE_PRIVATE);
-                String businessId = sp.getString("businessId", "");
-
-                businessController.uploadImage(businessId ,imageUri,BusinessCreationActivity.this , new BusinessController.BusinessUploadImage() {
+                businessController.uploadImage(imageUri,BusinessCreationActivity.this , new BusinessController.BusinessUploadImage() {
                     @Override
                     public void onBusinessUploadImage(Boolean uploaded) {
                         if(uploaded){

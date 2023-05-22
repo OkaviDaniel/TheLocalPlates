@@ -3,6 +3,8 @@ package com.example.thelocalplates8.Controllers;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.util.Log;
 import android.widget.Toast;
@@ -20,10 +22,13 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.storage.FileDownloadTask;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -72,7 +77,7 @@ public class BusinessController {
         });
     }
 
-    public void uploadImage(String businessId, Uri imageUri, Context context, final BusinessUploadImage callback){
+    public void uploadImage(Uri imageUri, Context context, final BusinessUploadImage callback){
         ProgressDialog progressDialog = new ProgressDialog(context);
         progressDialog.setTitle("Uploading file..");
         progressDialog.show();
@@ -81,7 +86,7 @@ public class BusinessController {
         String userId = sp.getString("userId", "");
         Log.d("Add product screen", "UserId is: " + userId);
 
-        StorageReference storageReference = FirebaseStorage.getInstance().getReference("images/"+userId+"/"+businessId);
+        StorageReference storageReference = FirebaseStorage.getInstance().getReference("images/"+userId+"/business");
         storageReference.putFile(imageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
@@ -162,6 +167,31 @@ public class BusinessController {
         });
     }
 
+    public void getBusinessImage(Context context, final BusinessGetImage callback){
+
+        SharedPreferences sp = context.getSharedPreferences("MyUserPrefs", Context.MODE_PRIVATE);
+        String userId = sp.getString("userId", "");
+
+        StorageReference storageReference = FirebaseStorage.getInstance().getReference("images/"+userId+"/business");
+
+        try{
+            File localFile = File.createTempFile("tempfile", ".jpeg");
+            storageReference.getFile(localFile).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
+                    Bitmap bitmap = BitmapFactory.decodeFile(localFile.getAbsolutePath());
+                    callback.onBusinessGetImage(bitmap);
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+
+                }
+            });
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+    }
 
 
 
@@ -171,5 +201,8 @@ public class BusinessController {
 
     public interface BusinessUploadImage{
         void onBusinessUploadImage(Boolean uploaded);
+    }
+    public interface BusinessGetImage {
+        void onBusinessGetImage(Bitmap bitmap);
     }
 }

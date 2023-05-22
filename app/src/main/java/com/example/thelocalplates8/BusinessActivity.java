@@ -3,6 +3,7 @@ package com.example.thelocalplates8;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -57,20 +58,30 @@ public class BusinessActivity extends AppCompatActivity {
                         @Override
                         public void onBusinessModelCallback(BusinessModel business) {
                             welcomeText.setText("Welcome back " + business.getFirstName() + " to your business!");
-                            welcomeText.setVisibility(View.VISIBLE);
                             nameTextView.setText(business.getFirstName() + " " + business.getLastName());
                             cityTextView.setText(business.getCity());
                             phoneTextView.setText(business.getPhone());
                             emailTextView.setText(business.getEmail());
 
-                            nameTextView.setVisibility(View.VISIBLE);
-                            cityTextView.setVisibility(View.VISIBLE);
-                            phoneTextView.setVisibility(View.VISIBLE);
-                            emailTextView.setVisibility(View.VISIBLE);
-                            businessImageView.setVisibility(View.VISIBLE);
+//                            nameTextView.setVisibility(View.VISIBLE);
+//                            cityTextView.setVisibility(View.VISIBLE);
+//                            phoneTextView.setVisibility(View.VISIBLE);
+//                            emailTextView.setVisibility(View.VISIBLE);
+                            businessController.getBusinessImage(BusinessActivity.this, new BusinessController.BusinessGetImage() {
+                                @Override
+                                public void onBusinessGetImage(Bitmap bitmap) {
+                                    businessImageView.setImageBitmap(bitmap);
+                                    businessImageView.setVisibility(View.VISIBLE);
+                                    nameTextView.setVisibility(View.VISIBLE);
+                                    cityTextView.setVisibility(View.VISIBLE);
+                                    phoneTextView.setVisibility(View.VISIBLE);
+                                    emailTextView.setVisibility(View.VISIBLE);
+                                    addProductButton.setVisibility(View.VISIBLE);
+                                    welcomeText.setVisibility(View.VISIBLE);
+                                }
+                            });
 
-
-                            addProductButton.setVisibility(View.VISIBLE);
+//                            addProductButton.setVisibility(View.VISIBLE);
                             addProductButton.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
@@ -78,6 +89,7 @@ public class BusinessActivity extends AppCompatActivity {
                                     startActivity(intent);
                                 }
                             });
+
                         }
                     });
 
