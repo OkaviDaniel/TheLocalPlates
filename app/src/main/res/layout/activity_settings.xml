@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
+
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#CEA8082D"
+        android:minHeight="?attr/actionBarSize"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:title="Settings"
+        android:textStyle="bold|italic"
+        app:titleTextColor="?attr/colorOnPrimary" />
+
+    <ImageView
+        android:id="@+id/profileImageViewSettings"
+        android:layout_width="match_parent"
+        android:layout_height="104dp"
+        app:srcCompat="@drawable/baseline_image_search_24" />
+
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="179dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="Welcome "
+        android:textAppearance="@style/TextAppearance.AppCompat.Display3"
+        android:textColor="#B31056"
+        android:textSize="30dp"
+        android:textStyle="bold|italic" />
+
+    <TextView
+        android:textStyle="bold|italic"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:text="First Name:"
+        android:id="@+id/firstNameSettings"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"/>
+
+    <Space
+        android:layout_width="147dp"
+        android:layout_height="32dp"
+        android:layout_weight="-5" />
+
+    <TextView
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:text="Last Name:"
+        android:id="@+id/lastNameSettings"
+        android:textStyle="bold|italic"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"/>
+    <Space
+        android:layout_width="147dp"
+        android:layout_height="32dp"
+        android:layout_weight="-5" />
+
+    <TextView
+        android:id="@+id/emailSettings"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Email:"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textStyle="bold|italic" />
+    <Space
+        android:layout_width="147dp"
+        android:layout_height="32dp"
+        android:layout_weight="-5" />
+    <TextView
+        android:id="@+id/location"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Location:"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textStyle="bold|italic" />
+
+    <com.google.android.gms.maps.MapView
+        android:id="@+id/mapView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+</LinearLayout>

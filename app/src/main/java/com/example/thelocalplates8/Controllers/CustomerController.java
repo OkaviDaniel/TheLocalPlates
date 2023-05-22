@@ -1,5 +1,8 @@
 package com.example.thelocalplates8.Controllers;
 
+import android.content.Context;
+import android.net.Uri;
+
 import androidx.annotation.NonNull;
 
 import com.example.thelocalplates8.Models.CustomerModel;
@@ -41,7 +44,15 @@ public class CustomerController {
         });
     }
 
+    public void uploadImage(Uri imageUri, Context context, final UploadProfileImage callback){
+
+    }
+
     public interface CustomerModelCallback{
         void onCustomerModelCallback(CustomerModel customer);
+    }
+
+    public interface UploadProfileImage{
+        void onUploadProfileImage(Boolean uploaded);
     }
 }

@@ -5,15 +5,27 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".BusinessCreationActivity">
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#CEA8082D"
+        android:minHeight="?attr/actionBarSize"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:title="welcome to business creation screen"
+        android:textStyle="bold|italic"
+        app:titleTextColor="?attr/colorOnPrimary" />
 
     <TextView
         android:textStyle="bold|italic"
         android:textColor="#E80505"
-        android:textSize="20sp"
+        android:textSize="20dp"
         android:id="@+id/BusinessCreationScreenTxt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/welcome_to_business_creation_screen"
+        android:text=""
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
@@ -22,34 +34,35 @@
         app:layout_constraintVertical_bias="0.022" />
 
     <TextView
-        android:textStyle="bold|italic"
-        android:textColor="#E80505"
-        android:textSize="15sp"
         android:id="@+id/BusinessCreationGuideTxt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/please_fill_the_entire_boxes"
+        android:textColor="#E80505"
+        android:textSize="15sp"
+        android:textStyle="bold|italic"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/BusinessCreationScreenTxt"
         app:layout_constraintStart_toStartOf="@+id/BusinessCreationScreenTxt"
         app:layout_constraintTop_toBottomOf="@+id/BusinessCreationScreenTxt"
-        app:layout_constraintVertical_bias="0.031" />
+        app:layout_constraintVertical_bias="0.043" />
 
     <EditText
-        android:textStyle="bold|italic"
         android:id="@+id/editTextPhoneBusiness"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:autofillHints=""
         android:ems="10"
         android:hint="@string/phone_number"
         android:inputType="phone"
         android:minHeight="48dp"
+        android:textStyle="bold|italic"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/BusinessCreationGuideTxt"
-        app:layout_constraintStart_toStartOf="@+id/BusinessCreationGuideTxt"
-        app:layout_constraintTop_toBottomOf="@+id/BusinessCreationGuideTxt"
-        app:layout_constraintVertical_bias="0.039"
-        android:autofillHints="" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.502"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar"
+        app:layout_constraintVertical_bias="0.063" />
 
     <EditText
         android:textStyle="bold|italic"
@@ -88,19 +101,18 @@
         android:autofillHints="" />
 
     <Button
-        android:textStyle="bold|italic"
         android:id="@+id/createBsButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:backgroundTint="#74DF143D"
         android:text="@string/create_business"
         android:textColorHint="#FFFBF6"
-        android:backgroundTint="#74DF143D"
+        android:textStyle="bold|italic"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/editTextTextDestinationLimit"
-        app:layout_constraintHorizontal_bias="0.491"
-        app:layout_constraintStart_toStartOf="@+id/editTextTextDestinationLimit"
-        app:layout_constraintTop_toBottomOf="@+id/editTextDeliveryCost"
-        app:layout_constraintVertical_bias="0.9" />
+        app:layout_constraintEnd_toEndOf="@+id/editTextClosedTime"
+        app:layout_constraintStart_toStartOf="@+id/editTextClosedTime"
+        app:layout_constraintTop_toBottomOf="@+id/editTextClosedTime"
+        app:layout_constraintVertical_bias="0.717" />
 
     <EditText
         android:id="@+id/editTextDeliveryCost"
@@ -163,7 +175,8 @@
         android:text="@string/select_image_create_business"
         app:layout_constraintBottom_toTopOf="@+id/createBsButton"
         app:layout_constraintEnd_toEndOf="parent"
+        android:backgroundTint="#74DF143D"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editTextClosedTime"
-        app:layout_constraintVertical_bias="0.157" />
+        app:layout_constraintVertical_bias="0.209" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -4,13 +4,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 
-import com.google.firebase.FirebaseApp;
-
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -26,9 +22,9 @@ import com.google.firebase.database.ValueEventListener;
 
 public class MainActivity extends AppCompatActivity {
 
-    TextView tvFirstName, tvLastName, tvEmail;
     Button businessBtn;
     Button cartButton;
+    Button settingsButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,11 +43,9 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
 
-        tvFirstName = findViewById(R.id.tvFirstName);
-        tvLastName = findViewById(R.id.tvLastName);
-        tvEmail = findViewById(R.id.tvEmail);
         businessBtn = (Button)findViewById(R.id.businessMainBtn);
         cartButton = (Button)findViewById(R.id.cartButton);
+        settingsButton = (Button)findViewById(R.id.settingsButton);
 
         Button btnLogout = findViewById(R.id.btnLogout);
         btnLogout.setOnClickListener(new View.OnClickListener() {
@@ -61,24 +55,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference reference = database.getReference("users").child(currentUser.getUid());
-        reference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                User user = snapshot.getValue(User.class);
-                if (user != null) {
-                    Log.d("Check1", "HELLOO" + user.firstName);
-                    tvFirstName.setText("First Name: " + user.firstName);
-                    tvLastName.setText("Last Name: " + user.lastName);
-                    tvEmail.setText("Email: " + user.email);
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-            }
-        });
 
         businessBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -95,6 +71,15 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        settingsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
+                startActivity(intent);
+            }
+        });
+
 
     }
 

@@ -1,16 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
+
+
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="16dp">
 
+
+
+
     <TextView
+        android:textStyle="bold|italic"
+        android:textColor="#E80505"
+
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Shopping Cart"
+        android:text="@string/shopping_cart"
         android:textSize="24sp"
-        android:textStyle="bold" />
+        />
 
     <View
         android:layout_width="match_parent"
@@ -35,16 +43,18 @@
         </LinearLayout>
 
     </ScrollView>
-
     <TextView
         android:id="@+id/totalPriceTextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="18sp"
         android:textStyle="bold"
-        android:padding="16dp" />
+        android:padding="16dp"/>
 
     <Button
+        android:textStyle="bold|italic"
+        android:backgroundTint="#74DF143D"
+
         android:id="@+id/checkoutButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
