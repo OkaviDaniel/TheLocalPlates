@@ -20,6 +20,9 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
+import java.io.File;
+import java.io.IOException;
+
 public class CustomerController {
     private FirebaseFirestore db;
 
@@ -81,16 +84,21 @@ public class CustomerController {
     }
 
     public void checkIfImageExist(String uid, final CheckProfileImageExist callback){
+        String imagePath = "images/"+uid+"/profile";
+        StorageReference storageRef = FirebaseStorage.getInstance().getReference().child(imagePath);
+
         StorageReference storageReference = FirebaseStorage.getInstance().getReference("images/"+uid+"/profile");
-        storageReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+        storageRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override
             public void onSuccess(Uri uri) {
-
+                // Handle the success case
+                String imageUrl = uri.toString();
+                callback.onCheckProfileImageExist(imageUrl);
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
-            public void onFailure(@NonNull Exception e) {
-                callback.onCheckProfileImageExist(null);
+            public void onFailure(@NonNull Exception exception) {
+                callback.onCheckProfileImageExist("");
             }
         });
     }
@@ -104,6 +112,6 @@ public class CustomerController {
     }
 
     public interface CheckProfileImageExist{
-        void onCheckProfileImageExist(Bitmap bitmap);
+        void onCheckProfileImageExist(String imageUrl);
     }
 }

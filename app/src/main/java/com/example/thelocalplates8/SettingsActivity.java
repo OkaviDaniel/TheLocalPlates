@@ -31,6 +31,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
 
 public class SettingsActivity extends AppCompatActivity {
 
@@ -58,8 +59,11 @@ public class SettingsActivity extends AppCompatActivity {
         customerController.checkIfImageExist(currentUser.getUid(), new CustomerController.CheckProfileImageExist(){
 
             @Override
-            public void onCheckProfileImageExist(Bitmap bitmap) {
-                if(bitmap != null){
+            public void onCheckProfileImageExist(String url) {
+                if(url.length() > 0){
+                    Picasso.get().load(url).into(profileImageView);
+
+                }else{
 
                 }
             }
