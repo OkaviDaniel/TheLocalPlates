@@ -3,8 +3,8 @@ package com.example.thelocalplates8.Controllers;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
 import android.net.Uri;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
@@ -78,8 +78,21 @@ public class CustomerController {
                 }
             }
         });
+    }
 
+    public void checkIfImageExist(String uid, final CheckProfileImageExist callback){
+        StorageReference storageReference = FirebaseStorage.getInstance().getReference("images/"+uid+"/profile");
+        storageReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+            @Override
+            public void onSuccess(Uri uri) {
 
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                callback.onCheckProfileImageExist(null);
+            }
+        });
     }
 
     public interface CustomerModelCallback{
@@ -88,5 +101,9 @@ public class CustomerController {
 
     public interface UploadProfileImage{
         void onUploadProfileImage(Boolean uploaded);
+    }
+
+    public interface CheckProfileImageExist{
+        void onCheckProfileImageExist(Bitmap bitmap);
     }
 }

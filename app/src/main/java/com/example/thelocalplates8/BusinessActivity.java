@@ -62,11 +62,6 @@ public class BusinessActivity extends AppCompatActivity {
                             cityTextView.setText(business.getCity());
                             phoneTextView.setText(business.getPhone());
                             emailTextView.setText(business.getEmail());
-
-//                            nameTextView.setVisibility(View.VISIBLE);
-//                            cityTextView.setVisibility(View.VISIBLE);
-//                            phoneTextView.setVisibility(View.VISIBLE);
-//                            emailTextView.setVisibility(View.VISIBLE);
                             businessController.getBusinessImage(BusinessActivity.this, new BusinessController.BusinessGetImage() {
                                 @Override
                                 public void onBusinessGetImage(Bitmap bitmap) {
@@ -81,7 +76,6 @@ public class BusinessActivity extends AppCompatActivity {
                                 }
                             });
 
-//                            addProductButton.setVisibility(View.VISIBLE);
                             addProductButton.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {

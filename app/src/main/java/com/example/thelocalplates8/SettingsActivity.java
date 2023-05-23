@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -38,6 +39,7 @@ public class SettingsActivity extends AppCompatActivity {
 
     private Uri imageUri;
 
+    private CustomerController customerController;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,6 +53,19 @@ public class SettingsActivity extends AppCompatActivity {
         tvLastName = (TextView)findViewById(R.id.lastNameSettings);
         tvEmail = (TextView)findViewById(R.id.emailSettings);
         profileImageView = (ImageView) findViewById(R.id.profileImageViewSettings);
+
+        customerController = new CustomerController();
+        customerController.checkIfImageExist(currentUser.getUid(), new CustomerController.CheckProfileImageExist(){
+
+            @Override
+            public void onCheckProfileImageExist(Bitmap bitmap) {
+                if(bitmap != null){
+
+                }
+            }
+        });
+
+
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference reference = database.getReference("users").child(currentUser.getUid());
@@ -96,7 +111,7 @@ public class SettingsActivity extends AppCompatActivity {
                         imageUri = data.getData();
                         profileImageView.setImageURI(imageUri);
 
-                        CustomerController customerController = new CustomerController();
+
                         customerController.uploadImage(imageUri, SettingsActivity.this, new CustomerController.UploadProfileImage() {
                             @Override
                             public void onUploadProfileImage(Boolean uploaded) {
