@@ -14,6 +14,8 @@ public class ProductModel {
 
     private String Ingredients;
 
+    private String imageUri;
+
     public ProductModel(){
 
     }
@@ -107,6 +109,14 @@ public class ProductModel {
 
     public void setIngredients(String ingredients) {
         Ingredients = ingredients;
+    }
+
+    public String getImageUri() {
+        return imageUri;
+    }
+
+    public void setImageUri(String imageUri) {
+        this.imageUri = imageUri;
     }
 
 }
