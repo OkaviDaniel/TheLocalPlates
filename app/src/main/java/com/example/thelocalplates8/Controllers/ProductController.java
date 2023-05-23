@@ -3,6 +3,8 @@ package com.example.thelocalplates8.Controllers;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.util.Log;
 import android.widget.Toast;
@@ -22,10 +24,13 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.storage.FileDownloadTask;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -43,9 +48,9 @@ public class ProductController {
     public void addProduct(String businessId, String productName, double productPrice, String productCulture, String kosher, String preparationTime, String ingredients, final ProductIdInterface callback) {
         Map<String, Object> product = new HashMap<>();
         product.put("businessId", businessId);
-        product.put("productName", productName);
-        product.put("productPrice", productPrice);
-        product.put("productCulture", productCulture);
+        product.put("title", productName);
+        product.put("price", productPrice);
+        product.put("culture", productCulture);
         product.put("kosher", kosher);
         product.put("preparationTime", preparationTime);
         product.put("ingredients", ingredients);
@@ -131,8 +136,8 @@ public class ProductController {
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if(task.isSuccessful()){
                     for(QueryDocumentSnapshot documentSnapshot: task.getResult()){
-                        Log.d("CHECKKKK!!", "CHECKKKKKKKKKKKKKKKKKKKKKKKKKK");
                         ProductModel productModel = documentSnapshot.toObject(ProductModel.class);
+                        productModel.setProductId(documentSnapshot.getId());
                         products.add(productModel);
                     }
                     callback.onGetProductsInterface(products);
@@ -141,6 +146,31 @@ public class ProductController {
         });
     }
 
+    public void getImage(String productId, Context context, final GetProductImage callback){
+        SharedPreferences sp = context.getSharedPreferences("MyUserPrefs", Context.MODE_PRIVATE);
+        String userId = sp.getString("userId", "");
+
+        StorageReference storageReference = FirebaseStorage.getInstance().getReference("images/"+userId+"/Products/"+productId);
+
+        try{
+            File localFile = File.createTempFile("tempfile", ".jpeg");
+            storageReference.getFile(localFile).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
+                    Bitmap bitmap = BitmapFactory.decodeFile(localFile.getAbsolutePath());
+                    callback.onGetProductImage(bitmap);
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+
+                }
+            });
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+
+    }
 
     public interface ProductIdInterface{
         void onProductIdInterface(String productId);
@@ -152,6 +182,10 @@ public class ProductController {
 
     public interface GetProductsInterface{
          void onGetProductsInterface(ArrayList<ProductModel> productModels);
+    }
+
+    public interface GetProductImage{
+        void onGetProductImage(Bitmap bitmap);
     }
 
 

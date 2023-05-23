@@ -53,6 +53,9 @@ public class BusinessActivity extends AppCompatActivity {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
         ArrayList<ProductModel> products = new ArrayList<ProductModel>();
+        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recyclerview_products);
+        recyclerView.setVisibility(View.GONE);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
 
 
 
@@ -64,19 +67,16 @@ public class BusinessActivity extends AppCompatActivity {
                     BusinessController businessController = new BusinessController();
                     ProductController productController = new ProductController();
 
-//                    productController.getProducts(BusinessActivity.this, new ProductController.GetProductsInterface() {
-//                        @Override
-//                        public void onGetProductsInterface(ArrayList<ProductModel> productModels) {
-//                            products.addAll(productModels);
-//                        }
-//                    });
-
-//                    RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recyclerview_products);
-//                    RecyclerView.LayoutManager LayoutManager = new LinearLayoutManager(BusinessActivity.this);
-//                    recyclerView.setLayoutManager(LayoutManager);
-//
-//                    ProductBusinessAdapter productBusinessAdapter = new ProductBusinessAdapter(products);
-//                    recyclerView.setAdapter(productBusinessAdapter);
+                    productController.getProducts(BusinessActivity.this, new ProductController.GetProductsInterface() {
+                        @Override
+                        public void onGetProductsInterface(ArrayList<ProductModel> productModels) {
+                            products.addAll(productModels);
+                            Log.d("Products", "number of products" + products.size());
+                            recyclerView.setLayoutManager(layoutManager);
+                            ProductBusinessAdapter productBusinessAdapter = new ProductBusinessAdapter(products, BusinessActivity.this);
+                            recyclerView.setAdapter(productBusinessAdapter);
+                        }
+                    });
 
                     businessController.getBusinessData(userID, new BusinessController.BusinessModelCallback() {
                         @Override
@@ -97,6 +97,7 @@ public class BusinessActivity extends AppCompatActivity {
                                     emailTextView.setVisibility(View.VISIBLE);
                                     addProductButton.setVisibility(View.VISIBLE);
                                     welcomeText.setVisibility(View.VISIBLE);
+                                    recyclerView.setVisibility(View.VISIBLE);
                                 }
                             });
 

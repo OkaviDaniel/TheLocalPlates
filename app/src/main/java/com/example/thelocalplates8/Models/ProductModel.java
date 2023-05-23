@@ -3,8 +3,7 @@ package com.example.thelocalplates8.Models;
 public class ProductModel {
     private String businessId;
     private String culture;
-    private String image; // check this, maybe need to change.
-    private boolean kosher;
+    private String kosher;
     private boolean available;
     private int discount;
     private int inventoryAmount;
@@ -12,15 +11,22 @@ public class ProductModel {
     private int price;
     private double rating;
 
-    private String Ingredients;
-
+    private String ingredients;
     private String imageUri;
 
-    public ProductModel(){
+    private String title;
 
+    private String productId;
+
+
+
+    public String getProductId() {
+        return productId;
     }
 
-
+    public void setProductId(String productId) {
+        this.productId = productId;
+    }
 
     public String getBusinessId() {
         return businessId;
@@ -38,19 +44,11 @@ public class ProductModel {
         this.culture = culture;
     }
 
-    public String getImage() {
-        return image;
-    }
-
-    public void setImage(String image) {
-        this.image = image;
-    }
-
-    public boolean isKosher() {
+    public String getKosher() {
         return kosher;
     }
 
-    public void setKosher(boolean kosher) {
+    public void setKosher(String kosher) {
         this.kosher = kosher;
     }
 
@@ -102,13 +100,20 @@ public class ProductModel {
         this.rating = rating;
     }
 
-
     public String getIngredients() {
-        return Ingredients;
+        return ingredients;
     }
 
     public void setIngredients(String ingredients) {
-        Ingredients = ingredients;
+        this.ingredients = ingredients;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public String getImageUri() {
@@ -119,4 +124,7 @@ public class ProductModel {
         this.imageUri = imageUri;
     }
 
+    public ProductModel(){
+
+    }
 }

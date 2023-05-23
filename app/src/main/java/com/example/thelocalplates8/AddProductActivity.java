@@ -88,8 +88,9 @@ public class AddProductActivity extends AppCompatActivity {
     }
 
     private void goToBusinessScreen() {
-        Intent intent = new Intent(this, BusinessActivity.class);
-        startActivity(intent);
+        // maybe to return this comments
+//        Intent intent = new Intent(this, BusinessActivity.class);
+//        startActivity(intent);
         finish();
     }
 

@@ -54,6 +54,7 @@ public class SettingsActivity extends AppCompatActivity {
         tvLastName = (TextView)findViewById(R.id.lastNameSettings);
         tvEmail = (TextView)findViewById(R.id.emailSettings);
         profileImageView = (ImageView) findViewById(R.id.profileImageViewSettings);
+        profileImageView.setVisibility(View.GONE);
 
         customerController = new CustomerController();
         customerController.checkIfImageExist(currentUser.getUid(), new CustomerController.CheckProfileImageExist(){
@@ -62,9 +63,9 @@ public class SettingsActivity extends AppCompatActivity {
             public void onCheckProfileImageExist(String url) {
                 if(url.length() > 0){
                     Picasso.get().load(url).into(profileImageView);
-
+                    profileImageView.setVisibility(View.VISIBLE);
                 }else{
-
+                    profileImageView.setVisibility(View.VISIBLE);
                 }
             }
         });
