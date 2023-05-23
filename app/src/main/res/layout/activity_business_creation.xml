@@ -20,8 +20,8 @@
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="181dp"
-        android:layout_height="662dp"
+        android:layout_width="178dp"
+        android:layout_height="657dp"
         android:scaleType="centerCrop"
         android:src="@drawable/chefpng"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -149,19 +149,19 @@
         android:id="@+id/editTextOpenTime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:autofillHints=""
         android:ems="10"
         android:hint="@string/open_time"
         android:inputType="time"
-        android:textStyle="bold|italic"
 
         android:minHeight="48dp"
+        android:textStyle="bold|italic"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/editTextDeliveryCost"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/editTextDeliveryCost"
         app:layout_constraintTop_toBottomOf="@+id/editTextDeliveryCost"
-        app:layout_constraintVertical_bias="0.059"
-        android:autofillHints="" />
+        app:layout_constraintVertical_bias="0.054" />
 
     <EditText
         android:id="@+id/editTextClosedTime"

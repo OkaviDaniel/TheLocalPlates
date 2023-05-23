@@ -43,4 +43,5 @@
     <string name="shopping_cart">Shopping Cart</string>
     <string name="cartMain">Cart</string>
     <string name="settingsMain">Settings</string>
+    <string name="title_activity_maps">MapsActivity</string>
 </resources>
