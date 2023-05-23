@@ -18,6 +18,19 @@
         android:textStyle="bold|italic"
         app:titleTextColor="?attr/colorOnPrimary" />
 
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="181dp"
+        android:layout_height="662dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/chefpng"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.986"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0" />
+
     <TextView
         android:textStyle="bold|italic"
         android:textColor="#E80505"
@@ -43,9 +56,10 @@
         android:textStyle="bold|italic"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/BusinessCreationScreenTxt"
-        app:layout_constraintStart_toStartOf="@+id/BusinessCreationScreenTxt"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/BusinessCreationScreenTxt"
-        app:layout_constraintVertical_bias="0.043" />
+        app:layout_constraintVertical_bias="0.041" />
 
     <EditText
         android:id="@+id/editTextPhoneBusiness"
@@ -59,10 +73,10 @@
         android:textStyle="bold|italic"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.502"
+        app:layout_constraintHorizontal_bias="0.079"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbar"
-        app:layout_constraintVertical_bias="0.063" />
+        app:layout_constraintVertical_bias="0.074" />
 
     <EditText
         android:textStyle="bold|italic"
@@ -112,7 +126,7 @@
         app:layout_constraintEnd_toEndOf="@+id/editTextClosedTime"
         app:layout_constraintStart_toStartOf="@+id/editTextClosedTime"
         app:layout_constraintTop_toBottomOf="@+id/editTextClosedTime"
-        app:layout_constraintVertical_bias="0.717" />
+        app:layout_constraintVertical_bias="0.451" />
 
     <EditText
         android:id="@+id/editTextDeliveryCost"
@@ -172,11 +186,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
+        android:backgroundTint="#74DF143D"
         android:text="@string/select_image_create_business"
         app:layout_constraintBottom_toTopOf="@+id/createBsButton"
         app:layout_constraintEnd_toEndOf="parent"
-        android:backgroundTint="#74DF143D"
+        app:layout_constraintHorizontal_bias="0.167"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editTextClosedTime"
-        app:layout_constraintVertical_bias="0.209" />
+        app:layout_constraintVertical_bias="0.0" />
 </androidx.constraintlayout.widget.ConstraintLayout>
