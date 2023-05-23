@@ -1,6 +1,8 @@
 package com.example.thelocalplates8;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -12,11 +14,15 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.thelocalplates8.Controllers.BusinessController;
+import com.example.thelocalplates8.Controllers.ProductController;
 import com.example.thelocalplates8.Models.BusinessModel;
+import com.example.thelocalplates8.Models.ProductModel;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import org.w3c.dom.Text;
+
+import java.util.ArrayList;
 
 public class BusinessActivity extends AppCompatActivity {
 
@@ -46,6 +52,8 @@ public class BusinessActivity extends AppCompatActivity {
         String userID = mAuth.getCurrentUser().getUid();
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
+        ArrayList<ProductModel> products = new ArrayList<ProductModel>();
+
 
 
         FirebaseCommunicator.checkBusinessExist(db, userID, new FirebaseCommunicator.OnBusinessCheckCompleteListener(){
@@ -54,6 +62,22 @@ public class BusinessActivity extends AppCompatActivity {
             public void onBusinessCheckComplete(boolean isBusinessCreated) {
                 if(isBusinessCreated){  // if user created a business
                     BusinessController businessController = new BusinessController();
+                    ProductController productController = new ProductController();
+
+//                    productController.getProducts(BusinessActivity.this, new ProductController.GetProductsInterface() {
+//                        @Override
+//                        public void onGetProductsInterface(ArrayList<ProductModel> productModels) {
+//                            products.addAll(productModels);
+//                        }
+//                    });
+
+//                    RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recyclerview_products);
+//                    RecyclerView.LayoutManager LayoutManager = new LinearLayoutManager(BusinessActivity.this);
+//                    recyclerView.setLayoutManager(LayoutManager);
+//
+//                    ProductBusinessAdapter productBusinessAdapter = new ProductBusinessAdapter(products);
+//                    recyclerView.setAdapter(productBusinessAdapter);
+
                     businessController.getBusinessData(userID, new BusinessController.BusinessModelCallback() {
                         @Override
                         public void onBusinessModelCallback(BusinessModel business) {

@@ -13,14 +13,18 @@ import androidx.annotation.NonNull;
 
 import com.example.thelocalplates8.Models.BusinessModel;
 import com.example.thelocalplates8.Models.CustomerModel;
+import com.example.thelocalplates8.Models.ProductModel;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FileDownloadTask;
 import com.google.firebase.storage.FirebaseStorage;
@@ -193,8 +197,6 @@ public class BusinessController {
         }
     }
 
-
-
     public interface BusinessModelCallback{
         void onBusinessModelCallback(BusinessModel business);
     }
@@ -205,4 +207,5 @@ public class BusinessController {
     public interface BusinessGetImage {
         void onBusinessGetImage(Bitmap bitmap);
     }
+
 }
