@@ -8,6 +8,8 @@ import androidx.annotation.NonNull;
 
 import android.content.Intent;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -88,6 +90,33 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, LoginActivity.class);
         startActivity(intent);
         finish();
+    }
+
+    @Override
+    public boolean onCreatePanelMenu(int featureId, @NonNull Menu menu) {
+getMenuInflater().inflate(R.menu.menu,menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        int itemId = item.getItemId();
+        if (itemId == R.id.Business) {
+            // Handle item 1 selection
+            return true;
+        }
+        else if (itemId == R.id.cart) {
+            // Handle item 2 selection
+            return true;
+        }
+        else if (itemId == R.id.setting) {
+            // Handle item 3 selection
+            return true;
+        }else if (itemId == R.id.logout) {
+            // Handle item 3 selection
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }
 
