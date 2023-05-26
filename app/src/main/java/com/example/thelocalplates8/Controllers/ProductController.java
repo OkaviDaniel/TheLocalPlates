@@ -84,40 +84,20 @@ public class ProductController {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
 
-                Task<Uri> downloadUriTask = taskSnapshot.getStorage().getDownloadUrl();
-                downloadUriTask.addOnSuccessListener(new OnSuccessListener<Uri>() {
-                    @Override
-                    public void onSuccess(Uri uri) {
-                        HashMap<String, Object> imageUriHashMap = new HashMap<String, Object>();
-                        imageUriHashMap.put("imageUri", uri.toString());
-                        db.collection("products").document(productId).update(imageUriHashMap).addOnSuccessListener(new OnSuccessListener<Void>() {
-                            @Override
-                            public void onSuccess(Void unused) {
-                                Toast.makeText(context, "Successfully uploaded!", Toast.LENGTH_SHORT).show();
-                                callback.onUploadProductImage(true);
-                                if(progressDialog.isShowing()){
-                                    progressDialog.dismiss();
-                                }
-                            }
-                        });
-                    }
-                });
+                Toast.makeText(context, "Successfully uploaded!", Toast.LENGTH_SHORT).show();
+                callback.onUploadProductImage(true);
+                if(progressDialog.isShowing()){
+                    progressDialog.dismiss();
+                }
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                HashMap<String, Object> imageUriHashMap = new HashMap<String, Object>();
-                imageUriHashMap.put("imageUri", "");
-                db.collection("products").document(productId).update(imageUriHashMap).addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void unused) {
-                        Toast.makeText(context, "Failed to upload!", Toast.LENGTH_SHORT).show();
-                        callback.onUploadProductImage(false);
-                        if(progressDialog.isShowing()){
-                            progressDialog.dismiss();
-                        }
-                    }
-                });
+                Toast.makeText(context, "Failed to upload!", Toast.LENGTH_SHORT).show();
+                callback.onUploadProductImage(false);
+                if(progressDialog.isShowing()){
+                    progressDialog.dismiss();
+                }
             }
         });
     }

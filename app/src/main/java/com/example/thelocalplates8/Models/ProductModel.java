@@ -12,7 +12,7 @@ public class ProductModel {
     private double rating;
 
     private String ingredients;
-    private String imageUri;
+//    private String imageUri;
 
     private String title;
 
@@ -116,13 +116,13 @@ public class ProductModel {
         this.title = title;
     }
 
-    public String getImageUri() {
-        return imageUri;
-    }
-
-    public void setImageUri(String imageUri) {
-        this.imageUri = imageUri;
-    }
+//    public String getImageUri() {
+//        return imageUri;
+//    }
+//
+//    public void setImageUri(String imageUri) {
+//        this.imageUri = imageUri;
+//    }
 
     public ProductModel(){
 

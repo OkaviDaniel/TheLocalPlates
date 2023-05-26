@@ -41,7 +41,6 @@ public class ProductBusinessAdapter extends RecyclerView.Adapter<ProductBusiness
         ProductModel currentProduct = products.get(position);
         holder.title.setText(currentProduct.getTitle());
 
-//        holder.image.setImageURI();
         ProductController p = new ProductController();
         p.getImage(currentProduct.getProductId(), context, new ProductController.GetProductImage() {
             @Override

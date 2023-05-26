@@ -13,6 +13,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.thelocalplates8.Controllers.CartController;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -91,6 +92,8 @@ public class RegisterActivity extends AppCompatActivity {
                                     editor.putString("userId", userId);
                                     editor.apply();
 
+                                    CartController cartController = new CartController(RegisterActivity.this);
+                                    cartController.initializeCart();
                                     showMainActivity();
                                 }
                             });

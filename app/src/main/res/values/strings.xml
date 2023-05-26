@@ -44,4 +44,15 @@
     <string name="cartMain">Cart</string>
     <string name="settingsMain">Settings</string>
     <string name="title_activity_maps">MapsActivity</string>
+    <string name="price">Price</string>
+    <string name="productname">ProductName</string>
+    <string name="x3">x3</string>
+    <string name="totalprice">TotalPrice</string>
+    <string name="decrease_the_quantity_of_the_product">Decrease the quantity of the product</string>
+    <string name="increase_item_quantity_by_one">Increase item quantity by one</string>
+    <string name="remove_product_from_the_cart">Remove product from the cart</string>
+    <string name="image_of_the_product">Image of the product</string>
+    <string name="continue_to_checkout">proceed to checkout</string>
+    <string name="welcome_to_cart_activity">Welcome to cart activity</string>
+    <string name="quantity">Quantity</string>
 </resources>

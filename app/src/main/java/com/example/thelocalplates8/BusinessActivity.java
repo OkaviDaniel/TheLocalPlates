@@ -26,44 +26,38 @@ import java.util.ArrayList;
 
 public class BusinessActivity extends AppCompatActivity {
 
+    private TextView welcomeText;
+    private Button createBusiness;
+    private TextView nameTextView;
+    private TextView cityTextView;
+    private TextView phoneTextView;
+    private TextView emailTextView;
+    private Button addProductButton;
+    private ImageView businessImageView;
+    private RecyclerView recyclerView;
+    private ArrayList<ProductModel> products;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_business);
 
-        TextView welcomeText = (TextView)findViewById(R.id.BusinessScreenTextView);
-        welcomeText.setVisibility(View.GONE);
-        Button createBusiness = (Button)findViewById(R.id.createBusinessButton);
-        createBusiness.setVisibility(View.GONE);
-        TextView nameTextView = (TextView)findViewById(R.id.BusinessOwnerName);
-        nameTextView.setVisibility(View.GONE);
-        TextView cityTextView = (TextView)findViewById(R.id.BusinessCityTextView);
-        cityTextView.setVisibility(View.GONE);
-        TextView phoneTextView = (TextView) findViewById(R.id.BusinessPhoneTextView);
-        phoneTextView.setVisibility(View.GONE);
-        TextView emailTextView = (TextView) findViewById(R.id.BusinessEmailTextView);
-        emailTextView.setVisibility(View.GONE);
-        Button addProductButton = (Button)findViewById(R.id.AddProductButton);
-        addProductButton.setVisibility(View.GONE);
-        ImageView businessImageView = (ImageView)findViewById(R.id.BusinessImageView);
-        businessImageView.setVisibility(View.GONE);
+        initializeVars();
+        setVisibilityGone();
 
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
         String userID = mAuth.getCurrentUser().getUid();
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-        ArrayList<ProductModel> products = new ArrayList<ProductModel>();
-        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recyclerview_products);
-        recyclerView.setVisibility(View.GONE);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
-
-
 
         FirebaseCommunicator.checkBusinessExist(db, userID, new FirebaseCommunicator.OnBusinessCheckCompleteListener(){
 
             @Override
             public void onBusinessCheckComplete(boolean isBusinessCreated) {
-                if(isBusinessCreated){  // if user created a business
+                // if user created a business
+                if(isBusinessCreated){
+                    // Initialize controllers
                     BusinessController businessController = new BusinessController();
                     ProductController productController = new ProductController();
 
@@ -71,7 +65,7 @@ public class BusinessActivity extends AppCompatActivity {
                         @Override
                         public void onGetProductsInterface(ArrayList<ProductModel> productModels) {
                             products.addAll(productModels);
-                            Log.d("Products", "number of products" + products.size());
+//                            Log.d("Products", "number of products" + products.size());
                             recyclerView.setLayoutManager(layoutManager);
                             ProductBusinessAdapter productBusinessAdapter = new ProductBusinessAdapter(products, BusinessActivity.this);
                             recyclerView.setAdapter(productBusinessAdapter);
@@ -81,23 +75,11 @@ public class BusinessActivity extends AppCompatActivity {
                     businessController.getBusinessData(userID, new BusinessController.BusinessModelCallback() {
                         @Override
                         public void onBusinessModelCallback(BusinessModel business) {
-                            welcomeText.setText("Welcome back " + business.getFirstName() + " to your business!");
-                            nameTextView.setText(business.getFirstName() + " " + business.getLastName());
-                            cityTextView.setText(business.getCity());
-                            phoneTextView.setText(business.getPhone());
-                            emailTextView.setText(business.getEmail());
+                            setData(business);
                             businessController.getBusinessImage(BusinessActivity.this, new BusinessController.BusinessGetImage() {
                                 @Override
                                 public void onBusinessGetImage(Bitmap bitmap) {
-                                    businessImageView.setImageBitmap(bitmap);
-                                    businessImageView.setVisibility(View.VISIBLE);
-                                    nameTextView.setVisibility(View.VISIBLE);
-                                    cityTextView.setVisibility(View.VISIBLE);
-                                    phoneTextView.setVisibility(View.VISIBLE);
-                                    emailTextView.setVisibility(View.VISIBLE);
-                                    addProductButton.setVisibility(View.VISIBLE);
-                                    welcomeText.setVisibility(View.VISIBLE);
-                                    recyclerView.setVisibility(View.VISIBLE);
+                                    setVisibilityVisible(bitmap);
                                 }
                             });
 
@@ -131,5 +113,50 @@ public class BusinessActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    private void setData(BusinessModel business) {
+        welcomeText.setText("Welcome back " + business.getFirstName() + " to your business!");
+        nameTextView.setText(business.getFirstName() + " " + business.getLastName());
+        cityTextView.setText(business.getCity());
+        phoneTextView.setText(business.getPhone());
+        emailTextView.setText(business.getEmail());
+    }
+
+    private void setVisibilityVisible(Bitmap bitmap) {
+        businessImageView.setImageBitmap(bitmap);
+        businessImageView.setVisibility(View.VISIBLE);
+        nameTextView.setVisibility(View.VISIBLE);
+        cityTextView.setVisibility(View.VISIBLE);
+        phoneTextView.setVisibility(View.VISIBLE);
+        emailTextView.setVisibility(View.VISIBLE);
+        addProductButton.setVisibility(View.VISIBLE);
+        welcomeText.setVisibility(View.VISIBLE);
+        recyclerView.setVisibility(View.VISIBLE);
+    }
+
+    private void setVisibilityGone() {
+        welcomeText.setVisibility(View.GONE);
+        createBusiness.setVisibility(View.GONE);
+        nameTextView.setVisibility(View.GONE);
+        cityTextView.setVisibility(View.GONE);
+        phoneTextView.setVisibility(View.GONE);
+        emailTextView.setVisibility(View.GONE);
+        addProductButton.setVisibility(View.GONE);
+        businessImageView.setVisibility(View.GONE);
+        recyclerView.setVisibility(View.GONE);
+    }
+
+    private void initializeVars() {
+        welcomeText = (TextView)findViewById(R.id.BusinessScreenTextView);
+        createBusiness = (Button)findViewById(R.id.createBusinessButton);
+        nameTextView = (TextView)findViewById(R.id.BusinessOwnerName);
+        cityTextView = (TextView)findViewById(R.id.BusinessCityTextView);
+        phoneTextView = (TextView) findViewById(R.id.BusinessPhoneTextView);
+        emailTextView = (TextView) findViewById(R.id.BusinessEmailTextView);
+        addProductButton = (Button)findViewById(R.id.AddProductButton);
+        businessImageView = (ImageView)findViewById(R.id.BusinessImageView);
+        recyclerView = (RecyclerView) findViewById(R.id.recyclerview_products);
+        products = new ArrayList<ProductModel>();
     }
 }

@@ -7,9 +7,7 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -20,11 +18,6 @@ import android.widget.EditText;
 import com.example.thelocalplates8.Controllers.BusinessController;
 import com.example.thelocalplates8.Controllers.CustomerController;
 import com.example.thelocalplates8.Models.CustomerModel;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.FirebaseFirestore;
 
 public class BusinessCreationActivity extends AppCompatActivity implements CustomerController.CustomerModelCallback {
 
@@ -66,6 +59,7 @@ public class BusinessCreationActivity extends AppCompatActivity implements Custo
                 selectImage();
             }
         });
+
         createBusiness.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content">
 
     <ImageView
         android:id="@+id/imageViewProductCart"
@@ -11,23 +11,126 @@
         android:layout_height="84dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
+        android:contentDescription="@string/image_of_the_product"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0"
+        tools:ignore="ImageContrastCheck"
         tools:srcCompat="@tools:sample/avatars" />
 
     <TextView
         android:id="@+id/productNameCartTextView"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="12dp"
-        android:layout_marginTop="8dp"
-        android:text="ProductName"
+        android:text="@string/productname"
         app:layout_constraintBottom_toBottomOf="@+id/imageViewProductCart"
-        app:layout_constraintStart_toEndOf="@+id/imageViewProductCart"
+        app:layout_constraintEnd_toStartOf="@+id/decreaseButton"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/cartItemPrice"
         app:layout_constraintTop_toTopOf="@+id/imageViewProductCart"
         app:layout_constraintVertical_bias="0.0" />
+
+    <TextView
+        android:id="@+id/cartItemPrice"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/price"
+        app:layout_constraintBottom_toBottomOf="@+id/imageViewProductCart"
+        app:layout_constraintEnd_toStartOf="@+id/textViewQuantity"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/imageViewProductCart"
+        app:layout_constraintTop_toBottomOf="@+id/productNameCartTextView"
+        app:layout_constraintVertical_bias="0.052" />
+
+    <TextView
+        android:id="@+id/cartProductQuantity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="4dp"
+        android:text="@string/x3"
+        android:textSize="8sp"
+        app:layout_constraintBottom_toBottomOf="@+id/decreaseButton"
+        app:layout_constraintEnd_toStartOf="@+id/decreaseButton"
+        app:layout_constraintTop_toTopOf="@+id/decreaseButton"
+        tools:ignore="SmallSp" />
+
+    <TextView
+        android:id="@+id/cartItemTotalPrice"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/totalprice"
+        app:layout_constraintBottom_toBottomOf="@+id/imageViewProductCart"
+        app:layout_constraintEnd_toStartOf="@+id/decreaseButton"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/cartItemPrice"
+        app:layout_constraintTop_toBottomOf="@+id/cartItemPrice"
+        app:layout_constraintVertical_bias="0.588" />
+
+    <ImageButton
+        android:id="@+id/decreaseButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="204dp"
+        android:contentDescription="@string/decrease_the_quantity_of_the_product"
+        app:layout_constraintBottom_toBottomOf="@+id/imageViewProductCart"
+        app:layout_constraintStart_toStartOf="@+id/imageViewProductCart"
+        app:layout_constraintTop_toTopOf="@+id/imageViewProductCart"
+        app:layout_constraintVertical_bias="0.575"
+        app:srcCompat="@android:drawable/ic_media_rew"
+        tools:ignore="ImageContrastCheck" />
+
+    <ImageButton
+        android:id="@+id/removeButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:contentDescription="@string/remove_product_from_the_cart"
+        app:layout_constraintBottom_toBottomOf="@+id/decreaseButton"
+        app:layout_constraintStart_toEndOf="@+id/decreaseButton"
+        app:layout_constraintTop_toTopOf="@+id/decreaseButton"
+        app:srcCompat="@android:drawable/ic_menu_delete"
+        tools:ignore="ImageContrastCheck" />
+
+    <ImageButton
+        android:id="@+id/increaseButtonCart"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:contentDescription="@string/increase_item_quantity_by_one"
+        app:layout_constraintBottom_toBottomOf="@+id/removeButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/removeButton"
+        app:layout_constraintTop_toTopOf="@+id/removeButton"
+        app:layout_constraintVertical_bias="0.0"
+        app:srcCompat="@android:drawable/ic_media_ff"
+        tools:ignore="ImageContrastCheck" />
+
+    <View
+        android:id="@+id/divider4"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_marginTop="8dp"
+        android:background="?android:attr/listDivider"
+        app:layout_constraintEnd_toEndOf="@+id/increaseButtonCart"
+        app:layout_constraintStart_toStartOf="@+id/imageViewProductCart"
+        app:layout_constraintTop_toBottomOf="@+id/imageViewProductCart" />
+
+    <TextView
+        android:id="@+id/textViewQuantity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="2dp"
+        android:text="@string/quantity"
+        android:textSize="8sp"
+        app:layout_constraintBottom_toBottomOf="@+id/cartProductQuantity"
+        app:layout_constraintEnd_toStartOf="@+id/cartProductQuantity"
+        app:layout_constraintTop_toTopOf="@+id/cartProductQuantity"
+        tools:ignore="SmallSp" />
 </androidx.constraintlayout.widget.ConstraintLayout>
