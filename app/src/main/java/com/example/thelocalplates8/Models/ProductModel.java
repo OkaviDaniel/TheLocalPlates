@@ -1,6 +1,7 @@
 package com.example.thelocalplates8.Models;
 
 public class ProductModel {
+
     private String businessId;
     private String culture;
     private String kosher;
@@ -10,12 +11,8 @@ public class ProductModel {
     private String preparationTime;
     private int price;
     private double rating;
-
     private String ingredients;
-//    private String imageUri;
-
     private String title;
-
     private String productId;
 
 
@@ -115,14 +112,6 @@ public class ProductModel {
     public void setTitle(String title) {
         this.title = title;
     }
-
-//    public String getImageUri() {
-//        return imageUri;
-//    }
-//
-//    public void setImageUri(String imageUri) {
-//        this.imageUri = imageUri;
-//    }
 
     public ProductModel(){
 

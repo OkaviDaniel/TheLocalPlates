@@ -14,10 +14,12 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
@@ -66,28 +68,94 @@ public class CartController {
         query.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if(task.isSuccessful()){
+                    QuerySnapshot querySnapshot = task.getResult();
+                    if (querySnapshot != null){
+                        for (QueryDocumentSnapshot documentSnapshot : querySnapshot){
+                            HashMap<String, HashMap<String, Object>> productsMap = (HashMap<String, HashMap<String, Object>>) documentSnapshot.get("products");
+                            if (productsMap != null){
+                                for (Map.Entry<String, HashMap<String, Object>> entry : productsMap.entrySet()){
+                                    String productId = entry.getKey();
+                                    Log.d("CartController", "productid = " + productId + "length " + productId.length());
+                                    HashMap<String, Object> productData = entry.getValue();
+
+                                    String title = (String) productData.get("title");
+                                    double price = Double.parseDouble(String.valueOf(productData.get("price")));
+                                    int quantity = Integer.parseInt(String.valueOf(productData.get("quantity")));
+                                    CartItemModel cartItemModel = new CartItemModel(productId, quantity, price, title);
+                                    ans.add(cartItemModel);
+                                }
+                                callback.onGetCartProducts(ans);
+                            }
+                        }
+                    }
+                }else{
+                    callback.onGetCartProducts(ans);
+                }
+            }
+        });
+    }
+
+
+    public void removeProduct(String productId, String userId) {
+        Query query = db.collection("shoppingCart").whereEqualTo("clientId", userId);
+        query.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if (task.isSuccessful()){
                     QuerySnapshot querySnapshot = task.getResult();
-                    if (querySnapshot != null && !querySnapshot.isEmpty()){
-                        DocumentSnapshot documentSnapshot = querySnapshot.getDocuments().get(0);
-                        // Document exists, extract the products ArrayList
-                        ArrayList<HashMap<String, Object>> productsList = (ArrayList<HashMap<String, Object>>) documentSnapshot.get("products");
-                        if (productsList != null){
-                            for (HashMap<String, Object> product : productsList) {
-                                String productId = (String) product.get("productId");
-                                int quantity = Integer.parseInt(String.valueOf(product.get("quantity")));
-                                double price = Double.parseDouble(String.valueOf(product.get("price")));
-                                String title = (String)product.get("title");
-                                CartItemModel cartItemModel = new CartItemModel(productId, quantity, price, title);
-                                ans.add(cartItemModel);
-                                // Perform operations with productId, quantity, and price
-                            }
-                            callback.onGetCartProducts(ans);
+                    if (querySnapshot != null){
+                        for (QueryDocumentSnapshot documentSnapshot : querySnapshot){
+                            HashMap<String, HashMap<String, Object>> productsMap = (HashMap<String, HashMap<String, Object>>) documentSnapshot.get("products");
+                            productsMap.remove(productId);
+
+                            documentSnapshot.getReference().update("products", productsMap).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void unused) {
+                                    Log.d("CartController", "Product removed");
+                                }
+                            }).addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    e.printStackTrace();
+                                    Log.d("CartController", "Product failed to be removed");
+                                }
+                            });
                         }
                     }
                 }
-                else{
-                    callback.onGetCartProducts(ans);
+            }
+        });
+    }
+
+    /**
+     * When the user change the quantity in the cart for a specific item
+     * @param productId - product id
+     * @param userId - user id
+     * @param i - Increased or decreased the quantity
+     */
+    public void updateQuantity(String productId, String userId, int i) {
+        Query query = db.collection("shoppingCart").whereEqualTo("clientId", userId);
+        query.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()){
+                    QuerySnapshot querySnapshot = task.getResult();
+                    if (querySnapshot != null){
+                        for (QueryDocumentSnapshot documentSnapshot : querySnapshot){
+                            HashMap<String, HashMap<String, Object>> productsMap = (HashMap<String, HashMap<String, Object>>) documentSnapshot.get("products");
+                            HashMap<String, Object> product = productsMap.get(productId);
+                            int quantity = Integer.parseInt(String.valueOf(product.get("quantity")));
+                            product.put("quantity", quantity+i);
+                            productsMap.put(productId, product);
+                            documentSnapshot.getReference().update("products", productsMap).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void unused) {
+                                    Log.d("CartController", "Increased or decreased quantity");
+                                }
+                            });
+                        }
+                    }
                 }
             }
         });

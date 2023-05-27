@@ -10,17 +10,18 @@
         android:id="@+id/textViewWelcomeCart"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:background="#F8FAB7"
+        android:background="#74DF143D"
         android:gravity="center"
-        android:text="@string/welcome_to_cart_activity"
-        android:textColor="#E75976"
+        android:text="@string/cartScreen"
+        android:textColor="#FFFFFF"
         android:textSize="34sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.056" />
+        app:layout_constraintVertical_bias="0.056"
+        tools:ignore="TextContrastCheck" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewCart"
@@ -33,13 +34,14 @@
 
     <Button
         android:id="@+id/cheackoutButton"
+        style="@style/Widget.MaterialComponents.Button"
         android:layout_width="250dp"
         android:layout_height="wrap_content"
         android:backgroundTint="#74DF143D"
-        style="@style/Widget.MaterialComponents.Button"
         android:text="@string/continue_to_checkout"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/recyclerViewCart" />
+        app:layout_constraintTop_toBottomOf="@+id/recyclerViewCart"
+        tools:ignore="TextSizeCheck,TextContrastCheck" />
 </androidx.constraintlayout.widget.ConstraintLayout>

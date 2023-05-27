@@ -12,7 +12,6 @@ public class BusinessModel {
     private String openTime;
     private String closedTime;
     private String phone;
-    private ArrayList<String> products;
     private String street;
     private String userId;
     private String email;
@@ -101,14 +100,6 @@ public class BusinessModel {
 
     public void setPhone(String phone) {
         this.phone = phone;
-    }
-
-    public ArrayList<String> getProducts() {
-        return products;
-    }
-
-    public void setProducts(ArrayList<String> products) {
-        this.products = products;
     }
 
     public String getStreet() {

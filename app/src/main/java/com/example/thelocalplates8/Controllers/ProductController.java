@@ -59,6 +59,7 @@ public class ProductController {
             @Override
             public void onSuccess(DocumentReference documentReference) {
                 Log.d("New product", "DocumentSnapshot successfully written!");
+                db.collection("products").document(documentReference.getId()).update("productId", documentReference.getId());
                 callback.onProductIdInterface(documentReference.getId());
             }
         }).addOnFailureListener(new OnFailureListener() {
@@ -127,6 +128,7 @@ public class ProductController {
     }
 
     public void getImage(String productId, Context context, final GetProductImage callback){
+//        Log.d("ProductController", "" + productId.length());
         SharedPreferences sp = context.getSharedPreferences("MyUserPrefs", Context.MODE_PRIVATE);
         String userId = sp.getString("userId", "");
 
@@ -149,6 +151,9 @@ public class ProductController {
         }catch (IOException e){
             e.printStackTrace();
         }
+    }
+
+    public void getProduct(String productId, String userId, final GetProduct callback){
 
     }
 
@@ -166,6 +171,10 @@ public class ProductController {
 
     public interface GetProductImage{
         void onGetProductImage(Bitmap bitmap);
+    }
+
+    public interface GetProduct{
+        void onGetProduct(ProductModel productModel);
     }
 
 

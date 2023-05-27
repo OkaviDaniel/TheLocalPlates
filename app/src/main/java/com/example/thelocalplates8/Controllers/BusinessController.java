@@ -69,10 +69,6 @@ public class BusinessController {
                         businessModel.setOpenTime(document.getString("openTime"));
                         businessModel.setClosedTime(document.getString("closedTime"));
                         businessModel.setDestinationLimit(document.getString("DestinationLimit"));
-                        // Add later an iterator over the array of products and add them to array list
-                        // and of course add the array list to the business model
-                        ArrayList<String> products = (ArrayList<String>) document.get("products");
-                        businessModel.setProducts(products);
 
                         callback.onBusinessModelCallback(businessModel);
                     }

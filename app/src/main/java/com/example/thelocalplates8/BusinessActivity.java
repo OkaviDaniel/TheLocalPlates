@@ -26,7 +26,7 @@ import java.util.ArrayList;
 
 public class BusinessActivity extends AppCompatActivity {
 
-    private TextView welcomeText;
+//    private TextView welcomeText;
     private Button createBusiness;
     private TextView nameTextView;
     private TextView cityTextView;
@@ -96,8 +96,8 @@ public class BusinessActivity extends AppCompatActivity {
 
                 }
                 else {   // User didn't created a business
-                    welcomeText.setText("Do you wish to create a business?");
-                    welcomeText.setVisibility(View.VISIBLE);
+//                    welcomeText.setText("Do you wish to create a business?");
+//                    welcomeText.setVisibility(View.VISIBLE);
                     createBusiness.setVisibility(View.VISIBLE);
 
                     createBusiness.setOnClickListener(new View.OnClickListener() {
@@ -116,7 +116,7 @@ public class BusinessActivity extends AppCompatActivity {
     }
 
     private void setData(BusinessModel business) {
-        welcomeText.setText("Welcome back " + business.getFirstName() + " to your business!");
+//        welcomeText.setText("Welcome back " + business.getFirstName() + " to your business!");
         nameTextView.setText(business.getFirstName() + " " + business.getLastName());
         cityTextView.setText(business.getCity());
         phoneTextView.setText(business.getPhone());
@@ -131,12 +131,12 @@ public class BusinessActivity extends AppCompatActivity {
         phoneTextView.setVisibility(View.VISIBLE);
         emailTextView.setVisibility(View.VISIBLE);
         addProductButton.setVisibility(View.VISIBLE);
-        welcomeText.setVisibility(View.VISIBLE);
+//        welcomeText.setVisibility(View.VISIBLE);
         recyclerView.setVisibility(View.VISIBLE);
     }
 
     private void setVisibilityGone() {
-        welcomeText.setVisibility(View.GONE);
+//        welcomeText.setVisibility(View.GONE);
         createBusiness.setVisibility(View.GONE);
         nameTextView.setVisibility(View.GONE);
         cityTextView.setVisibility(View.GONE);
@@ -148,7 +148,7 @@ public class BusinessActivity extends AppCompatActivity {
     }
 
     private void initializeVars() {
-        welcomeText = (TextView)findViewById(R.id.BusinessScreenTextView);
+//        welcomeText = (TextView)findViewById(R.id.BusinessScreenTextView);
         createBusiness = (Button)findViewById(R.id.createBusinessButton);
         nameTextView = (TextView)findViewById(R.id.BusinessOwnerName);
         cityTextView = (TextView)findViewById(R.id.BusinessCityTextView);
