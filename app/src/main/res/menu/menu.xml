@@ -3,41 +3,32 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        app:showAsAction="ifRoom"
+        app:showAsAction="always"
         android:icon="@drawable/baseline_more_vert_24"
         android:title="">
         <menu>
-
             <item
                 android:id="@+id/Business"
-                android:icon="@drawable/bisnlogo"
+                android:icon="@drawable/baseline_add_business_24"
                 android:title="Business"
-                app:showAsAction="never">
-
-            </item>
+                app:showAsAction="never"></item>
             <item
                 android:id="@+id/cart"
-            android:title="Cart"
-                android:icon="@drawable/cart"
-            app:showAsAction="never">
-
-            </item>
+                android:icon="@drawable/baseline_shopping_cart_24"
+                android:title="Cart"
+                app:showAsAction="never"></item>
             <item
                 android:id="@+id/setting"
-            android:title="Setting"
-                android:icon="@drawable/settingkey"
-            app:showAsAction="never">
+                android:icon="@drawable/baseline_manage_accounts_24"
+                android:title="Setting"
+                app:showAsAction="never"></item>
 
-            </item>
             <item
                 android:id="@+id/logout"
-            android:title="Logout"
+                android:title="Logout"
                 android:icon="@drawable/baseline_logout_24"
-            app:showAsAction="never"></item>
-
+                app:showAsAction="never">
+            </item>
         </menu>
-
-
-
     </item>
 </menu>

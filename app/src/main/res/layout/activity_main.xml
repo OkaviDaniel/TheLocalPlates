@@ -37,50 +37,20 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
-        <Button
-            android:id="@+id/businessMainBtn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:backgroundTint="#74DF143D"
-            android:text="Business"
-            android:textStyle="bold|italic" />
-
-        <Space
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1" />
-        <Button
-            android:id="@+id/cartButton"
-            android:layout_width="wrap_content"
-
-            android:layout_height="wrap_content"
-            android:backgroundTint="#74DF143D"
-            android:text="@string/cartMain"
-            android:textStyle="bold|italic" />
-        <Space
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1" />
-        <Button
-            android:id="@+id/settingsButton"
-            android:layout_width="wrap_content"
-
-            android:layout_height="wrap_content"
-            android:backgroundTint="#74DF143D"
-            android:text="@string/settingsMain"
-            android:textStyle="bold|italic" />
         <Space
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1" />
 
-        <Button
-            android:id="@+id/btnLogout"
+        <Space
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:backgroundTint="#74DF143D"
-            android:text="Logout"
-            android:textStyle="bold|italic" />
+            android:layout_weight="1" />
+
+        <Space
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
 
 
     </LinearLayout>

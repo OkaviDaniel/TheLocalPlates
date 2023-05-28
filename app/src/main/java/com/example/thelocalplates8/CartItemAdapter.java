@@ -1,5 +1,6 @@
 package com.example.thelocalplates8;
 
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
@@ -89,10 +90,51 @@ public class CartItemAdapter extends RecyclerView.Adapter<CartItemAdapter.CartIt
     private void getDetails(int position) {
         String productId = products.get(position).getProductId();
         ProductController productController = new ProductController();
+
         productController.getProduct(productId, userId, new ProductController.GetProduct() {
             @Override
             public void onGetProduct(ProductModel productModel) {
+                openProductDetailsWindow(productModel);
+            }
+        });
+    }
 
+    private void openProductDetailsWindow(ProductModel productModel) {
+        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(context);
+        LayoutInflater inflater = LayoutInflater.from(context);
+        View dialogView = inflater.inflate(R.layout.product_details_window, null);
+        dialogBuilder.setView(dialogView);
+
+        // Find and set the product details in the dialog views
+        TextView title = dialogView.findViewById(R.id.textViewTitleP);
+        TextView culture = dialogView.findViewById(R.id.textViewCultureP);
+        TextView price = dialogView.findViewById(R.id.textViewPriceP);
+        TextView kosher = dialogView.findViewById(R.id.textViewKosherP);
+        TextView available = dialogView.findViewById(R.id.textViewAvailableP);
+        TextView inventoryAmount = dialogView.findViewById(R.id.textViewInventoryAmountP);
+        TextView rating = dialogView.findViewById(R.id.textViewRatingP);
+        TextView preparationTime = dialogView.findViewById(R.id.textViewPreparationP);
+        ImageView productImageView = dialogView.findViewById(R.id.imageViewProductDetails);
+
+        title.setText(productModel.getTitle());
+        culture.setText(productModel.getCulture());
+        price.setText(String.valueOf(productModel.getPrice()));
+        kosher.setText(productModel.getKosher());
+        available.setText(String.valueOf(productModel.isAvailable()));
+        inventoryAmount.setText(String.valueOf(productModel.getInventoryAmount()));
+        rating.setText(String.valueOf(productModel.getRating()));
+        preparationTime.setText(productModel.getPreparationTime());
+
+        // Create and show the dialog
+        AlertDialog alertDialog = dialogBuilder.create();
+        alertDialog.show();
+
+        // Set a click listener for the close button
+        Button closeButton = dialogView.findViewById(R.id.buttonCloseDetails);
+        closeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                alertDialog.dismiss(); // Close the dialog
             }
         });
     }

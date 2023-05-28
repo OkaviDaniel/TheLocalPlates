@@ -19,7 +19,9 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
@@ -54,7 +56,10 @@ public class ProductController {
         product.put("kosher", kosher);
         product.put("preparationTime", preparationTime);
         product.put("ingredients", ingredients);
-
+        product.put("available", false);
+        product.put("inventoryAmount", 0);
+        product.put("rating", 0);
+        product.put("description", "");
         db.collection("products").add(product).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
             @Override
             public void onSuccess(DocumentReference documentReference) {
@@ -154,6 +159,31 @@ public class ProductController {
     }
 
     public void getProduct(String productId, String userId, final GetProduct callback){
+        ProductModel productModel = new ProductModel();
+        CollectionReference collection = db.collection("products");
+        collection.document(productId).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()){
+                    DocumentSnapshot document = task.getResult();
+                    if (document.exists()){
+//                        Map<String, Object> productMap = document.getData();
+//                        productModel.setTitle((String)productMap.get("title"));
+//                        productModel.setCulture((String)productMap.get("culture"));
+//                        productModel.setPrice(Integer.parseInt((String)productMap.get("price")));
+//                        productModel.setAvailable((boolean)productMap.get("available") );
+//                        productModel.setKosher((String)productMap.get("kosher"));
+//                        productModel.setInventoryAmount(Integer.parseInt((String)productMap.get("inventoryAmount")));
+//                        productModel.setPreparationTime((String)productMap.get("preparationTime"));
+//                        productModel.setRating(Integer.parseInt((String)productMap.get("rating")));
+//                        productModel.setIngredients((String)productMap.get("ingredients"));
+                        ProductModel productModel = document.toObject(ProductModel.class);
+
+                        callback.onGetProduct(productModel);
+                    }
+                }
+            }
+        });
 
     }
 
