@@ -69,7 +69,7 @@ public class BusinessController {
                         businessModel.setOpenTime(document.getString("openTime"));
                         businessModel.setClosedTime(document.getString("closedTime"));
                         businessModel.setDestinationLimit(document.getString("DestinationLimit"));
-
+                        businessModel.setLocation(document.getGeoPoint("location"));
                         callback.onBusinessModelCallback(businessModel);
                     }
                 }

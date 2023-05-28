@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -18,6 +19,7 @@ import android.widget.EditText;
 import com.example.thelocalplates8.Controllers.BusinessController;
 import com.example.thelocalplates8.Controllers.CustomerController;
 import com.example.thelocalplates8.Models.CustomerModel;
+import com.google.firebase.firestore.GeoPoint;
 
 public class BusinessCreationActivity extends AppCompatActivity implements CustomerController.CustomerModelCallback {
 
@@ -28,6 +30,7 @@ public class BusinessCreationActivity extends AppCompatActivity implements Custo
 
     private Uri imageUri;
 
+    private Location location;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,6 +75,8 @@ public class BusinessCreationActivity extends AppCompatActivity implements Custo
                 String closedTime = closedTimeText.getText().toString();
 
                 BusinessController businessController = new BusinessController();
+//                GeoPoint location = getCurrentLocation();
+                // Need to add the option to add GeoPoint to the DataBase!
                 businessController.createBusiness(Firstname, lastName, email, userId, phone, city, dstLimit, dvct, openTime,closedTime, BusinessCreationActivity.this);
 
                 businessController.uploadImage(imageUri,BusinessCreationActivity.this , new BusinessController.BusinessUploadImage() {

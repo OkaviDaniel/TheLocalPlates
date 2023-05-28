@@ -15,7 +15,15 @@ public class ProductModel {
     private String title;
     private String productId;
 
+    private String imageUri;
 
+    public String getImageUri() {
+        return imageUri;
+    }
+
+    public void setImageUri(String imageUri) {
+        this.imageUri = imageUri;
+    }
 
     public String getProductId() {
         return productId;

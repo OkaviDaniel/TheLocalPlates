@@ -1,5 +1,7 @@
 package com.example.thelocalplates8.Models;
 
+import com.google.firebase.firestore.GeoPoint;
+
 import java.util.ArrayList;
 
 public class BusinessModel {
@@ -16,6 +18,7 @@ public class BusinessModel {
     private String userId;
     private String email;
 
+    private GeoPoint location;
 
 
     public BusinessModel(){
@@ -116,5 +119,13 @@ public class BusinessModel {
 
     public void setUserId(String userId) {
         this.userId = userId;
+    }
+
+    public GeoPoint getLocation() {
+        return location;
+    }
+
+    public void setLocation(GeoPoint location) {
+        this.location = location;
     }
 }
