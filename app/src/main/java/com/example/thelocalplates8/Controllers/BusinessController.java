@@ -5,12 +5,17 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.location.Location;
 import android.net.Uri;
 import android.util.Log;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.lifecycle.LifecycleOwner;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.Observer;
 
+import com.example.thelocalplates8.LocationManager;
 import com.example.thelocalplates8.Models.BusinessModel;
 import com.example.thelocalplates8.Models.CustomerModel;
 import com.example.thelocalplates8.Models.ProductModel;
@@ -23,6 +28,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.GeoPoint;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -58,18 +64,20 @@ public class BusinessController {
                 if(task.isSuccessful()){
                     for (DocumentSnapshot document : task.getResult()){
 
-                        BusinessModel businessModel = new BusinessModel();
-                        businessModel.setFirstName(document.getString("firstName"));
-                        businessModel.setLastName(document.getString("lastName"));
-                        businessModel.setEmail(document.getString("email"));
-                        businessModel.setCity(document.getString("city"));
-                        businessModel.setDeliveryCost(document.getLong("DeliveryCost").intValue());
-                        businessModel.setRating(document.getDouble("Rating"));
-                        businessModel.setPhone(document.getString("phone"));
-                        businessModel.setOpenTime(document.getString("openTime"));
-                        businessModel.setClosedTime(document.getString("closedTime"));
-                        businessModel.setDestinationLimit(document.getString("DestinationLimit"));
-                        businessModel.setLocation(document.getGeoPoint("location"));
+//                        BusinessModel businessModel = new BusinessModel();
+//                        businessModel.setFirstName(document.getString("firstName"));
+//                        businessModel.setLastName(document.getString("lastName"));
+//                        businessModel.setEmail(document.getString("email"));
+//                        businessModel.setCity(document.getString("city"));
+//                        businessModel.setDeliveryCost(document.getLong("DeliveryCost").intValue());
+//                        businessModel.setRating(document.getDouble("Rating"));
+//                        businessModel.setPhone(document.getString("phone"));
+//                        businessModel.setOpenTime(document.getString("openTime"));
+//                        businessModel.setClosedTime(document.getString("closedTime"));
+//                        businessModel.setDestinationLimit(document.getString("DestinationLimit"));
+//                        businessModel.setLocation(document.getGeoPoint("location"));
+//                        businessModel.setBusinessId(document.getString("businessId"));
+                        BusinessModel businessModel = document.toObject(BusinessModel.class);
                         callback.onBusinessModelCallback(businessModel);
                     }
                 }
@@ -140,29 +148,45 @@ public class BusinessController {
         business.put("openTime", openTime);
         business.put("closedTime",closedTime);
 
+        LocationManager locationManager = new LocationManager(context);
+        LiveData<Location> currentLocationLiveData = locationManager.getGeoPoint();
         this.context = context;
         sharedPreferences = context.getSharedPreferences("MyUserPrefs", Context.MODE_PRIVATE);
 
-        db.collection("business").add(business).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+        currentLocationLiveData.observe((LifecycleOwner) context, new Observer<Location>() {
             @Override
-            public void onSuccess(DocumentReference documentReference) {
-                Log.d("New user business", "DocumentSnapshot successfully written!");
-                HashMap<String, Object> business = new HashMap<>();
-                business.put("businessId", documentReference.getId());
-                business.put("city", city);
-                business.put("phone", phone);
-                db.collection("customers").document(userId).update(business);
+            public void onChanged(Location location) {
+                // Do something with the location (e.g., convert it to a GeoPoint and save it)
+                if (location != null) {
+                    double latitude = location.getLatitude();
+                    double longitude = location.getLongitude();
+                    GeoPoint geoPoint = new GeoPoint(latitude, longitude);
+                    business.put("location", geoPoint);
+                    db.collection("business").add(business).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                        @Override
+                        public void onSuccess(DocumentReference documentReference) {
+                            Log.d("New user business", "DocumentSnapshot successfully written!");
+                            HashMap<String, Object> business = new HashMap<>();
+                            business.put("businessId", documentReference.getId());
+                            db.collection("business").document(documentReference.getId()).update(business); // Check if it's good!!
+                            business.put("city", city);
+                            business.put("phone", phone);
+                            db.collection("customers").document(userId).update(business);
 
 
-                // Here we save the businessId in the local storage
-                SharedPreferences.Editor editor = sharedPreferences.edit();
-                editor.putString("businessId", documentReference.getId());
-                editor.apply();
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Log.w("New user business", "Error writing document", e);
+                            // Here we save the businessId in the local storage
+                            SharedPreferences.Editor editor = sharedPreferences.edit();
+                            editor.putString("businessId", documentReference.getId());
+                            editor.apply();
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Log.w("New user business", "Error writing document", e);
+                        }
+                    });
+
+                }
             }
         });
     }
@@ -193,6 +217,29 @@ public class BusinessController {
         }
     }
 
+    public void getAllBusinesses(final GetAllBusinesses callback){
+// Create an ArrayList to hold the BusinessModel objects
+        ArrayList<BusinessModel> businessList = new ArrayList<>();
+
+// Retrieve all documents from the "Business" collection
+        db.collection("business")
+                .get()
+                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                    @Override
+                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                        // Iterate through each document in the result
+                        for (DocumentSnapshot documentSnapshot : queryDocumentSnapshots) {
+                            // Convert the document to a BusinessModel object
+                            BusinessModel business = documentSnapshot.toObject(BusinessModel.class);
+
+                            // Add the BusinessModel object to the ArrayList
+                            businessList.add(business);
+                        }
+                        callback.onGetAllBusinesses(businessList);
+                    }
+                });
+    }
+
     public interface BusinessModelCallback{
         void onBusinessModelCallback(BusinessModel business);
     }
@@ -202,6 +249,10 @@ public class BusinessController {
     }
     public interface BusinessGetImage {
         void onBusinessGetImage(Bitmap bitmap);
+    }
+
+    public interface GetAllBusinesses{
+        void onGetAllBusinesses(ArrayList<BusinessModel> businessModels);
     }
 
 }

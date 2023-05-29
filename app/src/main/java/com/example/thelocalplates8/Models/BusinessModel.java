@@ -18,6 +18,16 @@ public class BusinessModel {
     private String userId;
     private String email;
 
+    private String businessId;
+
+    public String getBusinessId() {
+        return businessId;
+    }
+
+    public void setBusinessId(String businessId) {
+        this.businessId = businessId;
+    }
+
     private GeoPoint location;
 
 
@@ -128,4 +138,6 @@ public class BusinessModel {
     public void setLocation(GeoPoint location) {
         this.location = location;
     }
+
+
 }
