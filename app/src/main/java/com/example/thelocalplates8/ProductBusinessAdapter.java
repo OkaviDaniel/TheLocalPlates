@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.thelocalplates8.Controllers.ProductController;
 import com.example.thelocalplates8.Models.ProductModel;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -41,13 +42,8 @@ public class ProductBusinessAdapter extends RecyclerView.Adapter<ProductBusiness
         ProductModel currentProduct = products.get(position);
         holder.title.setText(currentProduct.getTitle());
 
-        ProductController p = new ProductController();
-        p.getImage(currentProduct.getProductId(), context, new ProductController.GetProductImage() {
-            @Override
-            public void onGetProductImage(Bitmap bitmap) {
-                holder.image.setImageBitmap(bitmap);
-            }
-        });
+        Picasso.get().load(products.get(position).getImageUri()).into(holder.image);
+
         holder.price.setText(String.valueOf(currentProduct.getPrice()));
         holder.edit.setOnClickListener(new View.OnClickListener() {
             @Override

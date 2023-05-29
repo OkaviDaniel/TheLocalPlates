@@ -89,12 +89,30 @@ public class ProductController {
         storageReference.putFile(imageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                taskSnapshot.getStorage().getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                    @Override
+                    public void onSuccess(Uri uri) {
 
-                Toast.makeText(context, "Successfully uploaded!", Toast.LENGTH_SHORT).show();
-                callback.onUploadProductImage(true);
-                if(progressDialog.isShowing()){
-                    progressDialog.dismiss();
-                }
+                        String imageUri = uri.toString();
+                        Map<String, Object> imageMap = new HashMap<String, Object>();
+                        imageMap.put("imageUri", imageUri);
+                        db.collection("products").document(productId).update(imageMap);
+                        Toast.makeText(context, "Successfully uploaded!", Toast.LENGTH_SHORT).show();
+                        callback.onUploadProductImage(true);
+                        if(progressDialog.isShowing()){
+                            progressDialog.dismiss();
+                        }
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(context, "Successfully uploaded!", Toast.LENGTH_SHORT).show();
+                        callback.onUploadProductImage(true);
+                        if(progressDialog.isShowing()){
+                            progressDialog.dismiss();
+                        }
+                    }
+                });
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
@@ -158,7 +176,7 @@ public class ProductController {
         }
     }
 
-    public void getProduct(String productId, String userId, final GetProduct callback){
+    public void getProduct(String productId, final GetProduct callback){
         ProductModel productModel = new ProductModel();
         CollectionReference collection = db.collection("products");
         collection.document(productId).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {

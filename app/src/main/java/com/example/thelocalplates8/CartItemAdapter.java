@@ -20,6 +20,7 @@ import com.example.thelocalplates8.Controllers.CartController;
 import com.example.thelocalplates8.Controllers.ProductController;
 import com.example.thelocalplates8.Models.CartItemModel;
 import com.example.thelocalplates8.Models.ProductModel;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -49,11 +50,10 @@ public class CartItemAdapter extends RecyclerView.Adapter<CartItemAdapter.CartIt
         CartItemModel currentProduct = products.get(position);
         holder.title.setText(currentProduct.getTitle());
         ProductController p = new ProductController();
-
-        p.getImage(currentProduct.getProductId(), context, new ProductController.GetProductImage() {
+        p.getProduct(currentProduct.getProductId(), new ProductController.GetProduct() {
             @Override
-            public void onGetProductImage(Bitmap bitmap) {
-                holder.image.setImageBitmap(bitmap);
+            public void onGetProduct(ProductModel productModel) {
+                Picasso.get().load(productModel.getImageUri()).into(holder.image);
             }
         });
         holder.productPrice.setText(Double.toString(currentProduct.getPrice()));
@@ -91,7 +91,7 @@ public class CartItemAdapter extends RecyclerView.Adapter<CartItemAdapter.CartIt
         String productId = products.get(position).getProductId();
         ProductController productController = new ProductController();
 
-        productController.getProduct(productId, userId, new ProductController.GetProduct() {
+        productController.getProduct(productId, new ProductController.GetProduct() {
             @Override
             public void onGetProduct(ProductModel productModel) {
                 openProductDetailsWindow(productModel);
@@ -124,6 +124,9 @@ public class CartItemAdapter extends RecyclerView.Adapter<CartItemAdapter.CartIt
         inventoryAmount.setText(String.valueOf(productModel.getInventoryAmount()));
         rating.setText(String.valueOf(productModel.getRating()));
         preparationTime.setText(productModel.getPreparationTime());
+
+        String productImageUrl = productModel.getImageUri();
+        Picasso.get().load(productImageUrl).into(productImageView);
 
         // Create and show the dialog
         AlertDialog alertDialog = dialogBuilder.create();

@@ -46,7 +46,7 @@ public class CartController {
 
     public void initializeCart() {
         Map<String, Object> shoppingCart = new HashMap<String, Object>();
-        shoppingCart.put("products", new ArrayList<HashMap<String,Object>>());
+        shoppingCart.put("products", new HashMap<String,HashMap<String,Object>>());
         shoppingCart.put("clientId", userId);
 
         db.collection("shoppingCart").add(shoppingCart).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {

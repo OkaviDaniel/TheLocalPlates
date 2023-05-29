@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -79,7 +80,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         LatLng sydney = new LatLng(currentLocation.getLatitude(),currentLocation.getLongitude());
 
         mMap.addMarker(new MarkerOptions().position(sydney).title("My Location"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+
+        float zoomLevel = 15.0f;
+        CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(sydney, zoomLevel);
+
+        mMap.moveCamera(cameraUpdate);
     }
 
     @Override
