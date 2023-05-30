@@ -3,12 +3,15 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="match_parent">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewMapProduct"
         android:layout_width="0dp"
         android:layout_height="369dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.492"
@@ -18,12 +21,12 @@
 
     <Button
         android:id="@+id/buttonClose"
-        style="@style/Widget.MaterialComponents.Button"
+        style="@style/Widget.AppCompat.Button"
         android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:backgroundTint="#FE897F"
-        android:text="Close"
-        app:icon="@drawable/baseline_close_24"
+        android:text="@string/closeText"
+        android:textColor="#000000"
         app:layout_constraintBottom_toBottomOf="@+id/buttonGoToBusiness"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.494"
@@ -33,12 +36,12 @@
 
     <Button
         android:id="@+id/buttonGoToBusiness"
-        style="@style/Widget.MaterialComponents.Button"
+        style="@style/Widget.AppCompat.Button"
         android:layout_width="134dp"
         android:layout_height="wrap_content"
         android:backgroundTint="#FE897F"
-        android:text="Business"
-        app:icon="@drawable/baseline_food_bank_24_black"
+        android:text="@string/businessText"
+        android:textColor="#000000"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.144"

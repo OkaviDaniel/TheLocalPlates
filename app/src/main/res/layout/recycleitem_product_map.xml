@@ -122,28 +122,26 @@
         app:layout_constraintTop_toBottomOf="@+id/textView14"
         app:layout_constraintVertical_bias="0.0" />
 
-    <ImageButton
-        android:id="@+id/imageButtonAddToCart"
-        style="@android:style/Widget.DeviceDefault.ImageButton"
+    <Button
+        android:id="@+id/buttonAddToCart"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
         android:backgroundTint="#FE897F"
-        android:contentDescription="Add product to the cart"
-        android:minHeight="48dp"
+        android:text="Add to cart"
+        android:textColor="#FFFFFF"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.151"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageViewProductMap"
-        app:srcCompat="@drawable/baseline_add_shopping_cart_24" />
+        app:layout_constraintTop_toBottomOf="@+id/textViewAvailableMap" />
 
     <View
         android:id="@+id/divider12"
-        android:layout_width="0dp"
+        android:layout_width="409dp"
         android:layout_height="1dp"
-        android:layout_marginTop="8dp"
         android:background="@color/black"
-        app:layout_constraintEnd_toEndOf="@+id/imageButtonAddToCart"
-        app:layout_constraintStart_toStartOf="@+id/imageButtonAddToCart"
-        app:layout_constraintTop_toBottomOf="@+id/imageButtonAddToCart" />
+        android:backgroundTint="#000000"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/buttonAddToCart" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

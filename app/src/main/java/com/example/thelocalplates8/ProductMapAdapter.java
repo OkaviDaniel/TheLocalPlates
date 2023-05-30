@@ -5,6 +5,7 @@ import android.media.Image;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -64,7 +65,7 @@ public class ProductMapAdapter  extends RecyclerView.Adapter<ProductMapAdapter.P
         public TextView price;
         public TextView kosher;
         public TextView available;
-        public ImageButton addToCart;
+        public Button addToCart;
         public ProductViewHolder(@NonNull View itemView) {
             super(itemView);
             this.image = itemView.findViewById(R.id.imageViewProductMap);
@@ -72,7 +73,7 @@ public class ProductMapAdapter  extends RecyclerView.Adapter<ProductMapAdapter.P
             this.price = itemView.findViewById(R.id.textViewPriceProductMap);
             this.kosher = itemView.findViewById(R.id.textViewKosherMap);
             this.available = itemView.findViewById(R.id.textViewAvailableMap);
-            this.addToCart = itemView.findViewById(R.id.imageButtonAddToCart);
+            this.addToCart = itemView.findViewById(R.id.buttonAddToCart);
         }
 
 
