@@ -6,8 +6,8 @@
     android:layout_height="match_parent"
     tools:context=".BusinessDetailsActivity">
 
-    <ImageView
-        android:id="@+id/imageView2"
+   <com.google.android.material.imageview.ShapeableImageView
+    android:id="@+id/imageViewBusinessDetails"
         android:layout_width="176dp"
         android:layout_height="174dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -15,6 +15,7 @@
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:shapeAppearanceOverlay="@style/Circular"
         app:layout_constraintVertical_bias="0.07"
         tools:srcCompat="@tools:sample/avatars" />
 
@@ -26,9 +27,9 @@
         android:gravity="center_horizontal"
         android:text="Owner"
         android:textColor="#FFFFFF"
-        app:layout_constraintEnd_toStartOf="@+id/imageView2"
+        app:layout_constraintEnd_toStartOf="@+id/imageViewBusinessDetails"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/imageView2"
+        app:layout_constraintTop_toTopOf="@+id/imageViewBusinessDetails"
         tools:ignore="TextContrastCheck" />
 
     <TextView
@@ -36,7 +37,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="First_name Last_name"
-        app:layout_constraintEnd_toStartOf="@+id/imageView2"
+        app:layout_constraintEnd_toStartOf="@+id/imageViewBusinessDetails"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView2Owner" />
 
@@ -48,7 +49,7 @@
         android:gravity="center_horizontal"
         android:text="Location"
         android:textColor="#FFFFFF"
-        app:layout_constraintEnd_toStartOf="@+id/imageView2"
+        app:layout_constraintEnd_toStartOf="@+id/imageViewBusinessDetails"
         app:layout_constraintHorizontal_bias="0.505"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textViewOwnerB"
@@ -60,70 +61,72 @@
         android:layout_height="0dp"
         android:gravity="center_horizontal|center_vertical"
         android:text="Business page"
-        app:layout_constraintBottom_toTopOf="@+id/imageView2"
+        app:layout_constraintBottom_toTopOf="@+id/imageViewBusinessDetails"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/textView10"
+        android:id="@+id/textViewLocationB"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="GeoPoint"
-        app:layout_constraintEnd_toStartOf="@+id/imageView2"
+        app:layout_constraintEnd_toStartOf="@+id/imageViewBusinessDetails"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textViewLocation" />
 
     <TextView
-        android:id="@+id/textView11"
+        android:id="@+id/textViewRating"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:background="#FE897F"
         android:gravity="center_horizontal"
         android:text="Rating"
         android:textColor="#FFFFFF"
-        app:layout_constraintEnd_toStartOf="@+id/imageView2"
+        app:layout_constraintEnd_toStartOf="@+id/imageViewBusinessDetails"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView10" />
+        app:layout_constraintTop_toBottomOf="@+id/textViewLocationB"
+        tools:ignore="TextContrastCheck" />
 
     <TextView
-        android:id="@+id/textView12"
+        android:id="@+id/textViewRatingB"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="@+id/textView10"
+        app:layout_constraintEnd_toEndOf="@+id/textViewLocationB"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView11" />
+        app:layout_constraintTop_toBottomOf="@+id/textViewRating" />
 
     <TextView
-        android:id="@+id/textView13"
+        android:id="@+id/textViewContact"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:background="#FE897F"
         android:gravity="center_horizontal"
         android:text="Contact"
         android:textColor="#FFFFFF"
-        app:layout_constraintEnd_toStartOf="@+id/imageView2"
+        app:layout_constraintEnd_toStartOf="@+id/imageViewBusinessDetails"
         app:layout_constraintHorizontal_bias="0.58"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView12" />
+        app:layout_constraintTop_toBottomOf="@+id/textViewRatingB"
+        tools:ignore="TextContrastCheck" />
 
     <TextView
-        android:id="@+id/textView15"
+        android:id="@+id/textViewMailB"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="Mail"
-        app:layout_constraintEnd_toStartOf="@+id/imageView2"
+        app:layout_constraintEnd_toStartOf="@+id/imageViewBusinessDetails"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView13" />
+        app:layout_constraintTop_toBottomOf="@+id/textViewContact" />
 
     <TextView
-        android:id="@+id/textView16"
+        android:id="@+id/textViewPhoneB"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="Phone"
-        app:layout_constraintEnd_toStartOf="@+id/imageView2"
+        app:layout_constraintEnd_toStartOf="@+id/imageViewBusinessDetails"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView15" />
+        app:layout_constraintTop_toBottomOf="@+id/textViewMailB" />
 
     <View
         android:id="@+id/divider5"
@@ -132,5 +135,5 @@
         android:background="?android:attr/listDivider"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView2" />
+        app:layout_constraintTop_toBottomOf="@+id/imageViewBusinessDetails" />
 </androidx.constraintlayout.widget.ConstraintLayout>

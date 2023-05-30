@@ -18,6 +18,15 @@ public class BusinessModel {
     private String userId;
     private String email;
 
+    public String getOrdersTime() {
+        return ordersTime;
+    }
+
+    public void setOrdersTime(String ordersTime) {
+        this.ordersTime = ordersTime;
+    }
+
+    private String ordersTime;
     private String businessId;
 
     public String getBusinessId() {

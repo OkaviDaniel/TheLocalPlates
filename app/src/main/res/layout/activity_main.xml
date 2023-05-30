@@ -18,13 +18,13 @@
         app:titleTextColor="?attr/colorOnPrimary" />
 
     <androidx.appcompat.widget.SearchView
+        android:id="@+id/searchViewMain"
         android:layout_width="384dp"
         android:layout_height="36dp"
         android:layout_margin="8dp"
         android:background="@color/white"
-        app:queryHint="search here"
-        android:outlineAmbientShadowColor="@android:color/holo_red_light">
-    </androidx.appcompat.widget.SearchView>
+        android:outlineAmbientShadowColor="@android:color/holo_red_light"
+        app:queryHint="search here"></androidx.appcompat.widget.SearchView>
 
 
     <View
@@ -37,6 +37,7 @@
         android:id="@+id/mapViewMainActivity"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
+
 
 
 </LinearLayout>

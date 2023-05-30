@@ -25,6 +25,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -41,6 +42,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class BusinessController {
@@ -52,10 +54,7 @@ public class BusinessController {
         db = FirebaseFirestore.getInstance();
     }
 
-
-
     public void getBusinessData(String userId, final BusinessModelCallback callback){
-//        DocumentReference docRef = db.collection("business").document(userId);
 
         Query usersBusiness = db.collection("business").whereEqualTo("userId", userId);
         usersBusiness.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -63,20 +62,6 @@ public class BusinessController {
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if(task.isSuccessful()){
                     for (DocumentSnapshot document : task.getResult()){
-
-//                        BusinessModel businessModel = new BusinessModel();
-//                        businessModel.setFirstName(document.getString("firstName"));
-//                        businessModel.setLastName(document.getString("lastName"));
-//                        businessModel.setEmail(document.getString("email"));
-//                        businessModel.setCity(document.getString("city"));
-//                        businessModel.setDeliveryCost(document.getLong("DeliveryCost").intValue());
-//                        businessModel.setRating(document.getDouble("Rating"));
-//                        businessModel.setPhone(document.getString("phone"));
-//                        businessModel.setOpenTime(document.getString("openTime"));
-//                        businessModel.setClosedTime(document.getString("closedTime"));
-//                        businessModel.setDestinationLimit(document.getString("DestinationLimit"));
-//                        businessModel.setLocation(document.getGeoPoint("location"));
-//                        businessModel.setBusinessId(document.getString("businessId"));
                         BusinessModel businessModel = document.toObject(BusinessModel.class);
                         callback.onBusinessModelCallback(businessModel);
                     }
@@ -134,14 +119,13 @@ public class BusinessController {
                                String city, String destinationLimit, int deliveryCost, String openTime, String closedTime, Context context){
         Map<String, Object> business = new HashMap<>();
         business.put("phone", phone);
-        business.put("DeliveryCost", deliveryCost);
-        business.put("Rating",0);
+        business.put("deliveryCost", deliveryCost);
+        business.put("rating",0);
         business.put("city",city);
-        business.put("DestinationLimit",destinationLimit);
+        business.put("destinationLimit",destinationLimit);
         business.put("lastName",lastName);
         business.put("firstName", firstName);
         business.put("ordersTime",""); // maybe to change this!
-        business.put("Products",new ArrayList<String>());
         business.put("street","");
         business.put("userId",userId);
         business.put("email",email);
@@ -209,7 +193,7 @@ public class BusinessController {
             }).addOnFailureListener(new OnFailureListener() {
                 @Override
                 public void onFailure(@NonNull Exception e) {
-
+                    e.printStackTrace();
                 }
             });
         }catch (IOException e){
@@ -218,26 +202,105 @@ public class BusinessController {
     }
 
     public void getAllBusinesses(final GetAllBusinesses callback){
-// Create an ArrayList to hold the BusinessModel objects
         ArrayList<BusinessModel> businessList = new ArrayList<>();
-
-// Retrieve all documents from the "Business" collection
         db.collection("business")
                 .get()
                 .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                     @Override
                     public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                        // Iterate through each document in the result
                         for (DocumentSnapshot documentSnapshot : queryDocumentSnapshots) {
-                            // Convert the document to a BusinessModel object
                             BusinessModel business = documentSnapshot.toObject(BusinessModel.class);
-
-                            // Add the BusinessModel object to the ArrayList
                             businessList.add(business);
                         }
                         callback.onGetAllBusinesses(businessList);
                     }
                 });
+    }
+
+    public void getBusinessesByProduct(String productTitle, int radius,
+                                       GeoPoint geoPoint,  final GetCloseProductBusiness callback){
+        CollectionReference productsRef = db.collection("products");
+        CollectionReference businessesRef = db.collection("business");
+
+        ArrayList<BusinessModel> businessesWithinRadius = new ArrayList<>();
+
+        Query productsQuery = productsRef.whereEqualTo("title", productTitle);
+        // we can go over all the businesses around the radius and get extract the title and preform contains.
+        // but for now let's just check if they equals
+        productsQuery.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()){
+                    List<String> matchingBusinessIds = new ArrayList<>();
+
+                    for (QueryDocumentSnapshot productDoc : task.getResult()) {
+                        String businessId = productDoc.getString("businessId");
+                        matchingBusinessIds.add(businessId);
+                    }
+
+//                    Log.d("BusinessController", "Size of equals title = " + matchingBusinessIds.size());
+//                    for(String s: matchingBusinessIds){
+//                        Log.d("BusinessController", "BusinessId =  " + s);
+//                    }
+                    if(matchingBusinessIds.size() == 0){
+                        callback.onGetCloseProductBusiness(businessesWithinRadius);
+                        return;
+                    }
+                    Query businessesQuery = businessesRef.whereIn("businessId", matchingBusinessIds);
+                    businessesQuery.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                            if(task.isSuccessful()){
+//                                Log.d("BusinessController", "IN " + task.getResult().size());
+                                for (QueryDocumentSnapshot businessDoc : task.getResult()){
+                                    BusinessModel businessModel = businessDoc.toObject(BusinessModel.class);
+
+                                    GeoPoint location = businessModel.getLocation();
+
+                                    // Calculate the distance between the user's location and the business location
+                                    float[] distanceResults = new float[1];
+                                    Location.distanceBetween(geoPoint.getLatitude(), geoPoint.getLongitude(),
+                                            location.getLatitude(), location.getLongitude(), distanceResults);
+                                    float distance = distanceResults[0];
+//                                    Log.d("BusinessController", "distance = " + distance + " radius = " + radius);
+                                    if (distance <= radius) {
+                                        businessesWithinRadius.add(businessModel);
+                                    }
+                                }
+                                callback.onGetCloseProductBusiness(businessesWithinRadius);
+                            }else{
+                                callback.onGetCloseProductBusiness(businessesWithinRadius);
+                            }
+                        }
+                    });
+                }
+            }
+        });
+    }
+
+
+    public void getItemList(String title, String businessId, final GetItemListFromBusiness callback){
+        CollectionReference productsRef = db.collection("products");
+        Query query = productsRef.whereEqualTo("title", title)
+                .whereEqualTo("businessId", businessId);
+        ArrayList<ProductModel> productModels = new ArrayList<ProductModel>();
+        query.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()){
+                    QuerySnapshot querySnapshot = task.getResult();
+                    if (querySnapshot != null){
+                        for (DocumentSnapshot document : querySnapshot.getDocuments()){
+                            ProductModel productModel = document.toObject(ProductModel.class);
+                            productModels.add(productModel);
+                        }
+                        callback.onGetItemListFromBusiness(productModels);
+                    }
+                }else{
+                    callback.onGetItemListFromBusiness(productModels);
+                }
+            }
+        });
     }
 
     public interface BusinessModelCallback{
@@ -253,6 +316,14 @@ public class BusinessController {
 
     public interface GetAllBusinesses{
         void onGetAllBusinesses(ArrayList<BusinessModel> businessModels);
+    }
+
+    public interface GetCloseProductBusiness{
+        void onGetCloseProductBusiness(ArrayList<BusinessModel> businessModels);
+    }
+
+    public interface GetItemListFromBusiness{
+        void onGetItemListFromBusiness(ArrayList<ProductModel> productModels);
     }
 
 }

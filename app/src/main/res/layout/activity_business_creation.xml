@@ -20,8 +20,8 @@
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="181dp"
-        android:layout_height="662dp"
+        android:layout_width="188dp"
+        android:layout_height="593dp"
         android:scaleType="centerCrop"
         android:src="@drawable/chefpng"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -124,62 +124,63 @@
         android:textStyle="bold|italic"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/editTextClosedTime"
+        app:layout_constraintHorizontal_bias="0.177"
         app:layout_constraintStart_toStartOf="@+id/editTextClosedTime"
         app:layout_constraintTop_toBottomOf="@+id/editTextClosedTime"
-        app:layout_constraintVertical_bias="0.451" />
+        app:layout_constraintVertical_bias="0.603" />
 
     <EditText
         android:id="@+id/editTextDeliveryCost"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="380dp"
+        android:layout_marginBottom="304dp"
+        android:autofillHints=""
         android:ems="10"
-        android:textStyle="bold|italic"
 
-        android:hint="@string/delivery_cost"
+        android:hint="delivery cost"
         android:inputType="number"
         android:minHeight="48dp"
+        android:textStyle="bold|italic"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/editTextTextDestinationLimit"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/editTextTextDestinationLimit"
-        android:autofillHints="" />
+        app:layout_constraintStart_toStartOf="@+id/editTextTextDestinationLimit" />
 
     <EditText
         android:id="@+id/editTextOpenTime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:autofillHints=""
         android:ems="10"
         android:hint="@string/open_time"
         android:inputType="time"
-        android:textStyle="bold|italic"
 
         android:minHeight="48dp"
+        android:textStyle="bold|italic"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/editTextDeliveryCost"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/editTextDeliveryCost"
         app:layout_constraintTop_toBottomOf="@+id/editTextDeliveryCost"
-        app:layout_constraintVertical_bias="0.059"
-        android:autofillHints="" />
+        app:layout_constraintVertical_bias="0.072" />
 
     <EditText
         android:id="@+id/editTextClosedTime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:autofillHints=""
         android:ems="10"
         android:hint="@string/closed_time"
         android:inputType="time"
         android:minHeight="48dp"
-        android:textStyle="bold|italic"
 
+        android:textStyle="bold|italic"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/editTextOpenTime"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/editTextOpenTime"
         app:layout_constraintTop_toBottomOf="@+id/editTextOpenTime"
-        app:layout_constraintVertical_bias="0.123"
-        android:autofillHints="" />
+        app:layout_constraintVertical_bias="0.115" />
 
     <Button
         android:id="@+id/chooseImageButtonBusiness"
@@ -190,8 +191,8 @@
         android:text="@string/select_image_create_business"
         app:layout_constraintBottom_toTopOf="@+id/createBsButton"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.167"
+        app:layout_constraintHorizontal_bias="0.121"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editTextClosedTime"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="0.568" />
 </androidx.constraintlayout.widget.ConstraintLayout>

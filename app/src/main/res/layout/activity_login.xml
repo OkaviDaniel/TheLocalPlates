@@ -4,25 +4,28 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/logo"
+    android:gravity="center"
+    android:background="@drawable/back"
     android:backgroundTintMode="screen">
 
-    <Space
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1" />
+
+    <ImageView
+        android:layout_width="216dp"
+        android:layout_height="152dp"
+        android:shadowColor="#CA0D4F"
+        android:src="@drawable/logo" />
 
     <TextView
         android:id="@+id/textView"
-        style="@style/Widget.AppCompat.TextView"
+        style="@android:style/Widget.TextView.PopupMenu"
         android:layout_width="358dp"
         android:layout_height="wrap_content"
         android:gravity="center"
         android:scrollbarStyle="insideOverlay"
         android:shadowColor="#151414"
         android:text="@string/login_form"
-        android:textAppearance="@style/TextAppearance.AppCompat.Display3"
-        android:textColor="#E80505"
+        android:textAppearance="@style/TextAppearance.AppCompat.Display2"
+        android:textColor="#A80F0F"
         android:textColorHighlight="#B10303"
         android:textColorLink="#811616"
         android:textStyle="bold|italic" />
@@ -40,6 +43,8 @@
         android:text="Email:"
 
         android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+
+
 
     <EditText
         android:id="@+id/etLoginEmail"
@@ -92,11 +97,15 @@
         android:textStyle="bold|italic"
 
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        android:textColor="#911C1C"
+        android:textColor="#A80F0F"
         />
 
     <Space
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="2" />
+
+
+
+
 </LinearLayout>
