@@ -1,4 +1,4 @@
-package com.example.thelocalplates8;
+package com.example.thelocalplates8.activity;
 
 import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.FragmentActivity;
@@ -21,8 +21,11 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.example.thelocalplates8.Controllers.BusinessController;
+import com.example.thelocalplates8.LocationManager;
 import com.example.thelocalplates8.Models.BusinessModel;
 import com.example.thelocalplates8.Models.ProductModel;
+import com.example.thelocalplates8.R;
+import com.example.thelocalplates8.adapters.ProductMapAdapter;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -156,6 +159,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             public void onClick(View v) {
                 // Move to BusinessDetails screen
                 String businessId = (String)tag.get("businessId");
+                Log.d("MapsActivity", "businessId = " + businessId);
                 // Start the BusinessInfoScreen activity with the business ID
                 Intent intent = new Intent(MapsActivity.this, BusinessDetailsActivity.class);
                 intent.putExtra("businessId", businessId);

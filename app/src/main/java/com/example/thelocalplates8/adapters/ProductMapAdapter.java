@@ -1,22 +1,21 @@
-package com.example.thelocalplates8;
+package com.example.thelocalplates8.adapters;
 
 import android.content.Context;
-import android.media.Image;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.thelocalplates8.Controllers.CartController;
+import com.example.thelocalplates8.Controllers.ProductController;
 import com.example.thelocalplates8.Models.ProductModel;
+import com.example.thelocalplates8.R;
 import com.squareup.picasso.Picasso;
-
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
@@ -48,7 +47,13 @@ public class ProductMapAdapter  extends RecyclerView.Adapter<ProductMapAdapter.P
         holder.addToCart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                CartController cartController = new CartController(context);
+                cartController.addToCart(products.get(holder.getAdapterPosition()), new CartController.AddProductToCart() {
+                    @Override
+                    public void onAddProductToCart(boolean added) {
 
+                    }
+                });
             }
         });
 

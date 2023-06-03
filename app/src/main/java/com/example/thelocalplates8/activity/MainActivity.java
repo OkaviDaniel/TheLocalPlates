@@ -1,67 +1,33 @@
-package com.example.thelocalplates8;
+package com.example.thelocalplates8.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.Observer;
 
-import android.app.AlertDialog;
-import android.graphics.Bitmap;
-import android.graphics.Canvas;
-import android.location.Location;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 
 import android.content.Intent;
 import android.support.annotation.NonNull;
-import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.Toast;
+import android.widget.TextView;
 
-import androidx.appcompat.widget.SearchView;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.vectordrawable.graphics.drawable.VectorDrawableCompat;
-
-import com.example.thelocalplates8.Controllers.BusinessController;
-import com.example.thelocalplates8.Models.BusinessModel;
-import com.example.thelocalplates8.Models.ProductModel;
-import com.google.android.gms.maps.CameraUpdate;
-import com.google.android.gms.maps.CameraUpdateFactory;
-import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.MapView;
-import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.model.BitmapDescriptor;
-import com.google.android.gms.maps.model.BitmapDescriptorFactory;
-import com.google.android.gms.maps.model.CameraPosition;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.Marker;
-import com.google.android.gms.maps.model.MarkerOptions;
+import com.example.thelocalplates8.Controllers.CustomerController;
+import com.example.thelocalplates8.Models.CustomerModel;
+import com.example.thelocalplates8.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.GeoPoint;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
+import com.squareup.picasso.Picasso;
 
 public class MainActivity extends AppCompatActivity {
-
-//
-//    private MapView mapView;
-//    private GoogleMap googleMap;
-//
       ImageView mapBtn;
-//    private SearchView searchView;
-//    private GeoPoint geoPoint;
-//    private int radius = 2000;
-//
-//    private boolean searchState;
+
+      private ImageView profileImage;
+      private TextView helloName;
 
 
     @Override
@@ -88,6 +54,42 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        initializeVariables();
+        setUserDataOnScreen();
+
+        profileImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
+                startActivity(intent);
+            }
+        });
+
+    }
+
+    private void setUserDataOnScreen() {
+        SharedPreferences sp = getSharedPreferences("MyUserPrefs", Context.MODE_PRIVATE);
+        String userId = sp.getString("userId", "");
+
+        CustomerController customerController = new CustomerController();
+        customerController.checkIfImageExist(userId, new CustomerController.CheckProfileImageExist() {
+            @Override
+            public void onCheckProfileImageExist(String imageUrl) {
+                Picasso.get().load(imageUrl).into(profileImage);
+            }
+        });
+        customerController.getCustomerData(userId, new CustomerController.CustomerModelCallback(){
+            @Override
+            public void onCustomerModelCallback(CustomerModel customer) {
+                helloName.setText("Hi " + customer.getFirstName() + " " + customer.getLastName());
+            }
+        });
+    }
+
+    private void initializeVariables() {
+        profileImage = (ImageView) findViewById(R.id.imageViewMainProfile);
+        helloName = (TextView) findViewById(R.id.textViewHelloName);
     }
 
     private void logoutUser() {

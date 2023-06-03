@@ -19,6 +19,7 @@ import com.example.thelocalplates8.LocationManager;
 import com.example.thelocalplates8.Models.BusinessModel;
 import com.example.thelocalplates8.Models.CustomerModel;
 import com.example.thelocalplates8.Models.ProductModel;
+import com.example.thelocalplates8.activity.BusinessDetailsActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -57,6 +58,22 @@ public class BusinessController {
     public void getBusinessData(String userId, final BusinessModelCallback callback){
 
         Query usersBusiness = db.collection("business").whereEqualTo("userId", userId);
+        usersBusiness.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if(task.isSuccessful()){
+                    for (DocumentSnapshot document : task.getResult()){
+                        BusinessModel businessModel = document.toObject(BusinessModel.class);
+                        callback.onBusinessModelCallback(businessModel);
+                    }
+                }
+            }
+        });
+    }
+
+    public void getBusinessById(String businessId, final BusinessModelCallback callback){
+
+        Query usersBusiness = db.collection("business").whereEqualTo("businessId", businessId);
         usersBusiness.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
@@ -301,6 +318,28 @@ public class BusinessController {
                 }
             }
         });
+    }
+
+    public void getBusinessImage(String userId, BusinessDetailsActivity businessDetailsActivity, final BusinessGetImage callback) {
+        StorageReference storageReference = FirebaseStorage.getInstance().getReference("images/"+userId+"/business");
+
+        try{
+            File localFile = File.createTempFile("tempfile", ".jpeg");
+            storageReference.getFile(localFile).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
+                    Bitmap bitmap = BitmapFactory.decodeFile(localFile.getAbsolutePath());
+                    callback.onBusinessGetImage(bitmap);
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    e.printStackTrace();
+                }
+            });
+        }catch (IOException e){
+            e.printStackTrace();
+        }
     }
 
     public interface BusinessModelCallback{

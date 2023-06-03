@@ -1,4 +1,4 @@
-package com.example.thelocalplates8;
+package com.example.thelocalplates8.activity;
 
 import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
@@ -19,7 +19,7 @@ import android.widget.EditText;
 import com.example.thelocalplates8.Controllers.BusinessController;
 import com.example.thelocalplates8.Controllers.CustomerController;
 import com.example.thelocalplates8.Models.CustomerModel;
-import com.google.firebase.firestore.GeoPoint;
+import com.example.thelocalplates8.R;
 
 public class BusinessCreationActivity extends AppCompatActivity implements CustomerController.CustomerModelCallback {
 

@@ -1,4 +1,4 @@
-package com.example.thelocalplates8;
+package com.example.thelocalplates8.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -7,20 +7,21 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.thelocalplates8.AddProductActivity;
 import com.example.thelocalplates8.Controllers.BusinessController;
 import com.example.thelocalplates8.Controllers.ProductController;
+import com.example.thelocalplates8.FirebaseCommunicator;
 import com.example.thelocalplates8.Models.BusinessModel;
 import com.example.thelocalplates8.Models.ProductModel;
+import com.example.thelocalplates8.R;
+import com.example.thelocalplates8.adapters.ProductBusinessAdapter;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
-
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
@@ -36,6 +37,8 @@ public class BusinessActivity extends AppCompatActivity {
     private ImageView businessImageView;
     private RecyclerView recyclerView;
     private ArrayList<ProductModel> products;
+
+    private TextView productsTextView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -133,6 +136,7 @@ public class BusinessActivity extends AppCompatActivity {
         addProductButton.setVisibility(View.VISIBLE);
 //        welcomeText.setVisibility(View.VISIBLE);
         recyclerView.setVisibility(View.VISIBLE);
+        productsTextView.setVisibility(View.VISIBLE);
     }
 
     private void setVisibilityGone() {
@@ -145,6 +149,7 @@ public class BusinessActivity extends AppCompatActivity {
         addProductButton.setVisibility(View.GONE);
         businessImageView.setVisibility(View.GONE);
         recyclerView.setVisibility(View.GONE);
+        productsTextView.setVisibility(View.GONE);
     }
 
     private void initializeVars() {
@@ -157,6 +162,7 @@ public class BusinessActivity extends AppCompatActivity {
         addProductButton = (Button)findViewById(R.id.AddProductButton);
         businessImageView = (ImageView)findViewById(R.id.BusinessImageView);
         recyclerView = (RecyclerView) findViewById(R.id.recyclerview_products);
+        productsTextView = (TextView) findViewById(R.id.textViewProducts);
         products = new ArrayList<ProductModel>();
     }
 }

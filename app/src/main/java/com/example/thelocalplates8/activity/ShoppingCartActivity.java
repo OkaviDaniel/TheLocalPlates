@@ -1,4 +1,4 @@
-package com.example.thelocalplates8;
+package com.example.thelocalplates8.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;

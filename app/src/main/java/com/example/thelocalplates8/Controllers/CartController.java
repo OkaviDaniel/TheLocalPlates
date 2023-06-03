@@ -161,7 +161,41 @@ public class CartController {
         });
     }
 
+    public void addToCart(ProductModel productModel, final AddProductToCart callback){
+        Query query = db.collection("shoppingCart").whereEqualTo("clientId", userId);
+        query.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if(task.isSuccessful()){
+                    QuerySnapshot querySnapshot = task.getResult();
+                    if (querySnapshot != null){
+                        for (QueryDocumentSnapshot documentSnapshot : querySnapshot){
+                            HashMap<String, HashMap<String, Object>> productsMap = (HashMap<String, HashMap<String, Object>>) documentSnapshot.get("products");
+                            HashMap<String, Object> prodInfo = new HashMap<String, Object>();
+                            prodInfo.put("price", productModel.getPrice());
+                            prodInfo.put("quantity", 1);
+                            prodInfo.put("title", productModel.getTitle());
+                            productsMap.put(productModel.getProductId(), prodInfo);
+                            documentSnapshot.getReference().update("products", productsMap).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void unused) {
+                                    callback.onAddProductToCart(true);
+                                }
+                            });
+                        }
+                    }
+                }else{
+
+                }
+            }
+        });
+    }
+
     public interface GetCartProducts{
         void onGetCartProducts(ArrayList<CartItemModel> productModels);
+    }
+
+    public interface AddProductToCart{
+        void onAddProductToCart(boolean added);
     }
 }

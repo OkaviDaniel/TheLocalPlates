@@ -8,10 +8,11 @@
 
     <ImageView
         android:id="@+id/imageViewProduct"
-        android:layout_width="65dp"
-        android:layout_height="65dp"
+        android:layout_width="82dp"
+        android:layout_height="76dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
+        android:scaleType="centerCrop"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -22,44 +23,42 @@
 
     <TextView
         android:id="@+id/textview_productTitle"
-        android:layout_width="0dp"
+        android:layout_width="179dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="12dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
         android:text="@string/mekoshkeshet"
         android:textSize="16sp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toStartOf="@+id/buttonEditProduct"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/imageViewProduct"
-        app:layout_constraintTop_toTopOf="@+id/buttonEditProduct"
+        app:layout_constraintTop_toTopOf="@+id/imageViewProduct"
         tools:ignore="SmallSp" />
 
     <Button
         android:id="@+id/buttonEditProduct"
-        style="@android:style/Widget.Material.Button.Colored"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:layout_marginEnd="8dp"
-        android:text="@string/button"
+        android:layout_width="125dp"
+        android:layout_height="37dp"
+        android:backgroundTint="#74DF143D"
+        android:text="Edit"
         app:icon="@android:drawable/ic_menu_edit"
-        app:layout_constraintBottom_toBottomOf="@+id/imageViewProduct"
-        app:layout_constraintEnd_toStartOf="@+id/buttonDeleteProduct"
-        app:layout_constraintHorizontal_bias="0.876"
-        app:layout_constraintStart_toEndOf="@+id/imageViewProduct"
-        app:layout_constraintTop_toTopOf="@+id/imageViewProduct"
-        app:layout_constraintVertical_bias="0.529" />
+        app:iconTint="#FFFFFF"
+        app:layout_constraintEnd_toEndOf="@+id/buttonDeleteProduct"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="@+id/buttonDeleteProduct"
+        app:layout_constraintTop_toTopOf="@+id/imageViewProduct" />
 
     <Button
         android:id="@+id/buttonDeleteProduct"
-        style="@android:style/Widget.Material.Button.Colored"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:layout_marginEnd="16dp"
-        android:text="@string/deleteproduct"
+        android:layout_width="124dp"
+        android:layout_height="37dp"
+        android:backgroundTint="#74DF143D"
+        android:text="Delete"
         app:icon="@android:drawable/ic_menu_delete"
-        app:layout_constraintBottom_toBottomOf="@+id/buttonEditProduct"
+        app:iconTint="#FFFFFF"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/buttonEditProduct"
-        app:layout_constraintVertical_bias="1.0"
+        app:layout_constraintStart_toEndOf="@+id/textViewPrice"
+        app:layout_constraintTop_toBottomOf="@+id/buttonEditProduct"
         tools:ignore="MissingConstraints" />
 
     <View
@@ -68,22 +67,20 @@
         android:layout_height="1dp"
         android:layout_marginTop="8dp"
         android:background="?android:attr/listDivider"
-        app:layout_constraintEnd_toEndOf="@+id/buttonDeleteProduct"
+        app:layout_constraintEnd_toStartOf="@+id/buttonDeleteProduct"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/imageViewProduct"
         app:layout_constraintTop_toBottomOf="@+id/imageViewProduct" />
 
     <TextView
         android:id="@+id/textViewPrice"
-        android:layout_width="0dp"
+        android:layout_width="179dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginStart="8dp"
         android:text="@string/_80"
         android:textSize="12sp"
-        app:layout_constraintBottom_toBottomOf="@+id/buttonEditProduct"
-        app:layout_constraintEnd_toEndOf="@+id/textview_productTitle"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/textview_productTitle"
-        app:layout_constraintTop_toBottomOf="@+id/textview_productTitle"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintBottom_toBottomOf="@+id/imageViewProduct"
+        app:layout_constraintStart_toEndOf="@+id/imageViewProduct"
+        app:layout_constraintTop_toBottomOf="@+id/textview_productTitle" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

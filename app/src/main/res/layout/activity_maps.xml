@@ -4,12 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".SearchMap">
+    tools:context=".activity.SearchMap">
 
     <androidx.appcompat.widget.SearchView
         android:id="@+id/mapSearchView"
         android:layout_width="0dp"
         android:layout_height="57dp"
+        android:background="#8BF68787"
+        android:outlineAmbientShadowColor="@android:color/holo_red_light"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.307"

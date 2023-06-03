@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".BusinessActivity">
+    tools:context=".activity.BusinessActivity">
 
 
     <Button
@@ -24,12 +24,13 @@
 
 
     <Button
-        android:backgroundTint="#74DF143D"
-        android:textStyle="bold|italic"
         android:id="@+id/AddProductButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:backgroundTint="#74DF143D"
         android:text="@string/add_product"
+        android:textStyle="bold|italic"
+        app:icon="@drawable/settingkey"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -41,6 +42,7 @@
         android:layout_width="165dp"
         android:layout_height="163dp"
         android:padding="4dp"
+        android:scaleType="centerCrop"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -52,11 +54,12 @@
         app:strokeWidth="5dp" />
 
     <TextView
-        android:textStyle="bold|italic"
         android:id="@+id/BusinessOwnerName"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
         android:text="@string/name"
+        android:textStyle="bold|italic"
         android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="@+id/BusinessImageView"
         app:layout_constraintEnd_toEndOf="parent"
@@ -85,11 +88,12 @@
         tools:ignore="VisualLintBounds" />
 
     <TextView
-        android:textStyle="bold|italic"
         android:id="@+id/BusinessPhoneTextView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
         android:text="@string/phone"
+        android:textStyle="bold|italic"
         app:layout_constraintBottom_toBottomOf="@+id/BusinessImageView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -98,11 +102,12 @@
         app:layout_constraintVertical_bias="0.0" />
 
     <TextView
-        android:textStyle="bold|italic"
         android:id="@+id/BusinessEmailTextView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
         android:text="@string/email"
+        android:textStyle="bold|italic"
         app:layout_constraintBottom_toBottomOf="@+id/BusinessImageView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -123,11 +128,12 @@
         app:layout_constraintVertical_bias="0.0" />
 
     <TextView
-        android:textStyle="bold|italic"
         android:id="@+id/BusinessCityTextView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
         android:text="@string/city"
+        android:textStyle="bold|italic"
         app:layout_constraintBottom_toBottomOf="@+id/BusinessImageView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -147,17 +153,33 @@
         app:layout_constraintTop_toBottomOf="@+id/BusinessCityTextView"
         app:layout_constraintVertical_bias="0.0" />
 
+    <TextView
+        android:id="@+id/textViewProducts"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:textStyle="bold"
+        android:textSize="18dp"
+        android:text="Products"
+        app:layout_constraintEnd_toEndOf="@+id/BusinessImageView"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/BusinessImageView" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerview_products"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
         android:layout_marginBottom="16dp"
         app:layout_constraintBottom_toTopOf="@+id/AddProductButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/BusinessImageView"
+        app:layout_constraintTop_toBottomOf="@+id/textViewProducts"
         app:layout_constraintVertical_bias="0.0" />
 
 

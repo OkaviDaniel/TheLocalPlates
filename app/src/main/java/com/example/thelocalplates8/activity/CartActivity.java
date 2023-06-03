@@ -1,4 +1,4 @@
-package com.example.thelocalplates8;
+package com.example.thelocalplates8.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -9,7 +9,8 @@ import android.widget.Button;
 
 import com.example.thelocalplates8.Controllers.CartController;
 import com.example.thelocalplates8.Models.CartItemModel;
-import com.example.thelocalplates8.Models.ProductModel;
+import com.example.thelocalplates8.R;
+import com.example.thelocalplates8.adapters.CartItemAdapter;
 
 import java.util.ArrayList;
 

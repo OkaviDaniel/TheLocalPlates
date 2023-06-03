@@ -1,10 +1,8 @@
-package com.example.thelocalplates8;
+package com.example.thelocalplates8.adapters;
 
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.graphics.Bitmap;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +18,7 @@ import com.example.thelocalplates8.Controllers.CartController;
 import com.example.thelocalplates8.Controllers.ProductController;
 import com.example.thelocalplates8.Models.CartItemModel;
 import com.example.thelocalplates8.Models.ProductModel;
+import com.example.thelocalplates8.R;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
