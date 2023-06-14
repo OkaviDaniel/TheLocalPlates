@@ -2,6 +2,8 @@ package com.example.thelocalplates8.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -17,11 +19,17 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.thelocalplates8.Controllers.CustomerController;
+import com.example.thelocalplates8.Models.CategoryModel;
+import com.example.thelocalplates8.Models.CultureModel;
 import com.example.thelocalplates8.Models.CustomerModel;
 import com.example.thelocalplates8.R;
+import com.example.thelocalplates8.adapters.CategoryAdapter;
+import com.example.thelocalplates8.adapters.CultureAdapter;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.squareup.picasso.Picasso;
+
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
       ImageView mapBtn;
@@ -57,6 +65,8 @@ public class MainActivity extends AppCompatActivity {
 
         initializeVariables();
         setUserDataOnScreen();
+        recyclerViewCategory();
+        recyclerViewCulture();
 
         profileImage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -66,6 +76,39 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    private void recyclerViewCulture() {
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+        RecyclerView recyclerViewCultureList = findViewById(R.id.view2);
+        recyclerViewCultureList.setLayoutManager(linearLayoutManager);
+
+        ArrayList<CultureModel> cultureList = new ArrayList<>();
+        cultureList.add(new CultureModel("Asia", "noodles"));
+        cultureList.add(new CultureModel("Arab", "falafel"));
+        cultureList.add(new CultureModel("French", "french_fries"));
+        cultureList.add(new CultureModel("Moroccan", "harira"));
+        cultureList.add(new CultureModel("Israel", "wine"));
+
+        CultureAdapter adapter = new CultureAdapter(cultureList);
+        recyclerViewCultureList.setAdapter(adapter);
+    }
+
+    private void recyclerViewCategory() {
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+        RecyclerView recyclerViewCategoryList = findViewById(R.id.view1);
+        recyclerViewCategoryList.setLayoutManager(linearLayoutManager);
+
+        ArrayList<CategoryModel> categoryList = new ArrayList<>();
+        categoryList.add(new CategoryModel("Diet", "diet"));
+        categoryList.add(new CategoryModel("Pasta", "pasta"));
+        categoryList.add(new CategoryModel("Fish", "fish"));
+        categoryList.add(new CategoryModel("Burger", "burger"));
+        categoryList.add(new CategoryModel("Healthy", "healthy_eating"));
+        categoryList.add(new CategoryModel("Soup", "soup"));
+
+        CategoryAdapter adapter = new CategoryAdapter(categoryList);
+        recyclerViewCategoryList.setAdapter(adapter);
     }
 
     private void setUserDataOnScreen() {
