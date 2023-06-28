@@ -1,6 +1,9 @@
 package com.example.thelocalplates8.adapters;
 
+import static androidx.core.content.ContextCompat.startActivity;
+
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +16,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.thelocalplates8.Models.ProductModel;
 import com.example.thelocalplates8.R;
+import com.example.thelocalplates8.activity.EditProductActivity;
+import com.example.thelocalplates8.activity.LoginActivity;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -46,6 +51,9 @@ public class ProductBusinessAdapter extends RecyclerView.Adapter<ProductBusiness
         holder.edit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Intent intent = new Intent(context, EditProductActivity.class);
+                intent.putExtra("prod", currentProduct.getProductId());
+                context.startActivity(intent);
 
             }
         });

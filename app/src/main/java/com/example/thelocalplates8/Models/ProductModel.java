@@ -17,6 +17,8 @@ public class ProductModel {
 
     private String imageUri;
 
+    private String description;
+
     public String getImageUri() {
         return imageUri;
     }
@@ -123,5 +125,13 @@ public class ProductModel {
 
     public ProductModel(){
 
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }
