@@ -1,11 +1,20 @@
 package com.example.thelocalplates8.activity;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.example.thelocalplates8.Controllers.ProductController;
 import com.example.thelocalplates8.Models.ProductModel;
@@ -24,6 +33,10 @@ public class EditProductActivity extends AppCompatActivity {
     private EditText ingredients;
     private EditText price;
     private EditText description;
+    private Button saveBtn;
+    private String productId = "";
+
+    private Uri imageUri = null;
 
 
     @Override
@@ -34,7 +47,7 @@ public class EditProductActivity extends AppCompatActivity {
         ProductController productController = new ProductController();
 
         Bundle resultIntent = getIntent().getExtras();
-        String productId = "";
+
         if(resultIntent != null)
         {
             productId = resultIntent.getString("prod");
@@ -42,9 +55,51 @@ public class EditProductActivity extends AppCompatActivity {
 
         initializeViews();
         showProductInfo(productId, productController);
+        chooseImageBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                selectImage();
+            }
+        });
+
+        saveBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                double price2 = Double.parseDouble(price.getText().toString());
+                double inventoryAmount2 = Integer.parseInt(inventoryAmount.getText().toString());
+
+                productController.updateProduct(productId,
+                        title.getText().toString(),
+                        culture.getText().toString(),
+                        inventoryAmount2,
+                        preparationTime.getText().toString(),
+                        kosher.getText().toString(),
+                        ingredients.getText().toString(),
+                        price2,
+                        description.getText().toString(), new ProductController.UpdateProduct() {
+                            @Override
+                            public void onUpdateProduct(boolean updated) {
+                                if(updated == true && imageUri != null){
+                                    productController.uploadImage(productId,
+                                            imageUri, EditProductActivity.this,
+                                            new ProductController.UploadProductImage() {
+                                        @Override
+                                        public void onUploadProductImage(Boolean uploaded) {
+
+                                        }
+                                    });
+                                }else{
+                                    Toast.makeText(EditProductActivity.this, "Product updated!", Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        });
+            }
+        });
+
 
 
     }
+
 
     private void showProductInfo(String productId, ProductController productController) {
         productController.getProduct(productId, new ProductController.GetProduct() {
@@ -74,6 +129,28 @@ public class EditProductActivity extends AppCompatActivity {
         ingredients = (EditText) findViewById(R.id.editTextProdIngredients);
         price = (EditText) findViewById(R.id.editTextProdPrice);
         description = (EditText) findViewById(R.id.editTextProdDescription);
+        saveBtn = (Button) findViewById(R.id.buttonSaveProdUpdate);
     }
 
+
+    private void selectImage() {
+        Intent intent = new Intent();
+        intent.setType("image/");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        onActivityResultLauncher.launch(intent);
+    }
+
+    ActivityResultLauncher<Intent> onActivityResultLauncher = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            new ActivityResultCallback<ActivityResult>() {
+                @Override
+                public void onActivityResult(ActivityResult result) {
+                    if (result.getResultCode() == Activity.RESULT_OK) {
+                        // There are no request codes
+                        Intent data = result.getData();
+                        imageUri = data.getData();
+                        Picasso.get().load(data.getData()).into(image);
+                    }
+                }
+            });
 }

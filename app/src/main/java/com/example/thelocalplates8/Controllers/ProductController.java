@@ -106,8 +106,8 @@ public class ProductController {
                 }).addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(context, "Successfully uploaded!", Toast.LENGTH_SHORT).show();
-                        callback.onUploadProductImage(true);
+                        Toast.makeText(context, "Successfully failed!", Toast.LENGTH_SHORT).show();
+                        callback.onUploadProductImage(false);
                         if(progressDialog.isShowing()){
                             progressDialog.dismiss();
                         }
@@ -151,7 +151,6 @@ public class ProductController {
     }
 
     public void getImage(String productId, Context context, final GetProductImage callback){
-//        Log.d("ProductController", "" + productId.length());
         SharedPreferences sp = context.getSharedPreferences("MyUserPrefs", Context.MODE_PRIVATE);
         String userId = sp.getString("userId", "");
 
@@ -185,24 +184,49 @@ public class ProductController {
                 if (task.isSuccessful()){
                     DocumentSnapshot document = task.getResult();
                     if (document.exists()){
-//                        Map<String, Object> productMap = document.getData();
-//                        productModel.setTitle((String)productMap.get("title"));
-//                        productModel.setCulture((String)productMap.get("culture"));
-//                        productModel.setPrice(Integer.parseInt((String)productMap.get("price")));
-//                        productModel.setAvailable((boolean)productMap.get("available") );
-//                        productModel.setKosher((String)productMap.get("kosher"));
-//                        productModel.setInventoryAmount(Integer.parseInt((String)productMap.get("inventoryAmount")));
-//                        productModel.setPreparationTime((String)productMap.get("preparationTime"));
-//                        productModel.setRating(Integer.parseInt((String)productMap.get("rating")));
-//                        productModel.setIngredients((String)productMap.get("ingredients"));
                         ProductModel productModel = document.toObject(ProductModel.class);
-
                         callback.onGetProduct(productModel);
                     }
                 }
             }
         });
 
+    }
+
+    public void updateProduct(String productId, String title, String culture,
+                              double inventoryAmount, String preparationTime,
+                              String kosher, String ingredients,
+                              double price, String description, final UpdateProduct callback) {
+
+        CollectionReference collection = db.collection("products");
+        Map<String, Object> updated = new HashMap<String, Object>();
+
+        updated.put("culture", culture);
+        updated.put("description", description);
+        updated.put("ingredients", ingredients);
+        updated.put("inventoryAmount", inventoryAmount);
+        if(inventoryAmount > 0 ){
+            updated.put("available", true);
+        }else{
+            updated.put("available", false);
+        }
+        updated.put("kosher", kosher);
+        updated.put("preparationTime", preparationTime);
+        updated.put("price", price);
+        updated.put("title", title);
+
+        collection.document(productId).update(updated).addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void unused) {
+                callback.onUpdateProduct(true);
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                e.printStackTrace();
+                callback.onUpdateProduct(false);
+            }
+        });
     }
 
     public interface ProductIdInterface{
@@ -223,6 +247,10 @@ public class ProductController {
 
     public interface GetProduct{
         void onGetProduct(ProductModel productModel);
+    }
+
+    public interface UpdateProduct{
+        void onUpdateProduct(boolean updated);
     }
 
 

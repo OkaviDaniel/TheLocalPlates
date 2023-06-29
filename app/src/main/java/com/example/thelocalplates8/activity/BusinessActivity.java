@@ -99,8 +99,6 @@ public class BusinessActivity extends AppCompatActivity {
 
                 }
                 else {   // User didn't created a business
-//                    welcomeText.setText("Do you wish to create a business?");
-//                    welcomeText.setVisibility(View.VISIBLE);
                     createBusiness.setVisibility(View.VISIBLE);
 
                     createBusiness.setOnClickListener(new View.OnClickListener() {

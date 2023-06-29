@@ -9,7 +9,7 @@ public class ProductModel {
     private int discount;
     private int inventoryAmount;
     private String preparationTime;
-    private int price;
+    private double price;
     private double rating;
     private String ingredients;
     private String title;
@@ -91,7 +91,7 @@ public class ProductModel {
         this.preparationTime = preparationTime;
     }
 
-    public int getPrice() {
+    public double getPrice() {
         return price;
     }
 

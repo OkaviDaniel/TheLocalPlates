@@ -2,6 +2,7 @@ package com.example.thelocalplates8.adapters;
 
 import static androidx.core.content.ContextCompat.startActivity;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -54,7 +55,7 @@ public class ProductBusinessAdapter extends RecyclerView.Adapter<ProductBusiness
                 Intent intent = new Intent(context, EditProductActivity.class);
                 intent.putExtra("prod", currentProduct.getProductId());
                 context.startActivity(intent);
-
+                ((Activity)context).finish();
             }
         });
         holder.remove.setOnClickListener(new View.OnClickListener() {
