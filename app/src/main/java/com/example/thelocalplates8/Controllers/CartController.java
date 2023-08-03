@@ -3,6 +3,7 @@ package com.example.thelocalplates8.Controllers;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Log;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
@@ -12,6 +13,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.gms.tasks.Tasks;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.CollectionReference;
@@ -24,6 +26,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class CartController {
@@ -62,7 +65,7 @@ public class CartController {
         });
     }
 
-    public void getItems(final GetCartProducts callback){
+    public void getItems2(final GetCartProducts callback){
         ArrayList<CartItemModel> ans = new ArrayList<CartItemModel>();
         Query query = db.collection("shoppingCart").whereEqualTo("clientId", userId);
         query.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -96,6 +99,56 @@ public class CartController {
         });
     }
 
+    public void getItems(final GetCartProducts callback) {
+        ArrayList<CartItemModel> ans = new ArrayList<CartItemModel>();
+        Query query = db.collection("shoppingCart").whereEqualTo("clientId", userId);
+        query.get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+            @Override
+            public void onSuccess(QuerySnapshot querySnapshot) {
+                List<Task<?>> tasks = new ArrayList<>();
+                for (QueryDocumentSnapshot documentSnapshot : querySnapshot) {
+                    HashMap<String, Object> documentData = (HashMap<String, Object>) documentSnapshot.getData();
+                    if (documentData != null && documentData.containsKey("products")) {
+                        HashMap<String, HashMap<String, Object>> productsMap = (HashMap<String, HashMap<String, Object>>) documentData.get("products");
+                        if (productsMap != null) {
+                            for (Map.Entry<String, HashMap<String, Object>> entry : productsMap.entrySet()) {
+                                String productId = entry.getKey();
+                                HashMap<String, Object> productData = entry.getValue();
+                                int quantity = Integer.parseInt(String.valueOf(productData.get("quantity")));
+
+                                DocumentReference productRef = FirebaseFirestore.getInstance().collection("products").document(productId);
+                                Task<DocumentSnapshot> task = productRef.get();
+                                tasks.add(task);
+                                task.addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                                    @Override
+                                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                                        String title = documentSnapshot.getString("title");
+                                        double price = documentSnapshot.getDouble("price");
+                                        CartItemModel cartItemModel = new CartItemModel(productId, quantity, price, title);
+                                        ans.add(cartItemModel);
+                                    }
+                                });
+                            }
+                        }
+                    }
+                }
+
+                Tasks.whenAllSuccess(tasks).addOnSuccessListener(new OnSuccessListener<List<Object>>() {
+                    @Override
+                    public void onSuccess(List<Object> results) {
+                        callback.onGetCartProducts(ans);
+                    }
+                });
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                callback.onGetCartProducts(ans);
+            }
+        });
+    }
+
+
 
     public void removeProduct(String productId, String userId) {
         Query query = db.collection("shoppingCart").whereEqualTo("clientId", userId);
@@ -113,6 +166,7 @@ public class CartController {
                                 @Override
                                 public void onSuccess(Void unused) {
                                     Log.d("CartController", "Product removed");
+                                    Toast.makeText(context, "Product removed", Toast.LENGTH_SHORT).show();
                                 }
                             }).addOnFailureListener(new OnFailureListener() {
                                 @Override

@@ -89,23 +89,23 @@
         tools:ignore="VisualLintTextFieldSize" />
 
     <EditText
-        android:textStyle="bold|italic"
         android:id="@+id/editTextKosher"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_width="147dp"
+        android:layout_height="60dp"
         android:autofillHints=""
         android:ems="10"
         android:hint="kosher:"
-        android:inputType="text"
+        android:inputType="none"
         android:minHeight="48dp"
         android:textColorHint="#000000"
+        android:textStyle="bold|italic"
         app:layout_constraintEnd_toEndOf="@+id/editTextProductCulture"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/editTextProductCulture"
         app:layout_constraintTop_toBottomOf="@+id/editTextProductCulture"
         tools:ignore="VisualLintTextFieldSize" />
 
     <EditText
-        android:textStyle="bold|italic"
         android:id="@+id/editTextPreparationTime"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -115,7 +115,8 @@
         android:inputType="text"
         android:minHeight="48dp"
         android:textColorHint="#000000"
-        app:layout_constraintEnd_toEndOf="@+id/editTextKosher"
+        android:textStyle="bold|italic"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/editTextKosher"
         app:layout_constraintTop_toBottomOf="@+id/editTextKosher"
         tools:ignore="VisualLintTextFieldSize" />
@@ -144,27 +145,27 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="56dp"
         android:backgroundTint="#74DF143D"
         android:text="select image"
         android:textColorHint="#FFFBF6"
         android:textStyle="bold|italic"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.501"
         app:layout_constraintStart_toStartOf="@+id/editTextPreparationTime"
         app:layout_constraintTop_toBottomOf="@+id/contains" />
 
     <Button
         android:id="@+id/buttonAddProduct"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_width="187dp"
+        android:layout_height="65dp"
         android:backgroundTint="#74DF143D"
         android:text="add product "
         android:textStyle="bold|italic"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/buttonSelectProductImage"
         app:layout_constraintStart_toStartOf="@+id/buttonSelectProductImage"
         app:layout_constraintTop_toBottomOf="@+id/buttonSelectProductImage"
-        app:layout_constraintVertical_bias="0.442"
+        app:layout_constraintVertical_bias="0.326"
         tools:ignore="VisualLintButtonSize" />
 
     <ImageView
@@ -175,6 +176,38 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/AddProductWelcomeTextView" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/editTextPreparationTime"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/editTextKosher"
+        app:layout_constraintTop_toBottomOf="@+id/editTextProductCulture"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+        >
+
+        <AutoCompleteTextView
+            android:id="@+id/auto_complete_textview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:inputType="none"
+            android:text="@string/badatz"
+            tools:ignore="TouchTargetSizeCheck" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <CheckBox
+        android:id="@+id/checkBoxGluten"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Gluten included"
+        app:layout_constraintBottom_toTopOf="@+id/buttonSelectProductImage"
+        app:layout_constraintEnd_toEndOf="@+id/buttonSelectProductImage"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="@+id/buttonSelectProductImage"
+        app:layout_constraintTop_toBottomOf="@+id/contains"
+        app:layout_constraintVertical_bias="0.0" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

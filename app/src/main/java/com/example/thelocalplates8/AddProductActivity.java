@@ -11,9 +11,13 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.InputType;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import com.example.thelocalplates8.Controllers.ProductController;
@@ -23,6 +27,8 @@ public class AddProductActivity extends AppCompatActivity {
 
     private ImageView imageView;
     private Uri imageUri;
+
+    private String[] kashrotList = {"Badatz", "Mehadrin", "Beit Yosef", "None", "Other"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,15 +41,21 @@ public class AddProductActivity extends AppCompatActivity {
         EditText kosherEditText = (EditText) findViewById(R.id.editTextKosher);
         EditText preparationTimeEditText = (EditText) findViewById(R.id.editTextPreparationTime);
         EditText ingredientsEditText = (EditText) findViewById(R.id.contains);
+        CheckBox glutenCheckBox = (CheckBox)findViewById(R.id.checkBoxGluten);
 
         Button selectImageButton = (Button) findViewById(R.id.buttonSelectProductImage);
         Button addProductButton = (Button) findViewById(R.id.buttonAddProduct);
         imageView = (ImageView) findViewById(R.id.imageViewProduct);
 
+        AutoCompleteTextView autoCompleteTextView = findViewById(R.id.auto_complete_textview);
+        ArrayAdapter<String> adapterItems = new ArrayAdapter<String>(this, R.layout.dropdown_items, kashrotList);
+        autoCompleteTextView.setAdapter(adapterItems);
 
 
         SharedPreferences sp = getSharedPreferences("MyUserPrefs", Context.MODE_PRIVATE);
         String businessId = sp.getString("businessId", "");
+
+        kosherEditText.setInputType(InputType.TYPE_NULL);
 
 
         selectImageButton.setOnClickListener(new View.OnClickListener() {
@@ -62,7 +74,8 @@ public class AddProductActivity extends AppCompatActivity {
                 String productName = productNameEditText.getText().toString();
                 double productPrice = Double.parseDouble(productPriceEditText.getText().toString());
                 String productCulture = productCultureEditText.getText().toString();
-                String kosher = kosherEditText.getText().toString();
+//                String kosher = kosherEditText.getText().toString();
+                String kosher = autoCompleteTextView.getText().toString();
                 String preparationTime = preparationTimeEditText.getText().toString();
                 String ingredients = ingredientsEditText.getText().toString();
 

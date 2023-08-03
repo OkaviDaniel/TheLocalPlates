@@ -5,7 +5,6 @@ public class CartItemModel {
     private int quantity;
     private double totalPrice;
     private double price;
-
     private String title;
 
     public String getTitle() {

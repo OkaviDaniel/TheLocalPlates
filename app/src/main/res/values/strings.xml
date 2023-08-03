@@ -67,4 +67,6 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="closeText">Close</string>
     <string name="businessText">Business</string>
+    <string name="kashrot">Kashrot</string>
+    <string name="badatz">Badatz</string>
 </resources>

@@ -38,6 +38,8 @@ public class EditProductActivity extends AppCompatActivity {
 
     private Uri imageUri = null;
 
+    private String[] kashrotList = {"Badatz", "Mehadrin", "Beit Yosef", "None", "Other"};
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,21 +87,32 @@ public class EditProductActivity extends AppCompatActivity {
                                             new ProductController.UploadProductImage() {
                                         @Override
                                         public void onUploadProductImage(Boolean uploaded) {
-
+                                            finishActivity();
                                         }
                                     });
                                 }else{
-                                    Toast.makeText(EditProductActivity.this, "Product updated!", Toast.LENGTH_SHORT).show();
+                                    finishActivity();
                                 }
                             }
                         });
             }
         });
-
-
-
     }
 
+    private void finishActivity(){
+        Toast.makeText(EditProductActivity.this, "Product updated!", Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(EditProductActivity.this, BusinessActivity.class);
+        startActivity(intent);
+        finish();
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent intent = new Intent(EditProductActivity.this, BusinessActivity.class);
+        startActivity(intent);
+        finish();
+    }
 
     private void showProductInfo(String productId, ProductController productController) {
         productController.getProduct(productId, new ProductController.GetProduct() {
