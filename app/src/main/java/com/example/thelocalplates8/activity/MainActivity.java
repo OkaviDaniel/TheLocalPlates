@@ -1,6 +1,7 @@
 package com.example.thelocalplates8.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -16,15 +17,18 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+//import android.widget.SearchView;
 import android.widget.TextView;
 
 import com.example.thelocalplates8.Controllers.CustomerController;
+import com.example.thelocalplates8.Controllers.ProductController;
 import com.example.thelocalplates8.Models.CategoryModel;
 import com.example.thelocalplates8.Models.CultureModel;
 import com.example.thelocalplates8.Models.CustomerModel;
 import com.example.thelocalplates8.R;
 import com.example.thelocalplates8.adapters.CategoryAdapter;
 import com.example.thelocalplates8.adapters.CultureAdapter;
+//import com.google.android.material.search.SearchView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.squareup.picasso.Picasso;
@@ -36,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
 
       private ImageView profileImage;
       private TextView helloName;
-
+      private SearchView searchView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,7 +80,24 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-    }
+        ProductController productController = new ProductController();
+        searchView = findViewById(R.id.searchView);
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                Intent intent = new Intent(MainActivity.this, ResultsActivity.class);
+                intent.putExtra("SEARCH_QUERY", query);
+                startActivity(intent);
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return false;
+            }
+        });
+
+}
 
     private void recyclerViewCulture() {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
@@ -133,6 +154,7 @@ public class MainActivity extends AppCompatActivity {
     private void initializeVariables() {
         profileImage = (ImageView) findViewById(R.id.imageViewMainProfile);
         helloName = (TextView) findViewById(R.id.textViewHelloName);
+        searchView = (SearchView) findViewById(R.id.searchView);
     }
 
     private void logoutUser() {

@@ -15,6 +15,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.thelocalplates8.Controllers.ProductController;
 import com.example.thelocalplates8.Models.ProductModel;
 import com.example.thelocalplates8.R;
 import com.example.thelocalplates8.activity.EditProductActivity;
@@ -61,7 +62,18 @@ public class ProductBusinessAdapter extends RecyclerView.Adapter<ProductBusiness
         holder.remove.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                // Remove the product from the Firestore
+                ProductController productController = new ProductController();
+                productController.deleteProduct(currentProduct.getProductId(), new ProductController.DeleteProduct() {
+                    @Override
+                    public void onDeleteProduct(boolean removed) {
+                        if(removed){
+                            // Removing the item from the RecyclerView
+                            products.remove(holder.getBindingAdapterPosition());
+                            notifyItemRemoved(holder.getBindingAdapterPosition());
+                        }
+                    }
+                });
             }
         });
     }

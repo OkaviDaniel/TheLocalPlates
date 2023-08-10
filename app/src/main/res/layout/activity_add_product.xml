@@ -73,25 +73,48 @@
 
     <EditText
         android:id="@+id/editTextProductCulture"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_width="79dp"
+        android:layout_height="48dp"
         android:autofillHints=""
         android:ems="10"
-        android:textStyle="bold|italic"
         android:hint=" culture:"
         android:inputType="text"
         android:minHeight="48dp"
         android:textColorHint="#000000"
+        android:textStyle="bold|italic"
         app:layout_constraintEnd_toEndOf="@+id/editTextProductPrice"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/editTextProductPrice"
         app:layout_constraintTop_toBottomOf="@+id/editTextProductPrice"
         tools:ignore="VisualLintTextFieldSize" />
 
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/textInputLayout2"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+        android:layout_width="150dp"
+        android:layout_height="59dp"
+        app:layout_constraintBottom_toTopOf="@+id/textInputLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@+id/editTextProductCulture"
+        app:layout_constraintTop_toBottomOf="@+id/editTextProductPrice"
+        app:layout_constraintVertical_bias="0.562">
+
+        <AutoCompleteTextView
+            android:id="@+id/auto_complete_culture"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:inputType="none"
+            android:text="Israel"
+            tools:ignore="TouchTargetSizeCheck" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
     <EditText
         android:id="@+id/editTextKosher"
-        android:layout_width="147dp"
-        android:layout_height="60dp"
+        android:layout_width="80dp"
+        android:layout_height="55dp"
+        android:layout_marginTop="8dp"
         android:autofillHints=""
         android:ems="10"
         android:hint="kosher:"
@@ -124,9 +147,9 @@
 
     <EditText
         android:id="@+id/contains"
-        android:layout_width="392dp"
-        android:layout_height="70dp"
-        android:layout_marginTop="52dp"
+        android:layout_width="0dp"
+        android:layout_height="56dp"
+        android:layout_marginTop="56dp"
         android:autofillHints=""
         android:ems="10"
         android:hint="Ingredients: "
@@ -134,25 +157,64 @@
         android:minHeight="48dp"
         android:textColorHint="#000000"
         android:textStyle="bold|italic"
-        app:layout_constraintEnd_toEndOf="@+id/editTextKosher"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/editTextKosher"
         app:layout_constraintTop_toBottomOf="@+id/editTextKosher"
         tools:ignore="VisualLintTextFieldSize" />
+
+    <EditText
+        android:id="@+id/editTextCategory"
+        android:layout_width="85dp"
+        android:layout_height="48dp"
+        android:ems="10"
+        android:inputType="text"
+        android:hint="Category: "
+        android:textColorHint="#000000"
+        android:textStyle="bold|italic"
+        app:layout_constraintBottom_toTopOf="@+id/checkBoxGluten"
+        app:layout_constraintEnd_toEndOf="@+id/editTextKosher"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/contains"
+        app:layout_constraintTop_toBottomOf="@+id/contains"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/textInputLayout3"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+        android:layout_width="148dp"
+        android:layout_height="56dp"
+        app:layout_constraintBottom_toBottomOf="@+id/editTextCategory"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@+id/editTextCategory"
+        app:layout_constraintTop_toTopOf="@+id/editTextCategory"
+        app:layout_constraintVertical_bias="0.0">
+
+        <AutoCompleteTextView
+            android:id="@+id/auto_complete_category"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:inputType="none"
+            android:text="@string/diet"
+            tools:ignore="TouchTargetSizeCheck" />
+
+    </com.google.android.material.textfield.TextInputLayout>
 
     <Button
         android:id="@+id/buttonSelectProductImage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="56dp"
         android:backgroundTint="#74DF143D"
         android:text="select image"
         android:textColorHint="#FFFBF6"
         android:textStyle="bold|italic"
+        app:layout_constraintBottom_toBottomOf="@+id/buttonAddProduct"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.833"
         app:layout_constraintStart_toStartOf="@+id/editTextPreparationTime"
-        app:layout_constraintTop_toBottomOf="@+id/contains" />
+        app:layout_constraintTop_toTopOf="@+id/buttonAddProduct" />
 
     <Button
         android:id="@+id/buttonAddProduct"
@@ -162,10 +224,11 @@
         android:text="add product "
         android:textStyle="bold|italic"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/buttonSelectProductImage"
-        app:layout_constraintStart_toStartOf="@+id/buttonSelectProductImage"
-        app:layout_constraintTop_toBottomOf="@+id/buttonSelectProductImage"
-        app:layout_constraintVertical_bias="0.326"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.043"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/checkBoxGluten"
+        app:layout_constraintVertical_bias="0.466"
         tools:ignore="VisualLintButtonSize" />
 
     <ImageView
@@ -178,14 +241,16 @@
         app:layout_constraintTop_toBottomOf="@+id/AddProductWelcomeTextView" />
 
     <com.google.android.material.textfield.TextInputLayout
-        android:layout_width="0dp"
+        android:id="@+id/textInputLayout"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+        android:layout_width="150dp"
         android:layout_height="0dp"
         app:layout_constraintBottom_toTopOf="@+id/editTextPreparationTime"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toEndOf="@+id/editTextKosher"
         app:layout_constraintTop_toBottomOf="@+id/editTextProductCulture"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
-        >
+        app:layout_constraintVertical_bias="0.0">
 
         <AutoCompleteTextView
             android:id="@+id/auto_complete_textview"
@@ -202,12 +267,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Gluten included"
-        app:layout_constraintBottom_toTopOf="@+id/buttonSelectProductImage"
-        app:layout_constraintEnd_toEndOf="@+id/buttonSelectProductImage"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="@+id/buttonSelectProductImage"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.484"
+        app:layout_constraintStart_toStartOf="@+id/contains"
         app:layout_constraintTop_toBottomOf="@+id/contains"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="0.435" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -122,10 +122,15 @@ public class CartController {
                                 task.addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                                     @Override
                                     public void onSuccess(DocumentSnapshot documentSnapshot) {
-                                        String title = documentSnapshot.getString("title");
-                                        double price = documentSnapshot.getDouble("price");
-                                        CartItemModel cartItemModel = new CartItemModel(productId, quantity, price, title);
-                                        ans.add(cartItemModel);
+                                        if(documentSnapshot.exists()){
+                                            String title = documentSnapshot.getString("title");
+                                            double price = documentSnapshot.getDouble("price");
+                                            CartItemModel cartItemModel = new CartItemModel(productId, quantity, price, title);
+                                            ans.add(cartItemModel);
+                                        }else{
+                                            //delete the doc
+                                            Log.d("CartController", "Need to remove prod");
+                                        }
                                     }
                                 });
                             }

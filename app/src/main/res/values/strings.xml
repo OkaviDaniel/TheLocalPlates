@@ -69,4 +69,6 @@
     <string name="businessText">Business</string>
     <string name="kashrot">Kashrot</string>
     <string name="badatz">Badatz</string>
+    <string name="other">Other</string>
+    <string name="diet">Diet</string>
 </resources>

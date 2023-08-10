@@ -19,6 +19,8 @@ public class ProductModel {
 
     private String description;
 
+    private String category;
+
     public String getImageUri() {
         return imageUri;
     }
@@ -133,5 +135,13 @@ public class ProductModel {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
     }
 }

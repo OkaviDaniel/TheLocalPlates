@@ -29,6 +29,8 @@ public class AddProductActivity extends AppCompatActivity {
     private Uri imageUri;
 
     private String[] kashrotList = {"Badatz", "Mehadrin", "Beit Yosef", "None", "Other"};
+    private String[] categoryList = {"Diet", "Pasta", "Fish", "Burger", "Healthy","Soup"};
+    private String[] cultureList = {"Asia", "Arab", "French", "Moroccan", "Israel"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +43,7 @@ public class AddProductActivity extends AppCompatActivity {
         EditText kosherEditText = (EditText) findViewById(R.id.editTextKosher);
         EditText preparationTimeEditText = (EditText) findViewById(R.id.editTextPreparationTime);
         EditText ingredientsEditText = (EditText) findViewById(R.id.contains);
+        EditText categoryEditText = (EditText) findViewById(R.id.editTextCategory);
         CheckBox glutenCheckBox = (CheckBox)findViewById(R.id.checkBoxGluten);
 
         Button selectImageButton = (Button) findViewById(R.id.buttonSelectProductImage);
@@ -51,12 +54,20 @@ public class AddProductActivity extends AppCompatActivity {
         ArrayAdapter<String> adapterItems = new ArrayAdapter<String>(this, R.layout.dropdown_items, kashrotList);
         autoCompleteTextView.setAdapter(adapterItems);
 
+        AutoCompleteTextView autoCompleteTextViewCulture = findViewById(R.id.auto_complete_culture);
+        ArrayAdapter<String> adapterItemsCulture = new ArrayAdapter<String>(this, R.layout.dropdown_items, cultureList);
+        autoCompleteTextViewCulture.setAdapter(adapterItemsCulture);
+
+        AutoCompleteTextView autoCompleteTextViewCategory = findViewById(R.id.auto_complete_category);
+        ArrayAdapter<String> adapterItemsCategory = new ArrayAdapter<String>(this, R.layout.dropdown_items, categoryList);
+        autoCompleteTextViewCategory.setAdapter(adapterItemsCategory);
 
         SharedPreferences sp = getSharedPreferences("MyUserPrefs", Context.MODE_PRIVATE);
         String businessId = sp.getString("businessId", "");
 
         kosherEditText.setInputType(InputType.TYPE_NULL);
-
+        productCultureEditText.setInputType(InputType.TYPE_NULL);
+        categoryEditText.setInputType(InputType.TYPE_NULL);
 
         selectImageButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -73,15 +84,17 @@ public class AddProductActivity extends AppCompatActivity {
                 // Need to implement a way that prevent from the user to create the same product twice.
                 String productName = productNameEditText.getText().toString();
                 double productPrice = Double.parseDouble(productPriceEditText.getText().toString());
-                String productCulture = productCultureEditText.getText().toString();
+//                String productCulture = productCultureEditText.getText().toString();
+                String productCulture = autoCompleteTextViewCulture.getText().toString();
 //                String kosher = kosherEditText.getText().toString();
                 String kosher = autoCompleteTextView.getText().toString();
                 String preparationTime = preparationTimeEditText.getText().toString();
                 String ingredients = ingredientsEditText.getText().toString();
+                String productCategory = autoCompleteTextViewCategory.getText().toString();
 
                 ProductController productController = new ProductController();
                 productController.addProduct(businessId, productName, productPrice, productCulture,
-                        kosher, preparationTime, ingredients, new ProductController.ProductIdInterface() {
+                        kosher, preparationTime, ingredients, productCategory, new ProductController.ProductIdInterface() {
                             @Override
                             public void onProductIdInterface(String productId) {
                                 Log.d("Add product", "adding product!");

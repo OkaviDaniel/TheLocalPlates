@@ -11,7 +11,6 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
-import com.example.thelocalplates8.AddProductActivity;
 import com.example.thelocalplates8.Models.ProductModel;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -47,7 +46,7 @@ public class ProductController {
     }
 
 
-    public void addProduct(String businessId, String productName, double productPrice, String productCulture, String kosher, String preparationTime, String ingredients, final ProductIdInterface callback) {
+    public void addProduct(String businessId, String productName, double productPrice, String productCulture, String kosher, String preparationTime, String ingredients, String productCategory, final ProductIdInterface callback) {
         Map<String, Object> product = new HashMap<>();
         product.put("businessId", businessId);
         product.put("title", productName);
@@ -60,6 +59,7 @@ public class ProductController {
         product.put("inventoryAmount", 0);
         product.put("rating", 0);
         product.put("description", "");
+        product.put("category", productCategory);
         db.collection("products").add(product).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
             @Override
             public void onSuccess(DocumentReference documentReference) {
@@ -229,6 +229,29 @@ public class ProductController {
         });
     }
 
+    public void deleteProduct(String productId, final DeleteProduct callback){
+        DocumentReference docRef = FirebaseFirestore.getInstance().collection("products").document(productId);
+        docRef.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                callback.onDeleteProduct(true);
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Log.e("Firestore", "Error deleting document", e);
+                callback.onDeleteProduct(false);
+            }
+        });
+    }
+
+    public Task<QuerySnapshot> getProductsByTitle(String title) {
+        return db.collection("products")
+                .whereEqualTo("title", title)
+                .get();
+    }
+
+
     public interface ProductIdInterface{
         void onProductIdInterface(String productId);
     }
@@ -251,6 +274,10 @@ public class ProductController {
 
     public interface UpdateProduct{
         void onUpdateProduct(boolean updated);
+    }
+
+    public interface DeleteProduct{
+        void onDeleteProduct(boolean removed);
     }
 
 
