@@ -28,19 +28,42 @@ public class ResultsActivity extends AppCompatActivity {
         resultsRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         String searchQuery = getIntent().getStringExtra("SEARCH_QUERY");
+        String typeOfQuery = getIntent().getStringExtra("SEARCH_TYPE");
 
-        productController.getProductsByTitle(searchQuery).addOnCompleteListener(task -> {
-            if (task.isSuccessful()) {
-                List<ProductModel> products = task.getResult().toObjects(ProductModel.class);
-
-                // Set the fetched products to RecyclerView using the ProductAdapter
-                ProductResultAdapter adapter = new ProductResultAdapter(products);
-                resultsRecyclerView.setAdapter(adapter);
-            } else {
-                // Handle the error here
-                Toast.makeText(this, "Error fetching products", Toast.LENGTH_SHORT).show();
-            }
-        });
-
+        if(typeOfQuery.equals("title")){
+            productController.getProductsByTitle(searchQuery).addOnCompleteListener(task -> {
+                if (task.isSuccessful()) {
+                    List<ProductModel> products = task.getResult().toObjects(ProductModel.class);
+                    ProductResultAdapter adapter = new ProductResultAdapter(products, this);
+                    resultsRecyclerView.setAdapter(adapter);
+                } else {
+                    // Handle the error here
+                    Toast.makeText(this, "Error fetching products", Toast.LENGTH_SHORT).show();
+                }
+            });
+        }else if(typeOfQuery.equals("category")){
+            productController.getProductsByCategory(searchQuery).addOnCompleteListener(task -> {
+                if (task.isSuccessful()) {
+                    List<ProductModel> products = task.getResult().toObjects(ProductModel.class);
+                    ProductResultAdapter adapter = new ProductResultAdapter(products, this);
+                    resultsRecyclerView.setAdapter(adapter);
+                } else {
+                    // Handle the error here
+                    Toast.makeText(this, "Error fetching products", Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
+        else if(typeOfQuery.equals("culture")){
+            productController.getProductsByCulture(searchQuery).addOnCompleteListener(task -> {
+                if (task.isSuccessful()) {
+                    List<ProductModel> products = task.getResult().toObjects(ProductModel.class);
+                    ProductResultAdapter adapter = new ProductResultAdapter(products, this);
+                    resultsRecyclerView.setAdapter(adapter);
+                } else {
+                    // Handle the error here
+                    Toast.makeText(this, "Error fetching products", Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
     }
 }

@@ -65,7 +65,7 @@ public class CartItemAdapter extends RecyclerView.Adapter<CartItemAdapter.CartIt
         products.remove(position);
         notifyItemRemoved(position);
 
-        CartController cartController = new CartController();
+        CartController cartController = new CartController(context);
         cartController.removeProduct(productId, userId);
     }
 

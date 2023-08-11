@@ -1,5 +1,6 @@
 package com.example.thelocalplates8.adapters;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,9 +17,13 @@ import java.util.ArrayList;
 
 public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHolder> {
     ArrayList<CategoryModel> categoryModels;
+    Context context;
 
-    public CategoryAdapter(ArrayList<CategoryModel> categoryModels) {
+    OnClickListener onClickListener;
+
+    public CategoryAdapter(ArrayList<CategoryModel> categoryModels, Context context) {
         this.categoryModels = categoryModels;
+        this.context = context;
     }
 
     @NonNull
@@ -37,6 +42,23 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
                         "drawable",
                         holder.categoryName.getContext().getPackageName())
         );
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (onClickListener != null) {
+                    onClickListener.onClick(holder.getAdapterPosition(), currentCategory);
+                }
+            }
+        });
+    }
+
+    public void setOnClickListener(OnClickListener onClickListener) {
+        this.onClickListener = onClickListener;
+    }
+
+
+    public interface OnClickListener {
+        void onClick(int position, CategoryModel model);
     }
 
     @Override

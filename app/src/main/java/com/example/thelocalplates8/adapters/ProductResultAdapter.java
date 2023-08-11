@@ -1,14 +1,19 @@
 package com.example.thelocalplates8.adapters;
 
+import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.thelocalplates8.Controllers.CartController;
 import com.example.thelocalplates8.Models.ProductModel;
 import com.example.thelocalplates8.R;
 import com.squareup.picasso.Picasso;
@@ -19,8 +24,11 @@ public class ProductResultAdapter extends RecyclerView.Adapter<ProductResultAdap
 
     private List<ProductModel> products;
 
-    public ProductResultAdapter(List<ProductModel> products) {
+    private Context context;
+
+    public ProductResultAdapter(List<ProductModel> products, Context context) {
         this.products = products;
+        this.context = context;
     }
 
     @NonNull
@@ -39,6 +47,22 @@ public class ProductResultAdapter extends RecyclerView.Adapter<ProductResultAdap
         holder.tvKosher.setText("Kosher: " + product.getKosher());
         holder.tvInventoryAmount.setText("Inventory: " + product.getInventoryAmount());
         holder.tvCulture.setText("Culture: " + product.getCulture());
+        holder.addToCartBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                CartController cartController = new CartController(context);
+                cartController.addToCart(products.get(holder.getAdapterPosition()), new CartController.AddProductToCart() {
+                    @Override
+                    public void onAddProductToCart(boolean added) {
+                        if(added){
+                            Toast.makeText(context,"Product added to your cart :)",Toast.LENGTH_SHORT).show();
+                        }else{
+                            Toast.makeText(context,"The product is already in your cart",Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+            }
+        });
 
 
     }
@@ -51,6 +75,7 @@ public class ProductResultAdapter extends RecyclerView.Adapter<ProductResultAdap
     static class ProductViewHolder extends RecyclerView.ViewHolder {
         ImageView ivProductPicture;
         TextView tvProductTitle, tvProductPrice, tvKosher, tvInventoryAmount, tvCulture;
+        Button addToCartBtn;
 
 
         public ProductViewHolder(@NonNull View itemView) {
@@ -61,6 +86,7 @@ public class ProductResultAdapter extends RecyclerView.Adapter<ProductResultAdap
             tvKosher = itemView.findViewById(R.id.tvKosher);
             tvInventoryAmount = itemView.findViewById(R.id.tvInventoryAmount);
             tvCulture = itemView.findViewById(R.id.tvCulture);
+            addToCartBtn = itemView.findViewById(R.id.addToCartBtn);
         }
     }
 }

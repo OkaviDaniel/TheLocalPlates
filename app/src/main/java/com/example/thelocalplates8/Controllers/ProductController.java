@@ -251,6 +251,17 @@ public class ProductController {
                 .get();
     }
 
+    public Task<QuerySnapshot> getProductsByCategory(String category) {
+        return db.collection("products")
+                .whereEqualTo("category", category)
+                .get();
+    }
+    public Task<QuerySnapshot> getProductsByCulture(String culture) {
+        return db.collection("products")
+                .whereEqualTo("culture", culture)
+                .get();
+    }
+
 
     public interface ProductIdInterface{
         void onProductIdInterface(String productId);

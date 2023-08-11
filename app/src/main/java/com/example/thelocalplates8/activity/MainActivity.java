@@ -87,6 +87,7 @@ public class MainActivity extends AppCompatActivity {
             public boolean onQueryTextSubmit(String query) {
                 Intent intent = new Intent(MainActivity.this, ResultsActivity.class);
                 intent.putExtra("SEARCH_QUERY", query);
+                intent.putExtra("SEARCH_TYPE", "title");
                 startActivity(intent);
                 return true;
             }
@@ -111,8 +112,19 @@ public class MainActivity extends AppCompatActivity {
         cultureList.add(new CultureModel("Moroccan", "harira"));
         cultureList.add(new CultureModel("Israel", "wine"));
 
-        CultureAdapter adapter = new CultureAdapter(cultureList);
+        CultureAdapter adapter = new CultureAdapter(cultureList, this);
         recyclerViewCultureList.setAdapter(adapter);
+
+        adapter.setOnClickListener(new CultureAdapter.OnClickListener() {
+            @Override
+            public void onClick(int position, CultureModel model) {
+                Intent intent = new Intent(MainActivity.this, ResultsActivity.class);
+                intent.putExtra("SEARCH_QUERY", model.getTitle());
+                intent.putExtra("SEARCH_TYPE", "culture");
+                startActivity(intent);
+            }
+        });
+
     }
 
     private void recyclerViewCategory() {
@@ -128,8 +140,19 @@ public class MainActivity extends AppCompatActivity {
         categoryList.add(new CategoryModel("Healthy", "healthy_eating"));
         categoryList.add(new CategoryModel("Soup", "soup"));
 
-        CategoryAdapter adapter = new CategoryAdapter(categoryList);
+        CategoryAdapter adapter = new CategoryAdapter(categoryList, this);
         recyclerViewCategoryList.setAdapter(adapter);
+
+        adapter.setOnClickListener(new CategoryAdapter.OnClickListener() {
+            @Override
+            public void onClick(int position, CategoryModel model) {
+                Intent intent = new Intent(MainActivity.this, ResultsActivity.class);
+                intent.putExtra("SEARCH_QUERY", model.getTitle());
+                intent.putExtra("SEARCH_TYPE", "category");
+                startActivity(intent);
+            }
+        });
+
     }
 
     private void setUserDataOnScreen() {
@@ -140,7 +163,9 @@ public class MainActivity extends AppCompatActivity {
         customerController.checkIfImageExist(userId, new CustomerController.CheckProfileImageExist() {
             @Override
             public void onCheckProfileImageExist(String imageUrl) {
-                Picasso.get().load(imageUrl).into(profileImage);
+                if(imageUrl.length() != 0){
+                    Picasso.get().load(imageUrl).into(profileImage);
+                }
             }
         });
         customerController.getCustomerData(userId, new CustomerController.CustomerModelCallback(){
