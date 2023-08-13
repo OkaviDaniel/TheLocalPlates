@@ -71,4 +71,5 @@
     <string name="badatz">Badatz</string>
     <string name="other">Other</string>
     <string name="diet">Diet</string>
+    <string name="title_activity_chats">ChatsActivity</string>
 </resources>

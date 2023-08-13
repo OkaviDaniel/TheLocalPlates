@@ -37,7 +37,7 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
       ImageView mapBtn;
-
+      ImageView chatBtn;
       private ImageView profileImage;
       private TextView helloName;
       private SearchView searchView;
@@ -58,6 +58,15 @@ public class MainActivity extends AppCompatActivity {
             finish();
         }
 
+        chatBtn = (ImageView) findViewById(R.id.imageView6);
+        chatBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, ChatsActivity.class);
+                startActivity(intent);
+            }
+        });
+
         mapBtn = (ImageView) findViewById(R.id.imageView5);
         mapBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -66,6 +75,10 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+
+
+
 
         initializeVariables();
         setUserDataOnScreen();
