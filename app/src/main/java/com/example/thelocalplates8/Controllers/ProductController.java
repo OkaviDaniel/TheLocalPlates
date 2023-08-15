@@ -46,7 +46,7 @@ public class ProductController {
     }
 
 
-    public void addProduct(String businessId, String productName, double productPrice, String productCulture, String kosher, String preparationTime, String ingredients, String productCategory, final ProductIdInterface callback) {
+    public void addProduct(String businessId, String productName, double productPrice, String productCulture, String kosher, String preparationTime, String ingredients, String productCategory, boolean glutenIncluded, final ProductIdInterface callback) {
         Map<String, Object> product = new HashMap<>();
         product.put("businessId", businessId);
         product.put("title", productName);
@@ -60,6 +60,7 @@ public class ProductController {
         product.put("rating", 0);
         product.put("description", "");
         product.put("category", productCategory);
+        product.put("glutenIncluded", glutenIncluded);
         db.collection("products").add(product).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
             @Override
             public void onSuccess(DocumentReference documentReference) {

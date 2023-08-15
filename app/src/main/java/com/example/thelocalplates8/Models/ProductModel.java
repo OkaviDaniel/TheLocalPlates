@@ -17,6 +17,8 @@ public class ProductModel {
 
     private String imageUri;
 
+    private boolean glutenIncluded;
+
     private String description;
 
     private String category;
@@ -143,5 +145,13 @@ public class ProductModel {
 
     public void setCategory(String category) {
         this.category = category;
+    }
+
+    public boolean isGlutenIncluded() {
+        return glutenIncluded;
+    }
+
+    public void setGlutenIncluded(boolean glutenIncluded) {
+        this.glutenIncluded = glutenIncluded;
     }
 }

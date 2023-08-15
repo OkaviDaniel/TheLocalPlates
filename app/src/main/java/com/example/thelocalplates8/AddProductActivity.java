@@ -91,10 +91,11 @@ public class AddProductActivity extends AppCompatActivity {
                 String preparationTime = preparationTimeEditText.getText().toString();
                 String ingredients = ingredientsEditText.getText().toString();
                 String productCategory = autoCompleteTextViewCategory.getText().toString();
+                Boolean glutenIncluded = glutenCheckBox.isChecked();
 
                 ProductController productController = new ProductController();
                 productController.addProduct(businessId, productName, productPrice, productCulture,
-                        kosher, preparationTime, ingredients, productCategory, new ProductController.ProductIdInterface() {
+                        kosher, preparationTime, ingredients, productCategory, glutenIncluded, new ProductController.ProductIdInterface() {
                             @Override
                             public void onProductIdInterface(String productId) {
                                 Log.d("Add product", "adding product!");

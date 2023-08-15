@@ -45,6 +45,12 @@ public class OtherBusinessAdapter extends RecyclerView.Adapter<OtherBusinessAdap
         holder.rating.setText(String.valueOf(currentProduct.getRating()));
         holder.kashrot.setText(currentProduct.getKosher());
 
+        if(currentProduct.isGlutenIncluded()){
+            holder.glutenFree.setText("No");
+        }else{
+            holder.glutenFree.setText("Yes");
+        }
+
         holder.addToCart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
