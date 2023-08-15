@@ -114,6 +114,7 @@ public class CartItemAdapter extends RecyclerView.Adapter<CartItemAdapter.CartIt
         TextView rating = dialogView.findViewById(R.id.textViewRatingP);
         TextView preparationTime = dialogView.findViewById(R.id.textViewPreparationP);
         ImageView productImageView = dialogView.findViewById(R.id.imageViewProductDetails);
+        TextView productIngredients = dialogView.findViewById(R.id.textViewIngredientsP);
 
         title.setText(productModel.getTitle());
         culture.setText(productModel.getCulture());
@@ -123,6 +124,7 @@ public class CartItemAdapter extends RecyclerView.Adapter<CartItemAdapter.CartIt
         inventoryAmount.setText(String.valueOf(productModel.getInventoryAmount()));
         rating.setText(String.valueOf(productModel.getRating()));
         preparationTime.setText(productModel.getPreparationTime());
+        productIngredients.setText(productModel.getIngredients());
 
         String productImageUrl = productModel.getImageUri();
         Picasso.get().load(productImageUrl).into(productImageView);

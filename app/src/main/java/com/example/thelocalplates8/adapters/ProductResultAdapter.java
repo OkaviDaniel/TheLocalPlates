@@ -43,7 +43,7 @@ public class ProductResultAdapter extends RecyclerView.Adapter<ProductResultAdap
         ProductModel product = products.get(position);
         Picasso.get().load(products.get(position).getImageUri()).into(holder.ivProductPicture);
         holder.tvProductTitle.setText(product.getTitle());
-        holder.tvProductPrice.setText(String.format("Price: $%.2f", product.getPrice()));
+        holder.tvProductPrice.setText(String.format("Price: ₪%.2f", product.getPrice()));
         holder.tvKosher.setText("Kosher: " + product.getKosher());
         holder.tvInventoryAmount.setText("Inventory: " + product.getInventoryAmount());
         holder.tvCulture.setText("Culture: " + product.getCulture());

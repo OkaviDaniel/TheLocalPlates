@@ -71,4 +71,6 @@
     <string name="badatz">Badatz</string>
     <string name="other">Other</string>
     <string name="diet">Diet</string>
+    <string name="gluten_free">Gluten free:</string>
+    <string name="aa">____</string>
 </resources>

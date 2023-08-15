@@ -245,6 +245,28 @@ public class ProductController {
         });
     }
 
+    public void getBusinessProducts(String businessId, final GetBusinessProducts callback){
+        ArrayList<ProductModel> products = new ArrayList<ProductModel>();
+        ProductController productController = new ProductController();
+
+        DatabaseReference databaseRef = FirebaseDatabase.getInstance().getReference("products");
+        Query query = db.collection("products").whereEqualTo("businessId", businessId);
+
+        query.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if(task.isSuccessful()){
+                    for(QueryDocumentSnapshot documentSnapshot: task.getResult()){
+                        ProductModel productModel = documentSnapshot.toObject(ProductModel.class);
+                        productModel.setProductId(documentSnapshot.getId());
+                        products.add(productModel);
+                    }
+                    callback.onGetBusinessProducts(products);
+                }
+            }
+        });
+    }
+
     public Task<QuerySnapshot> getProductsByTitle(String title) {
         return db.collection("products")
                 .whereEqualTo("title", title)
@@ -291,7 +313,9 @@ public class ProductController {
         void onDeleteProduct(boolean removed);
     }
 
-
+    public interface GetBusinessProducts{
+        void onGetBusinessProducts(ArrayList<ProductModel> products);
+    }
 
 
 }

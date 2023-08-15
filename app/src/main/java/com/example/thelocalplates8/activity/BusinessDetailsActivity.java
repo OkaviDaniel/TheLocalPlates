@@ -1,6 +1,8 @@
 package com.example.thelocalplates8.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
 import android.content.Intent;
@@ -13,9 +15,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.thelocalplates8.Controllers.BusinessController;
+import com.example.thelocalplates8.Controllers.ProductController;
 import com.example.thelocalplates8.Models.BusinessModel;
+import com.example.thelocalplates8.Models.ProductModel;
 import com.example.thelocalplates8.R;
+import com.example.thelocalplates8.adapters.OtherBusinessAdapter;
 import com.squareup.picasso.Picasso;
+
+import java.util.ArrayList;
 
 public class BusinessDetailsActivity extends AppCompatActivity {
 
@@ -26,6 +33,11 @@ public class BusinessDetailsActivity extends AppCompatActivity {
     private TextView mailTextView;
     private TextView phoneTextView;
     private ImageView businessImage;
+
+    private RecyclerView recyclerView;
+
+    private ArrayList<ProductModel> productsM;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +51,25 @@ public class BusinessDetailsActivity extends AppCompatActivity {
         initializeVariables();
 
         showBusinessInfo();
+
+        initializeProducts();
+    }
+
+    private void initializeProducts() {
+//        BusinessController businessController = new BusinessController();
+        ProductController productController = new ProductController();
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
+       productController.getBusinessProducts(businessId, new ProductController.GetBusinessProducts() {
+           @Override
+           public void onGetBusinessProducts(ArrayList<ProductModel> products) {
+               productsM.addAll(products);
+               recyclerView.setLayoutManager(layoutManager);
+               OtherBusinessAdapter otherBusinessAdapter = new OtherBusinessAdapter(products, BusinessDetailsActivity.this);
+               recyclerView.setAdapter(otherBusinessAdapter);
+           }
+       });
+
+
     }
 
     private void showBusinessInfo() {
@@ -74,6 +105,8 @@ public class BusinessDetailsActivity extends AppCompatActivity {
         mailTextView = (TextView) findViewById(R.id.textViewMailB);
         phoneTextView = (TextView) findViewById(R.id.textViewPhoneB);
         businessImage = (ImageView) findViewById(R.id.imageViewBusinessDetails);
+        recyclerView = (RecyclerView) findViewById(R.id.recyclerView2);
+        productsM = new ArrayList<ProductModel>();
     }
 
 }
