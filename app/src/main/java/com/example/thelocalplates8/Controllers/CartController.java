@@ -257,4 +257,8 @@ public class CartController {
     public interface AddProductToCart{
         void onAddProductToCart(boolean added);
     }
+
+    public interface CheckoutOrder{
+        void onCheckoutOrder(boolean ordered);
+    }
 }

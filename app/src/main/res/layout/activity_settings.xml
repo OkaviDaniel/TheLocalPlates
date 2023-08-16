@@ -80,6 +80,19 @@
         android:text="Location:"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         android:textStyle="bold|italic" />
+    <Space
+        android:layout_width="147dp"
+        android:layout_height="32dp"
+        android:layout_weight="-5" />
+
+
+    <Button
+        android:id="@+id/buttonPH"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:backgroundTint="#FE897F"
+        android:text="My purchase history"
+        app:icon="@android:drawable/ic_menu_recent_history" />
 
     <com.google.android.gms.maps.MapView
         android:id="@+id/mapView"

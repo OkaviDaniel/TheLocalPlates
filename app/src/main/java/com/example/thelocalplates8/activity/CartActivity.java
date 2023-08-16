@@ -5,7 +5,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.example.thelocalplates8.Controllers.CartController;
 import com.example.thelocalplates8.Models.CartItemModel;
@@ -38,6 +40,15 @@ public class CartActivity extends AppCompatActivity {
                 recyclerView.setLayoutManager(layoutManager);
                 CartItemAdapter cartItemAdapter = new CartItemAdapter(products, CartActivity.this);
                 recyclerView.setAdapter(cartItemAdapter);
+            }
+        });
+
+        checkoutButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(CartActivity.this, "Checkout", Toast.LENGTH_SHORT).show();
+
+
             }
         });
 

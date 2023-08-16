@@ -11,6 +11,7 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -36,6 +37,8 @@ public class BusinessDetailsActivity extends AppCompatActivity {
 
     private RecyclerView recyclerView;
 
+    private Button chatBtn;
+
     private ArrayList<ProductModel> productsM;
 
 
@@ -53,6 +56,14 @@ public class BusinessDetailsActivity extends AppCompatActivity {
         showBusinessInfo();
 
         initializeProducts();
+
+        chatBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent1 = new Intent(BusinessDetailsActivity.this, SettingsActivity.class);
+                startActivity(intent1);
+            }
+        });
     }
 
     private void initializeProducts() {
@@ -94,18 +105,17 @@ public class BusinessDetailsActivity extends AppCompatActivity {
         ownerTextView.setText(business.getFirstName() + " " + business.getLastName());
         cityTextView.setText(business.getCity());
         ratingTextView.setText(String.valueOf(business.getRating()));
-        mailTextView.setText(business.getEmail());
-        phoneTextView.setText(business.getPhone());
+//        mailTextView.setText(business.getEmail());
+//        phoneTextView.setText(business.getPhone());
     }
 
     private void initializeVariables() {
         ownerTextView = (TextView) findViewById(R.id.textViewOwnerB);
         cityTextView = (TextView) findViewById(R.id.textViewLocationB);
         ratingTextView = (TextView) findViewById(R.id.textViewRatingB);
-        mailTextView = (TextView) findViewById(R.id.textViewMailB);
-        phoneTextView = (TextView) findViewById(R.id.textViewPhoneB);
         businessImage = (ImageView) findViewById(R.id.imageViewBusinessDetails);
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView2);
+        chatBtn = (Button)findViewById(R.id.buttonChatO);
         productsM = new ArrayList<ProductModel>();
     }
 

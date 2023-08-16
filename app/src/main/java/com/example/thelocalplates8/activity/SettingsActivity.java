@@ -15,6 +15,7 @@ import androidx.annotation.NonNull;
 import android.content.Intent;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -36,6 +37,8 @@ public class SettingsActivity extends AppCompatActivity {
     private TextView tvFirstName, tvLastName, tvEmail;
     private ImageView profileImageView;
 
+    private Button purchaseHistoryBtn;
+
     private Uri imageUri;
 
     private CustomerController customerController;
@@ -53,6 +56,7 @@ public class SettingsActivity extends AppCompatActivity {
         tvEmail = (TextView)findViewById(R.id.emailSettings);
         profileImageView = (ImageView) findViewById(R.id.profileImageViewSettings);
         profileImageView.setVisibility(View.GONE);
+        purchaseHistoryBtn = (Button)findViewById(R.id.buttonPH);
 
         customerController = new CustomerController();
         customerController.checkIfImageExist(currentUser.getUid(), new CustomerController.CheckProfileImageExist(){
@@ -92,6 +96,15 @@ public class SettingsActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 selectImage();
+            }
+        });
+
+
+        purchaseHistoryBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+//                Toast.makeText(SettingsActivity.this,"Clicked", Toast.LENGTH_SHORT).show();
+
             }
         });
     }
