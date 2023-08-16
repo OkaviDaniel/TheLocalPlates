@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -46,8 +47,18 @@ public class CartActivity extends AppCompatActivity {
         checkoutButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(CartActivity.this, "Checkout", Toast.LENGTH_SHORT).show();
-
+                cartController.completeOrder(CartActivity.this, products, new CartController.CheckoutOrder() {
+                    @Override
+                    public void onCheckoutOrder(boolean ordered) {
+                        cartController.emptyTheCart(CartActivity.this, new CartController.EmptyCart() {
+                            @Override
+                            public void onEmptyCart(boolean isEmpty) {
+                                Toast.makeText(CartActivity.this, "Checkout", Toast.LENGTH_SHORT).show();
+                                finish();
+                            }
+                        });
+                    }
+                });
 
             }
         });

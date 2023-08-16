@@ -25,6 +25,7 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -250,6 +251,83 @@ public class CartController {
         });
     }
 
+    public void emptyTheCart(Context context, final EmptyCart callback){
+        SharedPreferences sp = context.getSharedPreferences("MyUserPrefs", Context.MODE_PRIVATE);
+        String userId = sp.getString("userId", "");
+
+        CollectionReference cartCollectionRef = FirebaseFirestore.getInstance().collection("shoppingCart");
+
+        Query query = cartCollectionRef.whereEqualTo("clientId", userId);
+
+        query.get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+            @Override
+            public void onSuccess(QuerySnapshot querySnapshot) {
+                for (QueryDocumentSnapshot documentSnapshot : querySnapshot) {
+                    // Get the reference to the document with the matching userId
+                    DocumentReference cartRef = cartCollectionRef.document(documentSnapshot.getId());
+
+                    // Create an empty HashMap to set the "products" field
+                    Map<String, Object> emptyProductsMap = new HashMap<>();
+
+                    // Update the shoppingCart document with the empty "products" field
+                    cartRef.update("products", emptyProductsMap)
+                            .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void aVoid) {
+                                    callback.onEmptyCart(true);
+                                }
+                            })
+                            .addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    Log.e("Firestore", "Error updating shopping cart", e);
+                                    callback.onEmptyCart(false);
+                                }
+                            });
+                }
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Log.e("Firestore", "Error querying shopping cart", e);
+                callback.onEmptyCart(false);
+            }
+        });
+    }
+
+    public void completeOrder(Context context, ArrayList<CartItemModel> products, final CheckoutOrder callback){
+        SharedPreferences sp = context.getSharedPreferences("MyUserPrefs", Context.MODE_PRIVATE);
+        String userId = sp.getString("userId", "");
+
+        DocumentReference orderRef = FirebaseFirestore.getInstance().collection("orders").document();
+        Map<String, Object> order = new HashMap<String, Object>();
+        order.put("customerId", userId);
+        order.put("orderDate", new Date());
+        order.put("orderId", orderRef.getId());
+
+        double totalPrice = 0;
+        Map<String, Object> products2 = new HashMap<String, Object>();
+
+        for(CartItemModel c: products){
+            products2.put(c.getProductId(), c);
+            totalPrice += c.getTotalPrice();
+        }
+        order.put("products", products2);
+        orderRef.set(order).addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        callback.onCheckoutOrder(true);
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.e("Firestore", "Error adding order", e);
+                    }
+                });
+
+    }
+
     public interface GetCartProducts{
         void onGetCartProducts(ArrayList<CartItemModel> productModels);
     }
@@ -260,5 +338,9 @@ public class CartController {
 
     public interface CheckoutOrder{
         void onCheckoutOrder(boolean ordered);
+    }
+
+    public interface EmptyCart{
+        void onEmptyCart(boolean isEmpty);
     }
 }

@@ -1,6 +1,7 @@
 package com.example.thelocalplates8.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.thelocalplates8.Controllers.CartController;
 import com.example.thelocalplates8.Models.ProductModel;
 import com.example.thelocalplates8.R;
+import com.example.thelocalplates8.activity.BusinessDetailsActivity;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -63,6 +65,14 @@ public class ProductResultAdapter extends RecyclerView.Adapter<ProductResultAdap
                 });
             }
         });
+        holder.goToBusiness.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, BusinessDetailsActivity.class);
+                intent.putExtra("businessId", product.getBusinessId());
+                context.startActivity(intent);
+            }
+        });
 
 
     }
@@ -75,7 +85,7 @@ public class ProductResultAdapter extends RecyclerView.Adapter<ProductResultAdap
     static class ProductViewHolder extends RecyclerView.ViewHolder {
         ImageView ivProductPicture;
         TextView tvProductTitle, tvProductPrice, tvKosher, tvInventoryAmount, tvCulture;
-        Button addToCartBtn;
+        Button addToCartBtn, goToBusiness;
 
 
         public ProductViewHolder(@NonNull View itemView) {
@@ -87,6 +97,7 @@ public class ProductResultAdapter extends RecyclerView.Adapter<ProductResultAdap
             tvInventoryAmount = itemView.findViewById(R.id.tvInventoryAmount);
             tvCulture = itemView.findViewById(R.id.tvCulture);
             addToCartBtn = itemView.findViewById(R.id.addToCartBtn);
+            goToBusiness = itemView.findViewById(R.id.buttonGoToBusinessP);
         }
     }
 }
