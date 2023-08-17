@@ -313,6 +313,7 @@ public class CartController {
             totalPrice += c.getTotalPrice();
         }
         order.put("products", products2);
+        order.put("totalOrderPrice", totalPrice);
         orderRef.set(order).addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
