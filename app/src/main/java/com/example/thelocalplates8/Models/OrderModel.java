@@ -1,11 +1,12 @@
 package com.example.thelocalplates8.Models;
 
+import java.util.Date;
 import java.util.Map;
 
 public class OrderModel {
 
     private String customerId;
-    private String orderData;
+    private Date orderDate;
     private String orderId;
     private double totalOrderPrice;
     private Map<String,Object> products;
@@ -18,12 +19,12 @@ public class OrderModel {
         this.customerId = customerId;
     }
 
-    public String getOrderData() {
-        return orderData;
+    public Date getOrderDate() {
+        return orderDate;
     }
 
-    public void setOrderData(String orderData) {
-        this.orderData = orderData;
+    public void setOrderDate(Date orderDate) {
+        this.orderDate = orderDate;
     }
 
     public String getOrderId() {

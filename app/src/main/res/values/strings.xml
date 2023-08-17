@@ -73,4 +73,5 @@
     <string name="diet">Diet</string>
     <string name="gluten_free">Gluten free:</string>
     <string name="aa">____</string>
+    <string name="order_page_text">In this page you can view all your orders.\nTo view the details of specific order please\nclick on the right button.\nThere you can review and rate the product and\nthe business.</string>
 </resources>

@@ -7,6 +7,8 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -104,7 +106,12 @@ public class SettingsActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 //                Toast.makeText(SettingsActivity.this,"Clicked", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(SettingsActivity.this, OrderHistoryActivity.class);
 
+                SharedPreferences sharedPreferences = getSharedPreferences("MyUserPrefs", Context.MODE_PRIVATE);
+                String userId = sharedPreferences.getString("userId", "");
+                intent.putExtra("USERID", userId);
+                startActivity(intent);
             }
         });
     }
