@@ -268,6 +268,33 @@ public class ProductController {
         });
     }
 
+    public void getProductsByIds(ArrayList<String> ids, final GetProductsByIds callback){
+        // Get a reference to the "products" collection
+        CollectionReference productsCollectionRef = FirebaseFirestore.getInstance().collection("products");
+
+// Query for documents where the product ID is in the list of IDs
+        Query query = productsCollectionRef.whereIn("productId", ids);
+        ArrayList<ProductModel> ans = new ArrayList<ProductModel>();
+
+        query.get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+            @Override
+            public void onSuccess(QuerySnapshot querySnapshot) {
+                for (QueryDocumentSnapshot documentSnapshot : querySnapshot) {
+                    ProductModel productModel = documentSnapshot.toObject(ProductModel.class);
+                    productModel.setProductId(documentSnapshot.getId());
+                    ans.add(productModel);
+                }
+                callback.onGetProductsByIds(ans);
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                // Handle the error if the query fails
+                Log.e("Firestore", "Error querying products", e);
+            }
+        });
+    }
+
     public Task<QuerySnapshot> getProductsByTitle(String title) {
         return db.collection("products")
                 .whereEqualTo("title", title)
@@ -318,5 +345,8 @@ public class ProductController {
         void onGetBusinessProducts(ArrayList<ProductModel> products);
     }
 
+    public interface GetProductsByIds{
+        void onGetProductsByIds(ArrayList<ProductModel> products);
+    }
 
 }

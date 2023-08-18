@@ -1,6 +1,7 @@
 package com.example.thelocalplates8.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,7 +15,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.thelocalplates8.Models.OrderModel;
 import com.example.thelocalplates8.R;
+import com.example.thelocalplates8.activity.OrderProductsActivity;
 
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
@@ -52,7 +55,12 @@ public class OrderHistoryAdapter extends RecyclerView.Adapter<OrderHistoryAdapte
             @Override
             public void onClick(View v) {
 //                Toast.makeText(context, "Clicked", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(context, OrderProductsActivity.class);
+                intent.putExtra("USERID", userId);
+                intent.putExtra("ORDERID", currentOrder.getOrderId());
+                intent.putExtra("PRODUCTS", (Serializable) currentOrder.getProducts());
 
+                context.startActivity(intent);
             }
         });
     }
