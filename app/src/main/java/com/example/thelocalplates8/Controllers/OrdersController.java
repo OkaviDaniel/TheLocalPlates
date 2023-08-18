@@ -70,6 +70,7 @@ public class OrdersController {
                     temp.setPrice((double)currentPM.get("price"));
                     temp.setQuantity((long)currentPM.get("quantity"));
                     temp.setTotalPrice((double)currentPM.get("totalPrice"));
+                    temp.setProductId(pm.getProductId());
                     temp.setImageUri(pm.getImageUri());
 
                     ans.add(temp);

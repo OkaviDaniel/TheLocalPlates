@@ -87,6 +87,12 @@ public class SettingsActivity extends AppCompatActivity {
                     tvFirstName.setText("First Name: " + user.firstName);
                     tvLastName.setText("Last Name: " + user.lastName);
                     tvEmail.setText("Email: " + user.email);
+
+                    SharedPreferences sharedPreferences = getSharedPreferences("MyUserPrefs", Context.MODE_PRIVATE);
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.putString("userFirstName", user.firstName);
+                    editor.putString("userLastName", user.lastName);
+                    editor.apply();
                 }
             }
             @Override

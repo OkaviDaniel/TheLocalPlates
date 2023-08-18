@@ -1,19 +1,24 @@
 package com.example.thelocalplates8.adapters;
 
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.thelocalplates8.Controllers.RatingController;
 import com.example.thelocalplates8.Models.ProductOrderModel;
+import com.example.thelocalplates8.Models.RatingBusinessModel;
 import com.example.thelocalplates8.R;
 import com.squareup.picasso.Picasso;
 
@@ -49,14 +54,122 @@ public class ProductOrderAdapter extends RecyclerView.Adapter<ProductOrderAdapte
         holder.productRate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(context, "Rate product", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(context, "Rate product", Toast.LENGTH_SHORT).show();
+                ShowProductRatingWindow(currentProduct);
             }
         });
 
         holder.businessRate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(context, "Rate Business", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(context, "Rate Business", Toast.LENGTH_SHORT).show();
+                ShowBusinessReviewWindow(currentProduct);
+            }
+        });
+    }
+
+    private void ShowBusinessReviewWindow(ProductOrderModel currentProduct) {
+        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(context);
+        LayoutInflater inflater = LayoutInflater.from(context);
+        View dialogView = inflater.inflate(R.layout.business_rate_itemview, null);
+        dialogBuilder.setView(dialogView);
+
+        Button rateBtn = dialogView.findViewById(R.id.buttonRateB);
+        Button closeBtn = dialogView.findViewById(R.id.buttonRatingB);
+        EditText review = dialogView.findViewById(R.id.editTextTextMultiLineB);
+        RatingBar ratingBar = dialogView.findViewById(R.id.ratingBarBusiness);
+
+
+        AlertDialog alertDialog = dialogBuilder.create();
+        alertDialog.show();
+
+        RatingController ratingController = new RatingController(context);
+
+        ratingController.checkIfRatedBusiness(currentProduct.getBusinessId(), new RatingController.CheckIfRatedBusiness() {
+            @Override
+            public void onCheckIfRatedBusiness(RatingBusinessModel ratingBusinessModel) {
+                if(ratingBusinessModel != null){
+                    rateBtn.setEnabled(false);
+                    rateBtn.setText("Already rated");
+                    ratingBar.setRating((float)ratingBusinessModel.getRating());
+                    ratingBar.setEnabled(false);
+                    review.setText(ratingBusinessModel.getReview());
+                    review.setEnabled(false);
+                }
+            }
+        });
+        closeBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                alertDialog.dismiss();
+            }
+        });
+
+        rateBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                double rating = ratingBar.getRating();
+                String r = review.getText().toString();
+
+                ratingController.rateBusiness(currentProduct.getBusinessId(), rating, r, new RatingController.RateBusiness() {
+                    @Override
+                    public void onRateBusiness(boolean rated) {
+                        Toast.makeText(context, "Business rated!\nThank you :)", Toast.LENGTH_SHORT).show();
+                        alertDialog.dismiss();
+                    }
+                });
+            }
+        });
+    }
+
+    private void ShowProductRatingWindow(ProductOrderModel currentProduct) {
+        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(context);
+        LayoutInflater inflater = LayoutInflater.from(context);
+        View dialogView = inflater.inflate(R.layout.product_rate_itemview, null);
+        dialogBuilder.setView(dialogView);
+
+        Button closeBtn = dialogView.findViewById(R.id.buttonCloseWindow);
+        Button rateBtn = dialogView.findViewById(R.id.buttonRateProduct);
+        RatingBar ratingBar = dialogView.findViewById(R.id.ratingBarProduct);
+
+        AlertDialog alertDialog = dialogBuilder.create();
+        alertDialog.show();
+
+        RatingController ratingController = new RatingController(context);
+
+        ratingController.checkIfRatedProduct(currentProduct.getProductId(), new RatingController.CheckIfRatedProduct() {
+            @Override
+            public void onCheckIfRatedProduct(boolean rated) {
+                if(rated){
+                    rateBtn.setEnabled(false);
+                    rateBtn.setText("Already rated");
+                }else{
+                    rateBtn.setEnabled(true);
+                    rateBtn.setText("Rate product");
+                }
+            }
+        });
+
+        closeBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                alertDialog.dismiss();
+            }
+        });
+
+        rateBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                double rating = ratingBar.getRating();
+                ratingController.rateProduct(currentProduct, rating, new RatingController.RateProduct() {
+                    @Override
+                    public void onRateProduct(boolean rated) {
+                        if(rated){
+                            Toast.makeText(context, "Product rated!\nThank you :)", Toast.LENGTH_SHORT).show();
+                            alertDialog.dismiss();
+                        }
+                    }
+                });
             }
         });
     }

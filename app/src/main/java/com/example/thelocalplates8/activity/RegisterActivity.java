@@ -93,6 +93,8 @@ public class RegisterActivity extends AppCompatActivity {
                                     SharedPreferences sharedPreferences = getSharedPreferences("MyUserPrefs", Context.MODE_PRIVATE);
                                     SharedPreferences.Editor editor = sharedPreferences.edit();
                                     editor.putString("userId", userId);
+                                    editor.putString("userFirstName", firstName);
+                                    editor.putString("userLastName", lastName);
                                     editor.apply();
 
                                     CartController cartController = new CartController(RegisterActivity.this);

@@ -8,7 +8,6 @@ public class ProductOrderModel {
     private String title;
     private double totalPrice;
     private String imageUri;
-
     private String businessId;
 
     public double getPrice() {

@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -52,7 +53,7 @@ public class ProductMapAdapter  extends RecyclerView.Adapter<ProductMapAdapter.P
                 cartController.addToCart(products.get(holder.getAdapterPosition()), new CartController.AddProductToCart() {
                     @Override
                     public void onAddProductToCart(boolean added) {
-
+                        Toast.makeText(context, "Product added to your cart :)", Toast.LENGTH_SHORT).show();
                     }
                 });
             }
