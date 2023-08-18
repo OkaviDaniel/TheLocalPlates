@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -44,6 +45,20 @@ public class ProductOrderAdapter extends RecyclerView.Adapter<ProductOrderAdapte
         holder.title.setText(currentProduct.getTitle());
         holder.price.setText(String.valueOf(currentProduct.getTotalPrice()));
         Picasso.get().load(currentProduct.getImageUri()).into(holder.image);
+
+        holder.productRate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(context, "Rate product", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        holder.businessRate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(context, "Rate Business", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     @Override

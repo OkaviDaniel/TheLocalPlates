@@ -280,6 +280,7 @@ public class ProductController {
             @Override
             public void onSuccess(QuerySnapshot querySnapshot) {
                 for (QueryDocumentSnapshot documentSnapshot : querySnapshot) {
+                    // LATER TO CHECK IF DOCUMENTSNAPSHOT EXISTS
                     ProductModel productModel = documentSnapshot.toObject(ProductModel.class);
                     productModel.setProductId(documentSnapshot.getId());
                     ans.add(productModel);

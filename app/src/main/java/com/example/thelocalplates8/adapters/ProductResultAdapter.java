@@ -2,6 +2,7 @@ package com.example.thelocalplates8.adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -49,6 +50,19 @@ public class ProductResultAdapter extends RecyclerView.Adapter<ProductResultAdap
         holder.tvKosher.setText("Kosher: " + product.getKosher());
         holder.tvInventoryAmount.setText("Inventory: " + product.getInventoryAmount());
         holder.tvCulture.setText("Culture: " + product.getCulture());
+        if(product.isGlutenIncluded()){
+            holder.tvGluten.setText("Gluten free: No");
+            holder.tvGluten.setTextColor(Color.RED);
+        }else{
+            holder.tvGluten.setText("Gluten free: Yes");
+            holder.tvGluten.setTextColor(Color.GREEN);
+        }
+
+        if(product.getInventoryAmount() == 0){
+            holder.addToCartBtn.setEnabled(false);
+        }else{
+            holder.addToCartBtn.setEnabled(true);
+        }
         holder.addToCartBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -84,7 +98,7 @@ public class ProductResultAdapter extends RecyclerView.Adapter<ProductResultAdap
 
     static class ProductViewHolder extends RecyclerView.ViewHolder {
         ImageView ivProductPicture;
-        TextView tvProductTitle, tvProductPrice, tvKosher, tvInventoryAmount, tvCulture;
+        TextView tvProductTitle, tvProductPrice, tvKosher, tvInventoryAmount, tvCulture, tvGluten;
         Button addToCartBtn, goToBusiness;
 
 
@@ -98,6 +112,7 @@ public class ProductResultAdapter extends RecyclerView.Adapter<ProductResultAdap
             tvCulture = itemView.findViewById(R.id.tvCulture);
             addToCartBtn = itemView.findViewById(R.id.addToCartBtn);
             goToBusiness = itemView.findViewById(R.id.buttonGoToBusinessP);
+            tvGluten = itemView.findViewById(R.id.textViewGlutenFree);
         }
     }
 }
