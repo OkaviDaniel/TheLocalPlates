@@ -3,6 +3,7 @@ package com.example.thelocalplates8.activity;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -19,6 +20,7 @@ import android.view.View;
 import android.widget.ImageView;
 //import android.widget.SearchView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.thelocalplates8.Controllers.CustomerController;
 import com.example.thelocalplates8.Controllers.ProductController;
@@ -41,6 +43,8 @@ public class MainActivity extends AppCompatActivity {
       private ImageView profileImage;
       private TextView helloName;
       private SearchView searchView;
+
+      private ConstraintLayout constraintLayoutBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -125,6 +129,15 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        constraintLayoutBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, ResultsActivity.class);
+                intent.putExtra("SEARCH_TYPE", "random_pick");
+                startActivity(intent);
+            }
+        });
+
     }
 
     private void recyclerViewCategory() {
@@ -180,6 +193,7 @@ public class MainActivity extends AppCompatActivity {
         profileImage = (ImageView) findViewById(R.id.imageViewMainProfile);
         helloName = (TextView) findViewById(R.id.textViewHelloName);
         searchView = (SearchView) findViewById(R.id.searchView);
+        constraintLayoutBtn = (ConstraintLayout) findViewById(R.id.constraintLayoutBtn);
     }
 
     private void logoutUser() {

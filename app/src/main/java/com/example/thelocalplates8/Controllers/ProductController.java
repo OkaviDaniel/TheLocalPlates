@@ -268,6 +268,45 @@ public class ProductController {
         });
     }
 
+    public void getRandomProduct(final PickRandomProduct callback){
+        CollectionReference productsCollectionRef = FirebaseFirestore.getInstance().collection("products");
+
+        productsCollectionRef.get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+            @Override
+            public void onSuccess(QuerySnapshot querySnapshot) {
+                ArrayList<DocumentSnapshot> filteredProducts = new ArrayList<>();
+
+                for (DocumentSnapshot productDoc : querySnapshot.getDocuments()) {
+                    // Check if the "glutenIncluded" field is false
+                    ProductModel productModel = productDoc.toObject(ProductModel.class);
+
+                    boolean glutenIncluded = productModel.isGlutenIncluded();
+                    int amount = productModel.getInventoryAmount();
+                    if (!glutenIncluded && amount > 0) {
+                        filteredProducts.add(productDoc);
+                    }
+                }
+
+                int totalFilteredProducts = filteredProducts.size();
+
+                if (totalFilteredProducts > 0) {
+                    int randomIndex = (int) (Math.random() * totalFilteredProducts);
+                    DocumentSnapshot randomProductDoc = filteredProducts.get(randomIndex);
+                    ProductModel productModel = randomProductDoc.toObject(ProductModel.class);
+                    callback.onPickRandomProduct(productModel);
+                } else {
+                    callback.onPickRandomProduct(null);
+                }
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                // Handle the error if the query fails
+                Log.e("Firestore", "Error querying products", e);
+            }
+        });
+    }
+
     public void getProductsByIds(ArrayList<String> ids, final GetProductsByIds callback){
         // Get a reference to the "products" collection
         CollectionReference productsCollectionRef = FirebaseFirestore.getInstance().collection("products");
@@ -348,6 +387,10 @@ public class ProductController {
 
     public interface GetProductsByIds{
         void onGetProductsByIds(ArrayList<ProductModel> products);
+    }
+
+    public interface PickRandomProduct{
+        void onPickRandomProduct(ProductModel productModel);
     }
 
 }

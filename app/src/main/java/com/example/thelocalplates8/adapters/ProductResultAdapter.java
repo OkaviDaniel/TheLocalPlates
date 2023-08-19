@@ -51,10 +51,10 @@ public class ProductResultAdapter extends RecyclerView.Adapter<ProductResultAdap
         holder.tvInventoryAmount.setText("Inventory: " + product.getInventoryAmount());
         holder.tvCulture.setText("Culture: " + product.getCulture());
         if(product.isGlutenIncluded()){
-            holder.tvGluten.setText("Gluten free: No");
+            holder.tvGluten.setText("Gluten included");
             holder.tvGluten.setTextColor(Color.RED);
         }else{
-            holder.tvGluten.setText("Gluten free: Yes");
+            holder.tvGluten.setText("Gluten free");
             holder.tvGluten.setTextColor(Color.GREEN);
         }
 

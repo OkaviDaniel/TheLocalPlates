@@ -12,6 +12,7 @@ import com.example.thelocalplates8.Models.ProductModel;
 import com.example.thelocalplates8.R;
 import com.example.thelocalplates8.adapters.ProductResultAdapter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ResultsActivity extends AppCompatActivity {
@@ -62,6 +63,18 @@ public class ResultsActivity extends AppCompatActivity {
                 } else {
                     // Handle the error here
                     Toast.makeText(this, "Error fetching products", Toast.LENGTH_SHORT).show();
+                }
+            });
+        }else if(typeOfQuery.equals("random_pick")){
+            productController.getRandomProduct(new ProductController.PickRandomProduct() {
+                @Override
+                public void onPickRandomProduct(ProductModel productModel) {
+                    if(productModel!=null){
+                        List<ProductModel> products = new ArrayList<ProductModel>();
+                        products.add(productModel);
+                        ProductResultAdapter adapter = new ProductResultAdapter(products, ResultsActivity.this);
+                        resultsRecyclerView.setAdapter(adapter);
+                    }
                 }
             });
         }

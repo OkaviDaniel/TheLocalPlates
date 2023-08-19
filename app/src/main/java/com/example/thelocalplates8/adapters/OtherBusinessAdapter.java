@@ -1,6 +1,7 @@
 package com.example.thelocalplates8.adapters;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -45,10 +46,16 @@ public class OtherBusinessAdapter extends RecyclerView.Adapter<OtherBusinessAdap
         holder.rating.setText(String.valueOf(currentProduct.getRating()));
         holder.kashrot.setText(currentProduct.getKosher());
 
+        if(currentProduct.getInventoryAmount() == 0){
+            holder.addToCart.setEnabled(false);
+        }
+
         if(currentProduct.isGlutenIncluded()){
             holder.glutenFree.setText("No");
+            holder.glutenFree.setTextColor(Color.RED);
         }else{
             holder.glutenFree.setText("Yes");
+            holder.glutenFree.setTextColor(Color.GREEN);
         }
 
         holder.addToCart.setOnClickListener(new View.OnClickListener() {
