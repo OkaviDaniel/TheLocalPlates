@@ -2,6 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/constraintLayout2"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".activity.BusinessDetailsActivity">
@@ -25,10 +26,10 @@
         android:layout_height="wrap_content"
         android:background="#FE897F"
         android:gravity="center_horizontal"
-        android:textStyle="bold"
         android:text="Owner"
-        android:textSize="15dp"
         android:textColor="#FFFFFF"
+        android:textSize="15dp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toStartOf="@+id/imageViewBusinessDetails"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/imageViewBusinessDetails"
@@ -49,10 +50,10 @@
         android:layout_height="wrap_content"
         android:background="#FE897F"
         android:gravity="center_horizontal"
-        android:textStyle="bold"
         android:text="Location"
-        android:textSize="15dp"
         android:textColor="#FFFFFF"
+        android:textSize="15dp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toStartOf="@+id/imageViewBusinessDetails"
         app:layout_constraintHorizontal_bias="0.505"
         app:layout_constraintStart_toStartOf="parent"
@@ -95,14 +96,14 @@
         app:layout_constraintTop_toBottomOf="@+id/textViewLocationB"
         tools:ignore="TextContrastCheck" />
 
- <TextView
-     android:id="@+id/textViewRatingB"
-     android:layout_width="0dp"
-     android:layout_height="wrap_content"
-     android:gravity="center_horizontal"
-     app:layout_constraintEnd_toEndOf="@+id/textViewLocationB"
-     app:layout_constraintStart_toStartOf="parent"
-     app:layout_constraintTop_toBottomOf="@+id/textViewRating" />
+    <TextView
+        android:id="@+id/textViewRatingB"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        app:layout_constraintEnd_toEndOf="@+id/textViewLocationB"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewRating" />
 
     <TextView
         android:id="@+id/textViewContact"
@@ -110,10 +111,10 @@
         android:layout_height="wrap_content"
         android:background="#FE897F"
         android:gravity="center_horizontal"
-        android:textSize="15dp"
         android:text="Contact"
-        android:textStyle="bold"
         android:textColor="#FFFFFF"
+        android:textSize="15dp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toStartOf="@+id/imageViewBusinessDetails"
         app:layout_constraintHorizontal_bias="0.58"
         app:layout_constraintStart_toStartOf="parent"
@@ -148,30 +149,57 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageViewBusinessDetails" />
 
-    <TextView
-        android:id="@+id/textViewProducts2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:text="Products"
-        android:textColor="#303030"
-        android:textSize="16dp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/divider5" />
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView2"
+    <ScrollView
         android:layout_width="0dp"
-        android:layout_height="435dp"
-        android:layout_marginTop="8dp"
+        android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewProducts2"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toBottomOf="@+id/divider5">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/textViewProducts2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:text="Products"
+                android:textColor="#303030"
+                android:textSize="16dp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/textViewNoProducts"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="The business does not have products to sale right now.\nPlease come back later."
+                android:textAlignment="center"
+                android:textStyle="bold" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerView2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp" />
+            <TextView
+                android:id="@+id/textView27"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Reviews"
+                android:textSize="16dp"
+                android:textStyle="bold" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerViewReviews"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </LinearLayout>
+    </ScrollView>
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

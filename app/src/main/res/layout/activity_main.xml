@@ -74,7 +74,7 @@
                     app:srcCompat="@drawable/chefpng" />
 
                 <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/constraintLayout"
+                    android:id="@+id/constraintLayout2"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -157,7 +157,7 @@
                     android:outlineAmbientShadowColor="@android:color/holo_red_light"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/constraintLayout"
+                    app:layout_constraintTop_toBottomOf="@+id/constraintLayout2"
                     app:queryHint="search here"></androidx.appcompat.widget.SearchView>
 
                 <TextView

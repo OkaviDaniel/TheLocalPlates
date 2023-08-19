@@ -17,10 +17,13 @@ import android.widget.TextView;
 
 import com.example.thelocalplates8.Controllers.BusinessController;
 import com.example.thelocalplates8.Controllers.ProductController;
+import com.example.thelocalplates8.Controllers.RatingController;
 import com.example.thelocalplates8.Models.BusinessModel;
 import com.example.thelocalplates8.Models.ProductModel;
+import com.example.thelocalplates8.Models.RatingBusinessModel;
 import com.example.thelocalplates8.R;
 import com.example.thelocalplates8.adapters.OtherBusinessAdapter;
+import com.example.thelocalplates8.adapters.ReviewAdapter;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -39,7 +42,13 @@ public class BusinessDetailsActivity extends AppCompatActivity {
 
     private Button chatBtn;
 
+    private RecyclerView recyclerView2;
+
     private ArrayList<ProductModel> productsM;
+
+    private TextView noProducts;
+
+    private TextView reviewTitle;
 
 
     @Override
@@ -64,6 +73,27 @@ public class BusinessDetailsActivity extends AppCompatActivity {
                 startActivity(intent1);
             }
         });
+
+        initializeReviews();
+    }
+
+    private void initializeReviews() {
+        RatingController ratingController = new RatingController(this);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL, false);
+
+        ratingController.getBusinessReviews(businessId, new RatingController.GetBusinessReviews() {
+            @Override
+            public void onGetBusinessReviews(ArrayList<RatingBusinessModel> reviews) {
+                if(reviews.size() == 0){
+                    recyclerView2.setVisibility(View.GONE);
+                    reviewTitle.setVisibility(View.GONE);
+                }
+                recyclerView2.setLayoutManager(layoutManager);
+                ReviewAdapter reviewAdapter = new ReviewAdapter(reviews, BusinessDetailsActivity.this);
+                recyclerView2.setAdapter(reviewAdapter);
+            }
+        });
+
     }
 
     private void initializeProducts() {
@@ -73,6 +103,9 @@ public class BusinessDetailsActivity extends AppCompatActivity {
        productController.getBusinessProducts(businessId, new ProductController.GetBusinessProducts() {
            @Override
            public void onGetBusinessProducts(ArrayList<ProductModel> products) {
+               if(products.size() == 0){
+                   noProducts.setVisibility(View.VISIBLE);
+               }
                productsM.addAll(products);
                recyclerView.setLayoutManager(layoutManager);
                OtherBusinessAdapter otherBusinessAdapter = new OtherBusinessAdapter(products, BusinessDetailsActivity.this);
@@ -117,6 +150,10 @@ public class BusinessDetailsActivity extends AppCompatActivity {
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView2);
         chatBtn = (Button)findViewById(R.id.buttonChatO);
         productsM = new ArrayList<ProductModel>();
+        recyclerView2 = (RecyclerView) findViewById(R.id.recyclerViewReviews);
+        noProducts = (TextView) findViewById(R.id.textViewNoProducts);
+        noProducts.setVisibility(View.GONE);
+        reviewTitle = (TextView) findViewById(R.id.textView27);
     }
 
 }

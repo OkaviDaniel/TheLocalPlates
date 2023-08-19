@@ -18,6 +18,7 @@ import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -217,6 +218,37 @@ public class RatingController {
         });
     }
 
+    public void getBusinessReviews(String businessId, final GetBusinessReviews callback){
+        CollectionReference ratingsCollectionRef = FirebaseFirestore.getInstance().collection("businessRatings");
+        Query query = ratingsCollectionRef.whereEqualTo("businessId", businessId);
+        ArrayList<RatingBusinessModel> ans = new ArrayList<RatingBusinessModel>();
+        query.get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+            @Override
+            public void onSuccess(QuerySnapshot querySnapshot) {
+                if (!querySnapshot.isEmpty()) {
+                    // The customer has rated the business
+                    for (QueryDocumentSnapshot documentSnapshot : querySnapshot){
+                        RatingBusinessModel ratingBusinessModel = documentSnapshot.toObject(RatingBusinessModel.class);
+                        ans.add(ratingBusinessModel);
+                    }
+                    callback.onGetBusinessReviews(ans);
+
+                } else {
+                    // there is no reviews
+                    callback.onGetBusinessReviews(ans);
+
+                }
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Log.e("Firestore", "Error querying ratings", e);
+                callback.onGetBusinessReviews(ans);
+            }
+        });
+
+    }
+
     public interface CheckIfRatedProduct{
         void onCheckIfRatedProduct(boolean rated);
     }
@@ -229,6 +261,10 @@ public class RatingController {
     }
     public interface RateBusiness{
         void onRateBusiness(boolean rated);
+    }
+
+    public interface GetBusinessReviews{
+        void onGetBusinessReviews(ArrayList<RatingBusinessModel> reviews);
     }
 
 
