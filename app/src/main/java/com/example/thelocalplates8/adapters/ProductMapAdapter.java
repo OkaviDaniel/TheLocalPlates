@@ -1,6 +1,7 @@
 package com.example.thelocalplates8.adapters;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -44,8 +45,17 @@ public class ProductMapAdapter  extends RecyclerView.Adapter<ProductMapAdapter.P
         holder.title.setText(currentProduct.getTitle());
         Picasso.get().load(products.get(position).getImageUri()).into(holder.image);
         holder.price.setText(String.valueOf(currentProduct.getPrice()));
-        holder.available.setText(String.valueOf(currentProduct.isAvailable()));
+//        holder.available.setText(String.valueOf(currentProduct.isAvailable()));
         holder.kosher.setText(currentProduct.getKosher());
+
+        if(currentProduct.isAvailable()){
+            holder.available.setText("Yes");
+        }else{
+            holder.available.setText("No");
+            holder.addToCart.setEnabled(false);
+            holder.addToCart.setTextColor(Color.GRAY);
+        }
+
         holder.addToCart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

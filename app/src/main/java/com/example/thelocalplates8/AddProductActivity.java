@@ -29,8 +29,8 @@ public class AddProductActivity extends AppCompatActivity {
     private Uri imageUri;
 
     private String[] kashrotList = {"Badatz", "Mehadrin", "Beit Yosef", "None", "Other"};
-    private String[] categoryList = {"Diet", "Pasta", "Fish", "Burger", "Healthy","Soup"};
-    private String[] cultureList = {"Asia", "Arab", "French", "Moroccan", "Israel"};
+    private String[] categoryList = {"Diet", "Pasta", "Fish", "Burger", "Healthy","Soup", "Other"};
+    private String[] cultureList = {"Asia", "Arab", "French", "Moroccan", "Israel", "Other"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
