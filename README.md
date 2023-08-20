@@ -37,7 +37,7 @@ The primary objective of our application is to bring together small-scale food s
 7. **User-friendly**: Provides an easy-to-use platform for ordering food from the comfort of one's home.
 8. **Culinary Exploration**: Encourages users to try new and unique dishes.
 
-## Features
+## Features:bar_chart:
 
 1. **Purchasing**: Users can buy food from other sellers on the platform.
 2. **Location-based Browsing**: Find sellers in proximity using a map feature.
