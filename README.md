@@ -22,7 +22,7 @@ In today's fast-paced world, many struggle to find the time for homemade, high-q
 - Rawan Shareef: 318489697
 
 
-## Objective
+## Objective:pushpin:
 
 The primary objective of our application is to bring together small-scale food sellers and potential customers, promoting both the home food industry and healthy eating habits.
 
