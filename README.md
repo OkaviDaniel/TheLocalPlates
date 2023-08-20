@@ -2,7 +2,7 @@
 # The Local Plates
 
 Ariel University
-Final project 2023
+Final project 2023:mortar_board:
 
 ## About
 
