@@ -14,6 +14,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.thelocalplates8.Controllers.BusinessController;
 import com.example.thelocalplates8.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -79,6 +80,8 @@ public class LoginActivity extends AppCompatActivity {
                             if(user != null){
                                 // need to set the current userId sharedPreferences
                                 // need to set the current businessId sharedPreferences
+                                BusinessController businessController = new BusinessController();
+
                                 String userId = user.getUid();
                                 SharedPreferences sharedPreferences = getSharedPreferences("MyUserPrefs", Context.MODE_PRIVATE);
                                 SharedPreferences.Editor editor = sharedPreferences.edit();

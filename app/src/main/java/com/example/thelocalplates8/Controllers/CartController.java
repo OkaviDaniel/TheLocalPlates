@@ -317,7 +317,9 @@ public class CartController {
         orderRef.set(order).addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
+
                         callback.onCheckoutOrder(true);
+                        createOrderStatus(order);
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
@@ -326,6 +328,17 @@ public class CartController {
                         Log.e("Firestore", "Error adding order", e);
                     }
                 });
+
+    }
+
+    private void createOrderStatus(Map<String, Object> order) {
+        OrderStatusController orderStatusController = new OrderStatusController(context);
+        orderStatusController.createOrderStatus(order, new OrderStatusController.CreateOrderStatus() {
+            @Override
+            public void onCreateOrderStatus(boolean created) {
+
+            }
+        });
 
     }
 

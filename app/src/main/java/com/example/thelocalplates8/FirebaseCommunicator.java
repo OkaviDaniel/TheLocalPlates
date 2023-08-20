@@ -114,19 +114,22 @@ public class FirebaseCommunicator {
         userRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                     @Override
                     public void onSuccess(DocumentSnapshot documentSnapshot) {
-                        listener.onBusinessCheckComplete(documentSnapshot.exists() && documentSnapshot.contains("businessId"));
+                        if(documentSnapshot.exists() && documentSnapshot.contains("businessId")){
+                            String businessId = (String)documentSnapshot.get("businessId");
+                            listener.onBusinessCheckComplete(businessId);
+                        }
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        listener.onBusinessCheckComplete(false);
+                        listener.onBusinessCheckComplete("");
                     }
                 });
     }
 
     public interface OnBusinessCheckCompleteListener {
-        void onBusinessCheckComplete(boolean isBusinessCreated);
+        void onBusinessCheckComplete(String businessId);
     }
 
 

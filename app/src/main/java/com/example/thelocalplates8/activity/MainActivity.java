@@ -33,6 +33,7 @@ import com.example.thelocalplates8.adapters.CultureAdapter;
 //import com.google.android.material.search.SearchView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -75,6 +76,7 @@ public class MainActivity extends AppCompatActivity {
         setUserDataOnScreen();
         recyclerViewCategory();
         recyclerViewCulture();
+        obtainFCMToken();
 
         profileImage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -103,6 +105,30 @@ public class MainActivity extends AppCompatActivity {
         });
 
 }
+
+    private void obtainFCMToken() {
+        // Obtain the FCM registration token
+        FirebaseMessaging.getInstance().getToken()
+                .addOnCompleteListener(task -> {
+                    if (!task.isSuccessful()) {
+                        return;
+                    }
+
+                    String token = task.getResult();
+                    CustomerController customerController = new CustomerController();
+                    SharedPreferences sp = getSharedPreferences("MyUserPrefs", Context.MODE_PRIVATE);
+                    String userId = sp.getString("userId", "");
+
+
+                    // Upload the token to Firestore
+                    customerController.updateFcm(userId, token, new CustomerController.UpdateUserFCM() {
+                        @Override
+                        public void onUpdateUserFCM(boolean updated) {
+//                            Toast.makeText(MainActivity.this, "updated", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                });
+    }
 
     private void recyclerViewCulture() {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);

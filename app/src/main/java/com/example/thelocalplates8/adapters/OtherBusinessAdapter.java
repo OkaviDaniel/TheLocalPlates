@@ -43,7 +43,8 @@ public class OtherBusinessAdapter extends RecyclerView.Adapter<OtherBusinessAdap
         holder.title.setText(currentProduct.getTitle());
         Picasso.get().load(products.get(position).getImageUri()).into(holder.prodImage);
         holder.price.setText(String.valueOf(currentProduct.getPrice()));
-        holder.rating.setText(String.valueOf(currentProduct.getRating()));
+//        holder.rating.setText(String.valueOf(currentProduct.getRating()));
+        holder.rating.setText(String.format("%.2f",currentProduct.getRating()));
         holder.kashrot.setText(currentProduct.getKosher());
 
         if(currentProduct.getInventoryAmount() == 0){

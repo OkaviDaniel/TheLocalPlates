@@ -122,7 +122,8 @@ public class CartItemAdapter extends RecyclerView.Adapter<CartItemAdapter.CartIt
         kosher.setText(productModel.getKosher());
         available.setText(String.valueOf(productModel.isAvailable()));
         inventoryAmount.setText(String.valueOf(productModel.getInventoryAmount()));
-        rating.setText(String.valueOf(productModel.getRating()));
+//        rating.setText(String.valueOf(productModel.getRating()));
+        rating.setText(String.format("%.2f",productModel.getRating()));
         preparationTime.setText(productModel.getPreparationTime());
         productIngredients.setText(productModel.getIngredients());
 

@@ -30,6 +30,7 @@ public class CustomerController {
         db = FirebaseFirestore.getInstance();
     }
 
+
     public void getCustomerData(String userId, final CustomerModelCallback callback){
         DocumentReference docRef = db.collection("customers").document(userId);
 
@@ -103,6 +104,21 @@ public class CustomerController {
         });
     }
 
+    public void updateFcm(String userId, String token,final UpdateUserFCM callback){
+        DocumentReference customerRef = FirebaseFirestore.getInstance()
+                .collection("customers")
+                .document(userId);
+
+        // Update the "token" field in the customer document
+        customerRef.update("token", token)
+                .addOnSuccessListener(aVoid -> {
+                    callback.onUpdateUserFCM(true);
+                })
+                .addOnFailureListener(e -> {
+                    callback.onUpdateUserFCM(false);
+                });
+    }
+
     public interface CustomerModelCallback{
         void onCustomerModelCallback(CustomerModel customer);
     }
@@ -113,5 +129,9 @@ public class CustomerController {
 
     public interface CheckProfileImageExist{
         void onCheckProfileImageExist(String imageUrl);
+    }
+
+    public interface UpdateUserFCM{
+        void onUpdateUserFCM(boolean updated);
     }
 }

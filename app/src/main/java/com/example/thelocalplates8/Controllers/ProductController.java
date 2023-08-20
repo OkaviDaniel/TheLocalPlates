@@ -127,12 +127,9 @@ public class ProductController {
         });
     }
 
-    public void getProducts(Context context, final GetProductsInterface callback){
+    public void getProducts(Context context, String businessId, final GetProductsInterface callback){
         ArrayList<ProductModel> products = new ArrayList<ProductModel>();
         ProductController productController = new ProductController();
-
-        SharedPreferences sp = context.getSharedPreferences("MyUserPrefs", Context.MODE_PRIVATE);
-        String businessId = sp.getString("businessId", "");
 
         DatabaseReference databaseRef = FirebaseDatabase.getInstance().getReference("products");
         Query query = db.collection("products").whereEqualTo("businessId", businessId);

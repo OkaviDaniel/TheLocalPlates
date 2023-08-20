@@ -4,9 +4,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -37,8 +40,9 @@ public class BusinessActivity extends AppCompatActivity {
     private ImageView businessImageView;
     private RecyclerView recyclerView;
     private ArrayList<ProductModel> products;
-
     private TextView productsTextView;
+    private Button openOrdersBtn;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -57,14 +61,20 @@ public class BusinessActivity extends AppCompatActivity {
         FirebaseCommunicator.checkBusinessExist(db, userID, new FirebaseCommunicator.OnBusinessCheckCompleteListener(){
 
             @Override
-            public void onBusinessCheckComplete(boolean isBusinessCreated) {
+            public void onBusinessCheckComplete(String businessId) {
                 // if user created a business
-                if(isBusinessCreated){
+                if(businessId.length() > 0){
+
+                    SharedPreferences sharedPreferences = getSharedPreferences("MyUserPrefs", Context.MODE_PRIVATE);
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.putString("businessId", businessId);
+                    editor.apply();
+
                     // Initialize controllers
                     BusinessController businessController = new BusinessController();
                     ProductController productController = new ProductController();
 
-                    productController.getProducts(BusinessActivity.this, new ProductController.GetProductsInterface() {
+                    productController.getProducts(BusinessActivity.this, businessId, new ProductController.GetProductsInterface() {
                         @Override
                         public void onGetProductsInterface(ArrayList<ProductModel> productModels) {
                             products.addAll(productModels);
@@ -90,6 +100,16 @@ public class BusinessActivity extends AppCompatActivity {
                                 @Override
                                 public void onClick(View v) {
                                     Intent intent = new Intent(BusinessActivity.this, AddProductActivity.class);
+                                    startActivity(intent);
+                                }
+                            });
+
+                            openOrdersBtn.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    String businessId = business.getBusinessId();
+                                    Intent intent = new Intent(BusinessActivity.this, OpenOrdersActivity.class);
+                                    intent.putExtra("BUSINESSID", businessId);
                                     startActivity(intent);
                                 }
                             });
@@ -135,6 +155,7 @@ public class BusinessActivity extends AppCompatActivity {
 //        welcomeText.setVisibility(View.VISIBLE);
         recyclerView.setVisibility(View.VISIBLE);
         productsTextView.setVisibility(View.VISIBLE);
+        openOrdersBtn.setVisibility(View.VISIBLE);
     }
 
     private void setVisibilityGone() {
@@ -148,6 +169,7 @@ public class BusinessActivity extends AppCompatActivity {
         businessImageView.setVisibility(View.GONE);
         recyclerView.setVisibility(View.GONE);
         productsTextView.setVisibility(View.GONE);
+        openOrdersBtn.setVisibility(View.GONE);
     }
 
     private void initializeVars() {
@@ -162,5 +184,6 @@ public class BusinessActivity extends AppCompatActivity {
         recyclerView = (RecyclerView) findViewById(R.id.recyclerview_products);
         productsTextView = (TextView) findViewById(R.id.textViewProducts);
         products = new ArrayList<ProductModel>();
+        openOrdersBtn = (Button)findViewById(R.id.openOrdersButton);
     }
 }

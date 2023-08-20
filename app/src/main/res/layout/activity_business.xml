@@ -183,5 +183,20 @@
         app:layout_constraintTop_toBottomOf="@+id/textViewProducts"
         app:layout_constraintVertical_bias="0.0" />
 
+    <Button
+        android:id="@+id/openOrdersButton"
+        style="@style/Widget.MaterialComponents.Button"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:backgroundTint="#74DF143D"
+        android:text="Open orders"
+        android:textStyle="bold|italic"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/recyclerview_products"
+        app:layout_constraintVertical_bias="0.947"
+        tools:ignore="VisualLintOverlap,VisualLintButtonSize" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
