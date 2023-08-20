@@ -7,7 +7,7 @@ Final project 2023:mortar_board:
 
  <img src="https://github.com/OkaviDaniel/TheLocalPlatesNew/blob/Daniel/%E2%80%8F%E2%80%8Flogo.PNG" width="600" height="300">
 
-## About
+## About:mag:
 
 In today's fast-paced world, many struggle to find the time for homemade, high-quality meal preparation. This results in a reliance on fast food, which isn't always the healthiest option. This application seeks to bridge the gap by providing a platform for home chefs and small businesses to market their dishes, allowing consumers to purchase healthy, homemade meals with ease.
 
