@@ -59,4 +59,13 @@ If you're interested in contributing to our project or have any suggestions, fee
 ## Screens:
 
 
+https://github.com/OkaviDaniel/TheLocalPlatesNew/assets/73065095/f806486f-db28-4828-a020-a5a4862cb508
+
+
+https://github.com/OkaviDaniel/TheLocalPlatesNew/assets/73065095/4b0c2f2f-c378-4bfd-a269-05685fed0e92
+
+
+https://github.com/OkaviDaniel/TheLocalPlatesNew/assets/73065095/95073fe9-8858-40b0-8040-9092464f2d43
+
+
 
